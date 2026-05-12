@@ -464,7 +464,7 @@ ul {
 
 /* CTA SECTION */
 .cta-section {
-    background-color: var(--color-primary);
+    background: linear-gradient(135deg, #0A192F 0%, var(--color-accent) 100%);
     color: var(--color-white);
     text-align: center;
 }
@@ -473,6 +473,8 @@ ul {
     color: var(--color-white);
     font-size: 2.5rem;
     margin-bottom: 16px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
 }
 
 .cta-container p {
@@ -483,15 +485,48 @@ ul {
     margin-inline: auto;
 }
 
-.cta-btn {
-    background-color: var(--color-secondary);
+.cta-buttons {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.cta-btn-agendar {
+    background-color: #FF8A00;
     color: var(--color-white) !important;
     border: none;
 }
 
-.cta-btn:hover {
+.cta-btn-agendar:hover {
+    background-color: #e07900;
+    transform: translateY(-2px);
+    box-shadow: 0 10px 15px -3px rgba(255, 138, 0, 0.4);
+}
+
+.cta-btn-explorar {
+    background-color: transparent;
+    color: var(--color-white) !important;
+    border: 2px solid var(--color-white) !important;
+}
+
+.cta-btn-explorar:hover {
     background-color: var(--color-white);
-    color: var(--color-primary) !important;
+    color: #0A192F !important;
+    transform: translateY(-2px);
+}
+
+@keyframes pulse-btn {
+    0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.4); }
+    50% { transform: scale(1.02); box-shadow: 0 0 0 10px rgba(255, 255, 255, 0); }
+    100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 255, 255, 0); }
+}
+
+.btn-pulse {
+    animation: pulse-btn 2.5s infinite cubic-bezier(0.66, 0, 0, 1);
+}
+.btn-pulse:hover {
+    animation: none;
 }
 
 
@@ -633,11 +668,7 @@ ul {
 .footer-logo {
     height: 48px;
     margin-bottom: 24px;
-    /* Substituir brilho extremo apenas por um fundo/sombreamento ou filtro diferente */
-    filter: drop-shadow(0 0 12px rgba(255,255,255,0.4));
-    background-color: rgba(255,255,255,0.9); 
-    padding: 8px 16px;
-    border-radius: 8px;
+    filter: drop-shadow(0 0 8px rgba(255,255,255,0.2));
 }
 
 .brand-col p {
@@ -774,8 +805,21 @@ ul {
 .course-filters {
     display: flex;
     gap: 12px;
-    flex-wrap: wrap;
-    justify-content: center;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    overflow-x: auto;
+    padding-bottom: 8px;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    width: 100%;
+}
+.course-filters::-webkit-scrollbar {
+    display: none;
+}
+@media (min-width: 768px) {
+    .course-filters {
+        justify-content: center;
+    }
 }
 
 .filter-btn {
@@ -1154,3 +1198,65 @@ ul {
     }
 }
 
+ 
+.insta-item {
+    border: 3px solid transparent;
+}
+.insta-item:hover {
+    border-color: #00C2A0;
+}
+.insta-img { position: absolute; top:0; left:0; width: 100%; height: 100%; object-fit: cover; z-index: 1; transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94), filter 0.5s ease; }
+.insta-item:hover .insta-img { transform: scale(1.1); filter: brightness(0.7); }
+.insta-item i { position: relative; z-index: 2; opacity: 0; transition: all 0.3s ease; font-size: 2rem; color: white; }
+.insta-item:hover i { opacity: 1; }
+
+.btn-social-cta {
+    background-color: #0A192F;
+    color: #FF8A00 !important;
+    border: none;
+}
+.btn-social-cta:hover {
+    background-color: #050d1a;
+    color: #FF8A00 !important;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 15px rgba(0,0,0,0.15);
+}
+ 
+/* Orbits for Page Header Background */
+.page-header { position: relative; overflow: hidden; z-index: 1; }
+.page-header > .container { position: relative; z-index: 2; }
+.page-header::before { content: ''; position: absolute; top: 50%; left: 50%; width: 600px; height: 600px; border: 1px solid rgba(255,255,255,0.1); border-radius: 50%; transform: translate(-50%, -50%); animation: spin-orbit 30s linear infinite; pointer-events: none; z-index: 0; }
+.page-header::after { content: ''; position: absolute; top: 50%; left: 50%; width: 900px; height: 900px; border: 1px dashed rgba(255,255,255,0.05); border-radius: 50%; transform: translate(-50%, -50%); animation: spin-orbit-reverse 45s linear infinite; pointer-events: none; z-index: 0; }
+@keyframes spin-orbit { 100% { transform: translate(-50%, -50%) rotate(360deg); } }
+@keyframes spin-orbit-reverse { 100% { transform: translate(-50%, -50%) rotate(-360deg); } }
+
+/* CTA Course Buttons */
+.btn-course-cta { background-color: #FF8A00; color: #FFFFFF !important; border: none; font-weight: 600; padding: 12px 24px; border-radius: 999px; transition: all 0.3s ease; display: inline-flex; align-items: center; justify-content: center; text-transform: none; }
+.btn-course-cta:hover { background-color: #e07900; transform: translateY(-2px); box-shadow: 0 4px 10px rgba(255, 138, 0, 0.3); }
+
+/* Override Course Card Hover Border Color */
+.course-card { border: 2px solid transparent !important; }
+.course-card:hover { border-color: #00C2A0 !important; }
+ 
+/* CTA Cursos Button */
+.btn-inscricao-cta { background-color: #FF8A00; color: #FFFFFF !important; border: none; font-weight: 700; padding: 18px 48px; border-radius: 999px; font-size: 1.15rem; display: inline-flex; align-items: center; justify-content: center; transition: all 0.3s ease; text-transform: uppercase; letter-spacing: 1px; }
+.btn-inscricao-cta:hover { background-color: #ff9d2e; transform: scale(1.05); box-shadow: 0 0 20px rgba(255, 138, 0, 0.6); }
+ 
+/* Real Images on Course Cards */
+.course-img { width: 100%; height: 200px; object-fit: cover; display: block; border-radius: 16px 16px 0 0; }
+.img-gradient { position: absolute; bottom: 0; left: 0; width: 100%; height: 80px; background: linear-gradient(to top, rgba(0,0,0,0.4), transparent); pointer-events: none; z-index: 1; border-radius: 0 0 0 0; }
+.course-img-wrapper { overflow: hidden !important; border-radius: 16px 16px 0 0 !important; }
+.course-tag { z-index: 2; position: relative; }
+ 
+/* Insta Callout Modern Re-design */
+.insta-callout-modern { margin-top: 64px; background: linear-gradient(135deg, #0A192F 0%, #1C4568 100%); border-radius: 24px; padding: 40px; display: flex; align-items: center; gap: 32px; color: var(--color-white); box-shadow: 0 20px 40px rgba(0,0,0,0.15); position: relative; overflow: hidden; }
+.callout-icon-container { position: relative; flex-shrink: 0; width: 80px; height: 80px; display: flex; align-items: center; justify-content: center; }
+.callout-glow { position: absolute; width: 60px; height: 60px; background-color: #00C2A0; filter: blur(25px); opacity: 0.6; border-radius: 50%; z-index: 1; }
+.callout-icon-img { width: 64px; height: auto; position: relative; z-index: 2; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.2)); }
+.insta-callout-modern .callout-content { flex-grow: 1; }
+.insta-callout-modern .callout-content h3 { color: var(--color-white); font-weight: 700; margin-bottom: 8px; font-size: 1.6rem; }
+.insta-callout-modern .callout-content p { color: rgba(255, 255, 255, 0.85); font-size: 1.1rem; margin: 0; }
+.callout-action { flex-shrink: 0; }
+.btn-insta-cta { background-color: #FF8A00; color: var(--color-white) !important; border: none; font-weight: 700; padding: 16px 32px; border-radius: 999px; display: inline-flex; align-items: center; gap: 10px; transition: all 0.3s ease; }
+.btn-insta-cta:hover { background-color: #ff9d2e; transform: translateY(-5px) scale(1.02); box-shadow: 0 10px 25px rgba(255, 138, 0, 0.5); filter: brightness(1.1); }
+@media (max-width: 900px) { .insta-callout-modern { flex-direction: column; text-align: center; padding: 32px 24px; gap: 24px; } }

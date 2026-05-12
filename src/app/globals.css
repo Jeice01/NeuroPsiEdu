@@ -1,0 +1,102 @@
+@import "tailwindcss";
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-inter);
+  --font-display: var(--font-outfit);
+
+  /* Colors */
+  --color-neuro-blue: #1c4568;
+  --color-neuro-blue-light: #2c689c;
+  --color-neuro-blue-dark: #122f47;
+  --color-neuro-orange: #F28C28;
+  --color-neuro-orange-light: #f59f4d;
+  --color-neuro-lilac: #8b5cf6;
+  --color-neuro-cyan: #06b6d4;
+  
+  --color-premium-white: #ffffff;
+  --color-premium-offwhite: #fdfdfd;
+  --color-premium-gray-50: #f8fafc;
+  --color-premium-gray-100: #f1f5f9;
+  --color-premium-gray-200: #e2e8f0;
+  --color-premium-gray-800: #1e293b;
+  --color-premium-gray-900: #0f172a;
+}
+
+:root {
+  --background: #fdfdfd;
+  --foreground: #1c4568;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #f8fafc; /* Forçando tema claro premium mesmo no dark mode */
+    --foreground: #1c4568;
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans), sans-serif;
+  overflow-x: hidden;
+  scroll-padding-top: 80px; /* Alinha o scroll com a navbar fixa */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Custom Premium Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 10px;
+  transition: all 0.3s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-neuro-blue);
+}
+
+/* For Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #cbd5e1 #f1f5f9;
+}
+
+/* Utilities */
+@layer utilities {
+  .glass-card {
+    @apply bg-white/80 backdrop-blur-md border border-slate-200 shadow-[0_8px_30px_rgb(0,0,0,0.04)];
+  }
+  
+  .glass-card-hover {
+    @apply transition-all duration-300 hover:shadow-[0_20px_40px_rgb(28,69,104,0.1)] hover:border-neuro-blue/30 hover:-translate-y-1;
+  }
+  
+  .text-gradient {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-neuro-blue to-neuro-blue-light;
+  }
+
+  .glow-effect {
+    @apply absolute rounded-full blur-3xl opacity-20 pointer-events-none;
+  }
+
+  .animate-gradient {
+    background-size: 200% 200%;
+    animation: gradient-move 4s ease infinite;
+  }
+}
+
+@keyframes gradient-move {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
