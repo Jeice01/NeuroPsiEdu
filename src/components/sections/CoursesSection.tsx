@@ -1,9 +1,50 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { GraduationCap, Calendar, Award, BookOpen, ArrowRight, Star, Clock, CheckCircle2, Activity, Network, Sparkles, Users, Brain } from "lucide-react";
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { GraduationCap, Calendar, Award, BookOpen, ArrowRight, Star, Clock, CheckCircle2, Activity, Network, Sparkles, Users, Brain, X, Send, User, Mail, Phone, Briefcase } from "lucide-react";
+import { supabase } from "@/lib/supabase";
 
 export function CoursesSection() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [formStep, setFormStep] = useState(1); // 1: Form, 2: Success
+  
+  const [formData, setFormData] = useState({
+    nome: "",
+    telefone: "",
+    email: "",
+    isPsicologo: "sim"
+  });
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    try {
+      const { error } = await supabase
+        .from('espera_pos')
+        .insert([
+          { 
+            nome: formData.nome, 
+            email: formData.email, 
+            telefone: formData.telefone, 
+            is_psicologo: formData.isPsicologo,
+            origem: 'pos-graduacao'
+          }
+        ]);
+
+      if (error) throw error;
+
+      setFormStep(2);
+      
+      setTimeout(() => {
+        const msg = `Olá! Meu nome é ${formData.nome}. Sou ${formData.isPsicologo === 'sim' ? 'Psicólogo(a)' : 'estudante/outro'}. Gostaria de saber mais sobre a Pós-Graduação.`;
+        window.open(`https://wa.me/5561982088284?text=${encodeURIComponent(msg)}`, '_blank');
+      }, 2000);
+    } catch (error) {
+      console.error("Error saving lead:", error);
+      alert("Houve um erro ao salvar seus dados. Por favor, tente novamente.");
+    }
+  };
   const modules = [
     { num: "01", title: "Transtorno do Des. Intelectual (DI) e Altas Habilidades", desc: "Avaliação Clínica e Neuropsicológica avançada." },
     { num: "02", title: "TDAH (Déficit de Atenção e Hiperatividade)", desc: "Protocolos de avaliação clínica e neuropsicológica." },
@@ -47,7 +88,10 @@ export function CoursesSection() {
             viewport={{ once: true }}
             className="text-4xl md:text-6xl font-bold text-neuro-blue leading-[1.1] mb-8 max-w-4xl"
           >
-            Formação de <span className="text-neuro-orange">Elite</span> para quem busca o topo da Neuropsicologia
+            Formação de <span className="text-neuro-orange">Elite</span> para quem busca o topo da <span className="relative inline-block text-transparent bg-clip-text bg-gradient-to-r from-neuro-blue via-[#3b82f6] to-neuro-blue bg-[length:200%_auto] animate-gradient">
+              Neuropsicologia
+              <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full animate-[shimmer_3s_infinite] pointer-events-none" />
+            </span>
           </motion.h2>
 
           {/* Social Proof Stats */}
@@ -124,17 +168,18 @@ export function CoursesSection() {
               </div>
 
               <div className="flex flex-col sm:flex-row items-center gap-8">
-                <a 
-                  href="https://wa.me/5561982088284?text=Quero%20saber%20mais%20sobre%20os%20cursos%2C%20pode%20me%20ajudar%3F"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="relative w-full sm:w-auto overflow-hidden bg-[#f3821a] hover:bg-[#ff8c1a] text-white px-12 py-6 rounded-2xl font-black text-sm uppercase tracking-widest transition-all shadow-[0_20px_40px_-10px_rgba(243,130,26,0.5)] active:scale-95 text-center"
+                <button 
+                  onClick={() => {
+                    setFormStep(1);
+                    setIsModalOpen(true);
+                  }}
+                  className="relative w-full sm:w-auto overflow-hidden bg-[#f3821a] hover:bg-[#ff8c1a] text-white px-12 py-6 rounded-2xl font-black text-sm uppercase tracking-widest transition-all shadow-[0_20px_40px_-10px_rgba(243,130,26,0.5)] active:scale-95 text-center group"
                 >
                   <span className="relative z-10 flex items-center justify-center gap-3">
                     Garantir Minha Vaga
-                    <ArrowRight className="w-5 h-5" />
+                    <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
                   </span>
-                </a>
+                </button>
                 <div className="flex items-center gap-3">
                   <span className="text-blue-100/40 text-xs font-bold uppercase tracking-widest">+100 profissionais inscritos</span>
                 </div>
@@ -233,6 +278,167 @@ export function CoursesSection() {
         </div>
 
       </div>
+
+      {/* LEAD MODAL */}
+      <AnimatePresence>
+        {isModalOpen && (
+          <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setIsModalOpen(false)}
+              className="absolute inset-0 bg-[#0a1e30]/80 backdrop-blur-sm"
+            />
+            
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.9, y: 20 }}
+              className="relative bg-white rounded-[2.5rem] w-full max-w-lg overflow-hidden shadow-2xl"
+              onClick={(e) => e.stopPropagation()}
+            >
+              {/* Header */}
+              <div className="bg-[#122f47] p-8 text-center relative">
+                <button 
+                  onClick={() => setIsModalOpen(false)}
+                  className="absolute top-6 right-6 text-white/40 hover:text-white transition-colors"
+                >
+                  <X className="w-6 h-6" />
+                </button>
+                <div className="w-28 h-28 bg-white/5 backdrop-blur-sm rounded-[2rem] flex items-center justify-center p-5 mx-auto mb-6 border border-white/10 shadow-2xl">
+                  <img 
+                    src="/images/Logo_Saber_Saude_Icone_Transp-03.png" 
+                    alt="NeuroPsiEdu Icon" 
+                    className="w-full h-full object-contain" 
+                  />
+                </div>
+                <h4 className="text-2xl font-bold text-white mb-2">Quase lá!</h4>
+                <p className="text-blue-100/60 text-sm">Preencha seus dados para garantir prioridade na inscrição.</p>
+              </div>
+
+              <div className="p-8">
+                {formStep === 1 ? (
+                  <form onSubmit={handleSubmit} className="space-y-5">
+                    <div>
+                      <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2 px-1">Nome Completo</label>
+                      <div className="relative">
+                        <User className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-300" />
+                        <input 
+                          required
+                          type="text"
+                          value={formData.nome}
+                          onChange={(e) => setFormData({...formData, nome: e.target.value})}
+                          placeholder="Seu nome completo"
+                          className="w-full bg-slate-50 border border-slate-100 rounded-2xl py-4 pl-12 pr-4 focus:outline-none focus:ring-2 focus:ring-neuro-orange/20 focus:border-neuro-orange transition-all"
+                        />
+                      </div>
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                      <div>
+                        <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2 px-1">Telefone</label>
+                        <div className="relative">
+                          <Phone className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-300" />
+                          <input 
+                            required
+                            type="tel"
+                            value={formData.telefone}
+                            onChange={(e) => setFormData({...formData, telefone: e.target.value})}
+                            placeholder="(00) 00000-0000"
+                            className="w-full bg-slate-50 border border-slate-100 rounded-2xl py-4 pl-12 pr-4 focus:outline-none focus:ring-2 focus:ring-neuro-orange/20 focus:border-neuro-orange transition-all"
+                          />
+                        </div>
+                      </div>
+                      <div>
+                        <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2 px-1">E-mail</label>
+                        <div className="relative">
+                          <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-300" />
+                          <input 
+                            required
+                            type="email"
+                            value={formData.email}
+                            onChange={(e) => setFormData({...formData, email: e.target.value})}
+                            placeholder="seu@email.com"
+                            className="w-full bg-slate-50 border border-slate-100 rounded-2xl py-4 pl-12 pr-4 focus:outline-none focus:ring-2 focus:ring-neuro-orange/20 focus:border-neuro-orange transition-all"
+                          />
+                        </div>
+                      </div>
+                    </div>
+
+                    <div>
+                      <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-3 px-1">Status Profissional</label>
+                      <div className="space-y-3">
+                        <button
+                          type="button"
+                          onClick={() => setFormData({...formData, isPsicologo: 'sim'})}
+                          className={`w-full flex items-center justify-between p-4 rounded-2xl border transition-all ${
+                            formData.isPsicologo === 'sim' 
+                            ? 'bg-neuro-blue/5 border-neuro-blue ring-1 ring-neuro-blue' 
+                            : 'bg-white border-slate-100 hover:bg-slate-50'
+                          }`}
+                        >
+                          <span className={`text-sm font-bold ${formData.isPsicologo === 'sim' ? 'text-neuro-blue' : 'text-slate-600'}`}>Sou formado em Psicologia</span>
+                          <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${formData.isPsicologo === 'sim' ? 'border-neuro-blue bg-neuro-blue' : 'border-slate-300'}`}>
+                            {formData.isPsicologo === 'sim' && <div className="w-2 h-2 rounded-full bg-white" />}
+                          </div>
+                        </button>
+
+                        <button
+                          type="button"
+                          onClick={() => setFormData({...formData, isPsicologo: 'não'})}
+                          className={`w-full flex items-center justify-between p-4 rounded-2xl border transition-all ${
+                            formData.isPsicologo === 'não' 
+                            ? 'bg-neuro-blue/5 border-neuro-blue ring-1 ring-neuro-blue' 
+                            : 'bg-white border-slate-100 hover:bg-slate-50'
+                          }`}
+                        >
+                          <span className={`text-sm font-bold ${formData.isPsicologo === 'não' ? 'text-neuro-blue' : 'text-slate-600'}`}>Não sou psicólogo / Sou estudante</span>
+                          <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${formData.isPsicologo === 'não' ? 'border-neuro-blue bg-neuro-blue' : 'border-slate-300'}`}>
+                            {formData.isPsicologo === 'não' && <div className="w-2 h-2 rounded-full bg-white" />}
+                          </div>
+                        </button>
+                      </div>
+                      <p className="mt-4 text-[11px] text-slate-400 leading-relaxed italic flex items-start gap-2">
+                        <span className="text-neuro-orange mt-0.5 font-bold">*</span>
+                        Nota: A pós-graduação exige formação completa em Psicologia para a obtenção do certificado de especialista.
+                      </p>
+                    </div>
+
+                    <button
+                      type="submit"
+                      className="w-full bg-neuro-orange text-white py-6 rounded-2xl font-black text-sm uppercase tracking-[0.2em] shadow-xl shadow-neuro-orange/20 hover:bg-neuro-orange-light hover:-translate-y-1 transition-all flex items-center justify-center gap-3 mt-4"
+                    >
+                      Enviar e Continuar
+                      <ArrowRight className="w-5 h-5" />
+                    </button>
+                  </form>
+                ) : (
+                  <motion.div 
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    className="text-center py-10"
+                  >
+                    <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center text-green-500 mx-auto mb-6">
+                      <CheckCircle2 className="w-10 h-10" />
+                    </div>
+                    <h5 className="text-2xl font-bold text-neuro-blue mb-3">Dados enviados!</h5>
+                    <p className="text-slate-500 mb-8 leading-relaxed">Estamos redirecionando você para o nosso WhatsApp para finalizar seu atendimento...</p>
+                    <div className="w-full bg-slate-100 h-1 rounded-full overflow-hidden">
+                      <motion.div 
+                        initial={{ width: 0 }}
+                        animate={{ width: "100%" }}
+                        transition={{ duration: 2 }}
+                        className="h-full bg-neuro-orange"
+                      />
+                    </div>
+                  </motion.div>
+                )}
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
     </section>
   );
 }

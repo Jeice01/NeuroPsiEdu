@@ -116,17 +116,38 @@ export function ServicesSection() {
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="mt-28 bg-[#0a1e30] rounded-[3rem] p-12 lg:p-20 text-center relative overflow-hidden shadow-2xl shadow-neuro-blue/40 border border-white/5"
+          className="mt-28 bg-gradient-to-br from-[#0a1e30] via-[#0d273d] to-[#0a1e30] bg-[length:200%_200%] animate-gradient rounded-[3rem] p-12 lg:p-20 text-center relative overflow-hidden shadow-2xl shadow-neuro-blue/40 border border-white/5"
         >
           {/* 1. Cinematic Background Decorations - Radial Glows */}
           {/* Deep Blue Center Glow */}
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1000px] h-[1000px] bg-neuro-blue/20 rounded-full blur-[150px] pointer-events-none" />
+          <motion.div 
+            animate={{ 
+              scale: [1, 1.1, 1],
+              opacity: [0.2, 0.25, 0.2]
+            }}
+            transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1000px] h-[1000px] bg-neuro-blue/20 rounded-full blur-[150px] pointer-events-none" 
+          />
           
           {/* Orange Top-Right Glow */}
-          <div className="absolute -top-40 -right-40 w-[600px] h-[600px] bg-neuro-orange/10 rounded-full blur-[120px] pointer-events-none" />
+          <motion.div 
+            animate={{ 
+              x: [0, 20, 0],
+              y: [0, -20, 0]
+            }}
+            transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+            className="absolute -top-40 -right-40 w-[600px] h-[600px] bg-neuro-orange/10 rounded-full blur-[120px] pointer-events-none" 
+          />
           
           {/* Cyan Bottom-Left Glow */}
-          <div className="absolute -bottom-40 -left-40 w-[600px] h-[600px] bg-neuro-cyan/10 rounded-full blur-[120px] pointer-events-none" />
+          <motion.div 
+            animate={{ 
+              x: [0, -20, 0],
+              y: [0, 20, 0]
+            }}
+            transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
+            className="absolute -bottom-40 -left-40 w-[600px] h-[600px] bg-neuro-cyan/10 rounded-full blur-[120px] pointer-events-none" 
+          />
 
           {/* 2. Neuro-Wavy Lines Texture */}
           <svg className="absolute inset-0 w-full h-full opacity-10 pointer-events-none" xmlns="http://www.w3.org/2000/svg">
