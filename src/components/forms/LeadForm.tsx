@@ -21,6 +21,8 @@ export function LeadForm() {
   const [telefone, setTelefone] = useState<string>("");
   const [errors, setErrors] = useState<Errors>({});
   const [globalError, setGlobalError] = useState<string>("");
+  // CORREÇÃO: Adicionando o estado que faltava
+  const [status, setStatus] = useState<"idle" | "sending" | "success" | "error">("idle");
 
   const validate = (data: FormData): Errors => {
     const newErrors: Errors = {};
@@ -115,7 +117,6 @@ export function LeadForm() {
             placeholder="61 996360647"
             value={telefone}
             onChange={(e) => {
-              // Allow only numbers and optional space between DDD and number
               const cleaned = e.target.value.replace(/[^0-9\s]/g, "");
               setTelefone(cleaned);
             }}
