@@ -72,9 +72,9 @@ export function LeadForm() {
       setStatus("success");
       setTelefone("");
       form.reset();
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error(err);
-      setGlobalError(err?.message ?? "Falha ao enviar o lead.");
+      setGlobalError(err instanceof Error ? err.message : "Falha ao enviar o lead.");
       setStatus("error");
     }
   };
