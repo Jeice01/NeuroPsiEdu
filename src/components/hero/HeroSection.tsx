@@ -9,7 +9,7 @@ export function HeroSection() {
   return (
     <section className="relative w-full overflow-hidden bg-[#fdfdfd] pt-24">
       {/* Absolute Background Pattern - Refined */}
-      <div className="absolute inset-0 bg-[url('/grid.svg')] bg-center [mask-image:linear-gradient(180deg,white,rgba(255,255,255,0))] opacity-[0.03] pointer-events-none" />
+      <div className="hero-grid-bg absolute inset-0 pointer-events-none" />
       
       <div className="container mx-auto px-6 max-w-7xl relative z-10 flex flex-col items-center">
         {/* Top Grid: Content (Left) and Visuals (Right) */}
