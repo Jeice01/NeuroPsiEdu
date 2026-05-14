@@ -14,6 +14,12 @@ const outfit = Outfit({
 
 export const metadata: Metadata = {
   title: "NeuroPsiEdu",
+  description: "Excelência em Avaliação Neuropsicológica e Ensino",
+  icons: {
+    icon: "/icon.png",
+    shortcut: "/icon.png",
+    apple: "/icon.png",
+  },
 };
 
 import { FloatingWhatsAppButton } from "@/components/ui/FloatingWhatsAppButton";
