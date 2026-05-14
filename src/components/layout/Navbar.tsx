@@ -33,7 +33,7 @@ export function Navbar() {
         <Link href="/" className="flex items-center group">
           <div className="relative transition-transform group-hover:scale-[1.02]">
             <img 
-              src="/images/LogoVertical.png" 
+              src="/images/logo-vertical.png" 
               alt="NeuroPsiEdu Logo" 
               className="h-[34px] md:h-[40px] lg:h-[48px] w-auto object-contain"
             />

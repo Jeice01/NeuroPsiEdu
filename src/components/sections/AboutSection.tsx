@@ -43,7 +43,7 @@ export function AboutSection() {
           >
             <div className="relative z-10 rounded-[2.5rem] overflow-hidden shadow-[0_30px_60px_-15px_rgba(28,69,104,0.15)] h-[500px] md:h-[650px]">
               <img
-                src="/images/Foto_Marilia_Jaleco.jpeg"
+                src="/images/foto-marilia-jaleco.jpeg"
                 alt="Dra. Marília Karine"
                 className="block w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
               />

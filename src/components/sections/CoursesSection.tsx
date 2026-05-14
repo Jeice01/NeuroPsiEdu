@@ -308,7 +308,7 @@ export function CoursesSection() {
                 </button>
                 <div className="w-28 h-28 bg-white/5 backdrop-blur-sm rounded-[2rem] flex items-center justify-center p-5 mx-auto mb-6 border border-white/10 shadow-2xl">
                   <img 
-                    src="/images/Logo_Saber_Saude_Icone_Transp-03.png" 
+                    src="/images/logo-saber-saude-icone.png" 
                     alt="NeuroPsiEdu Icon" 
                     className="w-full h-full object-contain" 
                   />

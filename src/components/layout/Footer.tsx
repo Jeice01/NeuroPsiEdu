@@ -20,7 +20,7 @@ export function Footer() {
           {/* Brand Column */}
           <div className="space-y-6">
             <img
-              src="/images/LogoVertical.png"
+              src="/images/logo-vertical.png"
               alt="NeuroPsiEdu"
               width={160}
               height={80}
