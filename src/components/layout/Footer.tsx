@@ -20,12 +20,12 @@ export function Footer() {
           
           {/* Brand Column */}
           <div className="space-y-6">
-            <Image 
-              src="/images/LogoBranca.png" 
-              alt="NeuroPsiEdu" 
-              width={160} 
-              height={80} 
-              className="opacity-90"
+            <Image
+              src="/images/LogoVertical.png"
+              alt="NeuroPsiEdu"
+              width={160}
+              height={80}
+              className="opacity-90 brightness-0 invert"
             />
             <p className="text-blue-100/70 text-sm leading-relaxed max-w-xs">
               Excelência em avaliação neuropsicológica e capacitação profissional baseada em evidências científicas.
