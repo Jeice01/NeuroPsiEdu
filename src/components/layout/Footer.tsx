@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import { MessageCircle, Activity, Network, Sparkles, LineChart, ArrowRight } from "lucide-react";
 import { motion } from "framer-motion";
 
@@ -20,7 +19,7 @@ export function Footer() {
           
           {/* Brand Column */}
           <div className="space-y-6">
-            <Image
+            <img
               src="/images/LogoVertical.png"
               alt="NeuroPsiEdu"
               width={160}

@@ -4,7 +4,6 @@ import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Menu, X, User, CalendarHeart } from "lucide-react";
 import Link from "next/link";
-import Image from "next/image";
 
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);

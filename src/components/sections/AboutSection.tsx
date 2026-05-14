@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import { motion } from "framer-motion";
 import { CheckCircle2, Award, GraduationCap, Microscope } from "lucide-react";
 
@@ -43,11 +42,10 @@ export function AboutSection() {
             className="relative group"
           >
             <div className="relative z-10 rounded-[2.5rem] overflow-hidden shadow-[0_30px_60px_-15px_rgba(28,69,104,0.15)] aspect-[4/5] md:aspect-auto md:h-[650px]">
-              <Image
+              <img
                 src="/images/Foto_Marília_Jaleco.jpeg"
                 alt="Dra. Marília Karine"
-                fill
-                className="object-cover object-top transition-transform duration-700 group-hover:scale-105"
+                className="absolute inset-0 w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-neuro-blue/40 via-transparent to-transparent opacity-60" />
             </div>

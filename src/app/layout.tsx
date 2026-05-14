@@ -1,16 +1,6 @@
 import type { Metadata } from "next";
-import { Inter, Outfit } from "next/font/google";
 import "./globals.css";
-
-const inter = Inter({
-  variable: "--font-inter",
-  subsets: ["latin"],
-});
-
-const outfit = Outfit({
-  variable: "--font-outfit",
-  subsets: ["latin"],
-});
+import { FloatingWhatsAppButton } from "@/components/ui/FloatingWhatsAppButton";
 
 export const metadata: Metadata = {
   title: "NeuroPsiEdu",
@@ -22,8 +12,6 @@ export const metadata: Metadata = {
   },
 };
 
-import { FloatingWhatsAppButton } from "@/components/ui/FloatingWhatsAppButton";
-
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -31,9 +19,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pt-BR" className="scroll-smooth">
-      <body
-        className={`${inter.variable} ${outfit.variable} antialiased`}
-      >
+      <body className="antialiased">
         {children}
         <FloatingWhatsAppButton />
       </body>

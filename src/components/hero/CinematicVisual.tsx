@@ -2,7 +2,6 @@
 
 import { motion } from "framer-motion";
 import { Activity, LineChart, Sparkles, Network, TrendingUp } from "lucide-react";
-import Image from "next/image";
 
 export function CinematicVisual() {
   return (
@@ -25,13 +24,10 @@ export function CinematicVisual() {
             maskImage: 'radial-gradient(circle, black 70%, transparent 100%)'
           }}
         >
-          <Image 
-            src="/images/brain-3d.png" 
+          <img
+            src="/images/brain-3d.png"
             alt="Neuropsicologia 3D"
-            fill
-            priority
-            className="object-contain animate-float mix-blend-multiply"
-            sizes="(max-width: 768px) 160px, 380px"
+            className="absolute inset-0 w-full h-full object-contain animate-float mix-blend-multiply"
           />
         </div>
 
