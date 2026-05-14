@@ -41,13 +41,13 @@ export function AboutSection() {
             transition={{ duration: 0.8 }}
             className="relative group"
           >
-            <div className="relative z-10 rounded-[2.5rem] overflow-hidden shadow-[0_30px_60px_-15px_rgba(28,69,104,0.15)] aspect-[4/5] md:aspect-auto md:h-[650px]">
+            <div className="relative z-10 rounded-[2.5rem] overflow-hidden shadow-[0_30px_60px_-15px_rgba(28,69,104,0.15)] h-[500px] md:h-[650px]">
               <img
                 src="/images/Foto_Marília_Jaleco.jpeg"
                 alt="Dra. Marília Karine"
-                className="absolute inset-0 w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
+                className="block w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-neuro-blue/40 via-transparent to-transparent opacity-60" />
+              <div className="absolute inset-0 bg-gradient-to-t from-neuro-blue/40 via-transparent to-transparent opacity-60 pointer-events-none" />
             </div>
             
             {/* Decorative elements */}
