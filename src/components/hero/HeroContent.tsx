@@ -1,34 +1,47 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useEffect } from "react";
+import { motion, useAnimation } from "framer-motion";
 import { ArrowRight, BookOpen, CalendarHeart } from "lucide-react";
 
 export function HeroContent() {
+  const badge = useAnimation();
+  const heading = useAnimation();
+  const paragraph = useAnimation();
+  const buttons = useAnimation();
+
+  useEffect(() => {
+    badge.set({ opacity: 0, y: 20 });
+    heading.set({ opacity: 0, y: 20 });
+    paragraph.set({ opacity: 0, y: 20 });
+    buttons.set({ opacity: 0, y: 20 });
+
+    badge.start({ opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut" } });
+    heading.start({ opacity: 1, y: 0, transition: { duration: 0.6, delay: 0.1 } });
+    paragraph.start({ opacity: 1, y: 0, transition: { duration: 0.6, delay: 0.2 } });
+    buttons.start({ opacity: 1, y: 0, transition: { duration: 0.6, delay: 0.3 } });
+  }, [badge, heading, paragraph, buttons]);
+
   return (
     <div className="flex flex-col gap-6 w-full max-w-2xl pt-12 md:pt-20 pb-4 md:pb-6 z-10">
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, ease: "easeOut" }}
-        className="relative group w-max mb-3"
-      >
+      <motion.div animate={badge} className="relative group w-max mb-3">
         {/* Subtle breathing glow */}
-        <motion.div 
+        <motion.div
           className="absolute -inset-1 rounded-full blur-[12px] opacity-[0.12] group-hover:opacity-[0.2] transition-opacity duration-1000 pointer-events-none"
-          animate={{ 
+          animate={{
             background: [
-              "radial-gradient(circle, #1c4568 0%, transparent 70%)", 
-              "radial-gradient(circle, #F28C28 0%, transparent 70%)", 
+              "radial-gradient(circle, #1c4568 0%, transparent 70%)",
+              "radial-gradient(circle, #F28C28 0%, transparent 70%)",
               "radial-gradient(circle, #1c4568 0%, transparent 70%)"
-            ] 
+            ]
           }}
           transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
         />
-        
+
         {/* Crystalline Badge Surface */}
         <div className="relative inline-flex items-center gap-3 px-6 py-2.5 rounded-full bg-white/30 backdrop-blur-2xl border border-white/40 shadow-[0_8px_32px_rgba(28,69,104,0.04)] group-hover:shadow-[0_12px_48px_rgba(28,69,104,0.08)] group-hover:-translate-y-[1.5px] transition-all duration-500 ease-[cubic-bezier(0.23,1,0.32,1)]">
-          <motion.span 
-            animate={{ 
+          <motion.span
+            animate={{
               backgroundColor: ["#1c4568", "#F28C28", "#1c4568"],
               boxShadow: [
                 "0 0 8px rgba(28,69,104,0.4)",
@@ -37,7 +50,7 @@ export function HeroContent() {
               ]
             }}
             transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-            className="flex h-1.5 w-1.5 rounded-full" 
+            className="flex h-1.5 w-1.5 rounded-full"
           />
           <span className="text-[13px] font-black tracking-[0.25em] uppercase bg-gradient-to-r from-neuro-blue via-neuro-cyan to-neuro-orange bg-clip-text text-transparent animate-gradient leading-none">
             PADRÃO OURO EM NEUROPSICOLOGIA
@@ -46,9 +59,7 @@ export function HeroContent() {
       </motion.div>
 
       <motion.h1
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, delay: 0.1 }}
+        animate={heading}
         className="flex flex-col font-display tracking-tight max-w-[90%] md:max-w-2xl"
       >
         <span className="text-[2.5rem] sm:text-6xl lg:text-[4.5rem] font-bold leading-[1.05] text-neuro-blue block">
@@ -66,18 +77,14 @@ export function HeroContent() {
       </motion.h1>
 
       <motion.p
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, delay: 0.2 }}
+        animate={paragraph}
         className="text-lg md:text-xl text-slate-500 leading-relaxed max-w-xl font-medium"
       >
         Avaliação neuropsicológica completa e formação profissional com abordagem científica, humana e moderna.
       </motion.p>
 
       <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, delay: 0.3 }}
+        animate={buttons}
         className="flex flex-col sm:flex-row items-center gap-5 mt-10"
       >
         <a

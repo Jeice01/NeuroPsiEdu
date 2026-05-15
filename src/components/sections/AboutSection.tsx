@@ -1,6 +1,7 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useRef, useEffect } from "react";
+import { motion, useAnimation, useInView } from "framer-motion";
 import { CheckCircle2, Award, GraduationCap, Microscope } from "lucide-react";
 
 export function AboutSection() {
@@ -25,20 +26,39 @@ export function AboutSection() {
     }
   ];
 
+  const imageRef = useRef(null);
+  const contentRef = useRef(null);
+  const isImageInView = useInView(imageRef, { once: true, margin: "-100px" });
+  const isContentInView = useInView(contentRef, { once: true, margin: "-100px" });
+  const imageControls = useAnimation();
+  const contentControls = useAnimation();
+
+  useEffect(() => {
+    if (isImageInView) {
+      imageControls.set({ opacity: 0, x: -30 });
+      imageControls.start({ opacity: 1, x: 0, transition: { duration: 0.8 } });
+    }
+  }, [isImageInView, imageControls]);
+
+  useEffect(() => {
+    if (isContentInView) {
+      contentControls.set({ opacity: 0, x: 30 });
+      contentControls.start({ opacity: 1, x: 0, transition: { duration: 0.8 } });
+    }
+  }, [isContentInView, contentControls]);
+
   return (
     <section id="sobre" className="py-24 bg-white relative overflow-hidden">
       {/* Background decoration */}
       <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-neuro-blue/5 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/2 pointer-events-none" />
-      
+
       <div className="container mx-auto px-6 max-w-7xl">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-          
+
           {/* Image Column */}
           <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
+            ref={imageRef}
+            animate={imageControls}
             className="relative group"
           >
             <div className="relative z-10 rounded-[2.5rem] overflow-hidden shadow-[0_30px_60px_-15px_rgba(28,69,104,0.15)] h-[500px] md:h-[650px]">
@@ -49,11 +69,11 @@ export function AboutSection() {
               />
               <div className="absolute inset-0 bg-gradient-to-t from-neuro-blue/40 via-transparent to-transparent opacity-60 pointer-events-none" />
             </div>
-            
+
             {/* Decorative elements */}
             <div className="absolute -bottom-6 -right-6 w-48 h-48 bg-neuro-orange/10 rounded-3xl -z-10 blur-2xl" />
             <div className="absolute -top-6 -left-6 w-32 h-32 border-2 border-slate-100 rounded-full -z-10" />
-            
+
             {/* Floating Experience Badge */}
             <motion.div
               animate={{ y: [0, -10, 0] }}
@@ -70,20 +90,18 @@ export function AboutSection() {
 
           {/* Content Column */}
           <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
+            ref={contentRef}
+            animate={contentControls}
           >
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-neuro-blue/5 border border-neuro-blue/10 mb-6">
               <span className="w-2 h-2 rounded-full bg-neuro-blue animate-pulse" />
               <span className="text-xs font-black text-neuro-blue tracking-widest uppercase">Sobre Nós</span>
             </div>
-            
+
             <h2 className="text-4xl md:text-5xl font-bold text-neuro-blue leading-[1.15] mb-8">
               Conheça a <span className="text-[#42b6a5]">Dra. Marília Karine</span> e a NeuroPsiEdu
             </h2>
-            
+
             <div className="space-y-6 text-slate-600 text-lg leading-relaxed mb-10">
               <p>
                 A <span className="font-bold text-neuro-blue">NeuroPsiEdu</span> nasceu com a missão de oferecer avaliações neuropsicológicas de excelência e, ao mesmo tempo, capacitar profissionais da saúde com conhecimento prático e baseado nas melhores evidências científicas.
@@ -95,12 +113,8 @@ export function AboutSection() {
 
             <div className="grid grid-cols-1 sm:grid-cols-1 gap-5">
               {points.map((point, idx) => (
-                <motion.div
+                <div
                   key={idx}
-                  initial={{ opacity: 0, y: 10 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: idx * 0.1 }}
                   className="flex items-center gap-4 p-4 rounded-2xl border border-slate-100 hover:border-neuro-blue/20 transition-colors bg-slate-50/50"
                 >
                   <div className={`w-12 h-12 rounded-xl ${point.bg} flex items-center justify-center ${point.color} flex-shrink-0`}>
@@ -109,7 +123,7 @@ export function AboutSection() {
                   <span className="font-bold text-slate-800">
                     {point.title}
                   </span>
-                </motion.div>
+                </div>
               ))}
             </div>
           </motion.div>

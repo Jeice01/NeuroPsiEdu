@@ -1,9 +1,17 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useEffect } from "react";
+import { motion, useAnimation } from "framer-motion";
 import { Activity, LineChart, Sparkles, Network, TrendingUp } from "lucide-react";
 
 export function CinematicVisual() {
+  const brainControls = useAnimation();
+
+  useEffect(() => {
+    brainControls.set({ opacity: 0, scale: 0.9 });
+    brainControls.start({ opacity: 1, scale: 1, transition: { duration: 1.5, ease: "easeOut" } });
+  }, [brainControls]);
+
   return (
     <div className="relative w-full h-[450px] md:h-[550px] lg:h-[750px] flex items-center justify-center lg:justify-end z-0 mt-8 lg:mt-0 lg:ml-20 perspective-[2000px]">
       {/* Background Glow Effects - Pure and Clean */}
@@ -11,9 +19,7 @@ export function CinematicVisual() {
       
       {/* Main Container */}
       <motion.div
-        initial={{ opacity: 0, scale: 0.9 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 1.5, ease: "easeOut" }}
+        animate={brainControls}
         className="relative w-[280px] h-[280px] sm:w-[350px] sm:h-[350px] md:w-[550px] md:h-[550px] flex items-center justify-center"
       >
         {/* Central Brain Visual - Optimized Size to avoid cutting */}

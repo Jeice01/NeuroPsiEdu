@@ -1,13 +1,14 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { motion } from "framer-motion";
+import { motion, useAnimation } from "framer-motion";
 import { Menu, X, User, CalendarHeart } from "lucide-react";
 import Link from "next/link";
 
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const navControls = useAnimation();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -17,11 +18,14 @@ export function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  useEffect(() => {
+    navControls.set({ y: -100 });
+    navControls.start({ y: 0, transition: { duration: 0.5, ease: "easeOut" } });
+  }, [navControls]);
+
   return (
     <motion.header
-      initial={{ y: -100 }}
-      animate={{ y: 0 }}
-      transition={{ duration: 0.5, ease: "easeOut" }}
+      animate={navControls}
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         scrolled
           ? "bg-white/90 backdrop-blur-md border-b border-slate-200 shadow-sm py-4"
