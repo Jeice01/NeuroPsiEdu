@@ -48,7 +48,7 @@ export function AboutSection() {
   }, [isContentInView, contentControls]);
 
   return (
-    <section id="sobre" className="py-24 bg-white relative overflow-hidden">
+    <section id="sobre" className="py-12 xs:py-16 sm:py-20 md:py-24 bg-white relative overflow-hidden">
       {/* Background decoration */}
       <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-neuro-blue/5 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/2 pointer-events-none" />
 
@@ -61,7 +61,7 @@ export function AboutSection() {
             animate={imageControls}
             className="relative group"
           >
-            <div className="relative z-10 rounded-[2.5rem] overflow-hidden shadow-[0_30px_60px_-15px_rgba(28,69,104,0.15)] h-[500px] md:h-[650px]">
+            <div className="relative z-10 rounded-[2rem] xs:rounded-[2.5rem] overflow-hidden shadow-[0_30px_60px_-15px_rgba(28,69,104,0.15)] h-[350px] xs:h-[450px] sm:h-[500px] md:h-[650px]">
               <img
                 src="/images/foto-marilia-jaleco.jpeg"
                 alt="Dra. Marília Karine"
@@ -78,10 +78,10 @@ export function AboutSection() {
             <motion.div
               animate={{ y: [0, -10, 0] }}
               transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-              className="absolute bottom-12 -left-4 md:-left-12 bg-white/90 backdrop-blur-xl p-6 rounded-2xl shadow-xl border border-slate-100 z-20 hidden sm:block"
+              className="absolute bottom-6 xs:bottom-8 sm:bottom-12 -left-2 xs:-left-4 md:-left-12 bg-white/90 backdrop-blur-xl p-4 sm:p-6 rounded-2xl shadow-xl border border-slate-100 z-20 hidden sm:block"
             >
-              <p className="text-3xl font-black text-neuro-blue leading-none mb-1">Especialista</p>
-              <p className="text-sm font-bold text-slate-400 uppercase tracking-widest">em Neuropsicologia</p>
+              <p className="text-2xl sm:text-3xl font-black text-neuro-blue leading-none mb-1">Especialista</p>
+              <p className="text-xs sm:text-sm font-bold text-slate-400 uppercase tracking-widest">em Neuropsicologia</p>
               <div className="mt-3 pt-3 border-t border-slate-100">
                 <p className="text-[10px] font-black text-neuro-orange uppercase tracking-widest">CRP DF 0119553</p>
               </div>
@@ -98,7 +98,7 @@ export function AboutSection() {
               <span className="text-xs font-black text-neuro-blue tracking-widest uppercase">Sobre Nós</span>
             </div>
 
-            <h2 className="text-4xl md:text-5xl font-bold text-neuro-blue leading-[1.15] mb-8">
+            <h2 className="text-3xl xs:text-4xl md:text-5xl font-bold text-neuro-blue leading-[1.15] mb-8">
               Conheça a <span className="text-[#42b6a5]">Dra. Marília Karine</span> e a NeuroPsiEdu
             </h2>
 

@@ -55,7 +55,7 @@ export function CtaCards() {
   }, [isInView, ctrl0, ctrl1]);
 
   return (
-    <section className="py-20 px-6 bg-[#fdfdfd]">
+    <section className="py-10 xs:py-14 sm:py-20 px-4 xs:px-6 bg-[#fdfdfd]">
       <div
         ref={containerRef}
         className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8"
@@ -64,7 +64,7 @@ export function CtaCards() {
           <motion.div
             key={idx}
             animate={cardControls[idx]}
-            className={`group relative overflow-hidden rounded-3xl p-8 md:p-12 border border-slate-100 bg-white shadow-[0_20px_50px_rgba(0,0,0,0.03)] hover:shadow-[0_30px_70px_rgba(0,0,0,0.06)] transition-all duration-500`}
+            className={`group relative overflow-hidden rounded-3xl p-5 xs:p-8 md:p-12 border border-slate-100 bg-white shadow-[0_20px_50px_rgba(0,0,0,0.03)] hover:shadow-[0_30px_70px_rgba(0,0,0,0.06)] transition-all duration-500`}
           >
             {/* Color Accent Bar */}
             <div className={`absolute top-0 left-0 w-full h-1.5 ${card.color === 'blue' ? 'bg-neuro-blue' : 'bg-neuro-orange'}`} />

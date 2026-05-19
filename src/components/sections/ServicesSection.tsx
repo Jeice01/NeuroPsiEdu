@@ -29,7 +29,7 @@ export function ServicesSection() {
   ];
 
   return (
-    <section id="atendimento" className="py-24 bg-[#f8fafc] relative overflow-hidden">
+    <section id="atendimento" className="py-12 xs:py-16 sm:py-20 md:py-24 bg-[#f8fafc] relative overflow-hidden">
       {/* Visual Background Elements */}
       <div className="absolute top-1/2 left-0 -translate-y-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-neuro-cyan/5 rounded-full blur-[100px] pointer-events-none" />
       
@@ -50,7 +50,7 @@ export function ServicesSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
-            className="text-4xl md:text-5xl font-bold text-neuro-blue mb-6 leading-tight"
+            className="text-3xl xs:text-4xl md:text-5xl font-bold text-neuro-blue mb-6 leading-tight"
           >
             Compreender o funcionamento cerebral é o <span className="text-[#42b6a5]">primeiro passo</span> para transformar o desenvolvimento e a qualidade de vida
           </motion.h2>
@@ -116,7 +116,7 @@ export function ServicesSection() {
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="mt-28 bg-gradient-to-br from-[#0a1e30] via-[#0d273d] to-[#0a1e30] bg-[length:200%_200%] animate-gradient rounded-[3rem] p-12 lg:p-20 text-center relative overflow-hidden shadow-2xl shadow-neuro-blue/40 border border-white/5"
+          className="mt-16 xs:mt-20 sm:mt-24 md:mt-28 bg-gradient-to-br from-[#0a1e30] via-[#0d273d] to-[#0a1e30] bg-[length:200%_auto] animate-gradient rounded-[2rem] xs:rounded-[3rem] p-6 xs:p-8 md:p-12 lg:p-20 text-center relative overflow-hidden shadow-2xl shadow-neuro-blue/40 border border-white/5"
         >
           {/* 1. Cinematic Background Decorations - Radial Glows */}
           {/* Deep Blue Center Glow */}
@@ -175,7 +175,7 @@ export function ServicesSection() {
 
           <div className="relative z-10 max-w-4xl mx-auto flex flex-col items-center">
             {/* Headline */}
-            <h3 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-8 leading-[1.15] max-w-3xl">
+            <h3 className="text-3xl xs:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 xs:mb-8 leading-[1.15] max-w-3xl">
               Tire suas dúvidas antes de iniciar a <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#f3821a] to-[#ffb347] animate-gradient">avaliação neuropsicológica</span>
             </h3>
 
@@ -203,7 +203,7 @@ export function ServicesSection() {
             </div>
 
             {/* Bottom Features */}
-            <div className="mt-20 pt-12 border-t border-white/5 w-full grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="mt-12 xs:mt-16 md:mt-20 pt-8 xs:pt-12 border-t border-white/5 w-full grid grid-cols-1 md:grid-cols-3 gap-8">
               <div className="flex items-center justify-center md:justify-start gap-4">
                 <div className="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center text-blue-100/60">
                   <Activity className="w-6 h-6" />

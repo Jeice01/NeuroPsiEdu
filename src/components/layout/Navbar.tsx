@@ -32,7 +32,7 @@ export function Navbar() {
           : "bg-transparent py-6"
       }`}
     >
-      <div className="container mx-auto px-8 md:px-12 lg:px-16 max-w-screen-2xl flex items-center justify-between">
+      <div className="container mx-auto px-4 xs:px-6 md:px-12 lg:px-16 max-w-screen-2xl flex items-center justify-between">
         {/* Logo */}
         <Link href="/" className="flex items-center group">
           <div className="relative transition-transform group-hover:scale-[1.02]">

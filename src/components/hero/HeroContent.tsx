@@ -39,7 +39,7 @@ export function HeroContent() {
         />
 
         {/* Crystalline Badge Surface */}
-        <div className="relative inline-flex items-center gap-3 px-6 py-2.5 rounded-full bg-white/30 backdrop-blur-2xl border border-white/40 shadow-[0_8px_32px_rgba(28,69,104,0.04)] group-hover:shadow-[0_12px_48px_rgba(28,69,104,0.08)] group-hover:-translate-y-[1.5px] transition-all duration-500 ease-[cubic-bezier(0.23,1,0.32,1)]">
+        <div className="relative inline-flex items-center gap-2.5 px-4 py-2 sm:px-6 sm:py-2.5 rounded-full bg-white/30 backdrop-blur-2xl border border-white/40 shadow-[0_8px_32px_rgba(28,69,104,0.04)] group-hover:shadow-[0_12px_48px_rgba(28,69,104,0.08)] group-hover:-translate-y-[1.5px] transition-all duration-500 ease-[cubic-bezier(0.23,1,0.32,1)]">
           <motion.span
             animate={{
               backgroundColor: ["#1c4568", "#F28C28", "#1c4568"],
@@ -52,7 +52,7 @@ export function HeroContent() {
             transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
             className="flex h-1.5 w-1.5 rounded-full"
           />
-          <span className="text-[13px] font-black tracking-[0.25em] uppercase bg-gradient-to-r from-neuro-blue via-neuro-cyan to-neuro-orange bg-clip-text text-transparent animate-gradient leading-none">
+          <span className="text-[10px] sm:text-[13px] font-black tracking-[0.2em] sm:tracking-[0.25em] uppercase bg-gradient-to-r from-neuro-blue via-neuro-cyan to-neuro-orange bg-clip-text text-transparent animate-gradient leading-none">
             PADRÃO OURO EM NEUROPSICOLOGIA
           </span>
         </div>
@@ -60,18 +60,18 @@ export function HeroContent() {
 
       <motion.h1
         animate={heading}
-        className="flex flex-col font-display tracking-tight max-w-[90%] md:max-w-3xl"
+        className="flex flex-col font-display tracking-tight max-w-full md:max-w-3xl"
       >
-        <span className="text-[2.5rem] sm:text-6xl lg:text-[4.5rem] font-bold leading-[1.05] text-neuro-blue block">
+        <span className="text-[1.8rem] xs:text-[2.2rem] sm:text-6xl lg:text-[4.5rem] font-bold leading-[1.05] text-neuro-blue block">
           Excelência em
         </span>
-        <span className="text-[2.5rem] sm:text-6xl lg:text-[4.5rem] font-bold leading-[1.05] text-[#42b6a5] block">
+        <span className="text-[1.8rem] xs:text-[2.2rem] sm:text-6xl lg:text-[4.5rem] font-bold leading-[1.05] text-[#42b6a5] block">
           Avaliação
         </span>
-        <span className="text-[2.5rem] sm:text-6xl lg:text-[4.5rem] font-bold leading-[1.05] text-[#42b6a5] block">
+        <span className="text-[1.8rem] xs:text-[2.2rem] sm:text-6xl lg:text-[4.5rem] font-bold leading-[1.05] text-[#42b6a5] block">
           Neuropsicológica
         </span>
-        <span className="text-[2rem] sm:text-5xl lg:text-[3.5rem] xl:text-[4rem] font-bold leading-[1.05] text-neuro-blue block">
+        <span className="text-[1.5rem] xs:text-[1.8rem] sm:text-5xl lg:text-[3.5rem] xl:text-[4rem] font-bold leading-[1.05] text-neuro-blue block">
           e Capacitação Profissional
         </span>
       </motion.h1>

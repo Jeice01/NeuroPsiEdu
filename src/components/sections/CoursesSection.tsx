@@ -176,7 +176,7 @@ export function CoursesSection() {
   ];
 
   return (
-    <section id="cursos" className="py-32 bg-[#fafbfc] relative overflow-hidden">
+    <section id="cursos" className="py-16 xs:py-20 sm:py-24 md:py-32 bg-[#fafbfc] relative overflow-hidden">
       {/* Cinematic Background Lighting */}
       <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-neuro-orange/5 rounded-full blur-[150px] translate-x-1/3 -translate-y-1/3 pointer-events-none" />
       <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-neuro-blue/5 rounded-full blur-[120px] -translate-x-1/4 translate-y-1/4 pointer-events-none" />
@@ -199,7 +199,7 @@ export function CoursesSection() {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-4xl md:text-6xl font-bold text-neuro-blue leading-[1.1] mb-6 max-w-4xl mx-auto"
+            className="text-3xl xs:text-4xl md:text-6xl font-bold text-neuro-blue leading-[1.1] mb-6 max-w-4xl mx-auto"
           >
             Da teoria à prática clínica da <span className="relative inline-block text-transparent bg-clip-text bg-gradient-to-r from-neuro-blue via-[#3b82f6] to-neuro-blue bg-[length:200%_auto] animate-gradient">
               Neuropsicologia
@@ -240,12 +240,14 @@ export function CoursesSection() {
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="relative group rounded-[3.5rem] bg-[#0a1e30] p-1 md:p-2 mb-24 overflow-hidden shadow-[0_40px_100px_-20px_rgba(10,30,48,0.3)] transition-all duration-700 hover:shadow-[0_50px_120px_-20px_rgba(28,69,104,0.2)]"
+          className="rounded-[2.2rem] xs:rounded-[3.5rem] bg-[#0a1e30] p-1 mb-12 xs:mb-16 md:mb-24 relative overflow-hidden shadow-2xl border border-white/[0.03] shadow-neuro-blue/10"
         >
-          <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-neuro-blue/15 rounded-full blur-[100px] translate-x-1/3 -translate-y-1/3 opacity-60 pointer-events-none group-hover:opacity-80 transition-opacity" />
-          <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-neuro-cyan/10 rounded-full blur-[80px] -translate-x-1/3 translate-y-1/3 opacity-30 pointer-events-none" />
-
-          <div className="relative z-10 bg-gradient-to-br from-[#122f47] to-[#0a1e30] rounded-[3.2rem] p-8 md:p-16 flex flex-col lg:flex-row gap-12 lg:gap-16 items-start">
+          {/* Outer Border Glow Surface */}
+          <div className="absolute inset-0 bg-gradient-to-tr from-neuro-orange/20 via-transparent to-neuro-cyan/10 opacity-30 animate-pulse" />
+          
+          <div 
+            className="rounded-[2rem] xs:rounded-[3.2rem] p-5 xs:p-8 md:p-16 flex flex-col lg:flex-row gap-12 lg:gap-16 items-start relative z-10 overflow-hidden bg-gradient-to-br from-[#0c2237] via-[#091b2c] to-[#0c2237]"
+          >
             {/* Left: info */}
             <div className="flex-1">
               <div className="inline-flex items-center gap-3 px-6 py-2.5 rounded-full bg-white/5 border border-white/10 backdrop-blur-md mb-10">
@@ -255,7 +257,7 @@ export function CoursesSection() {
                 <span className="text-[10px] font-black text-neuro-cyan tracking-[0.2em] uppercase">Vagas Abertas</span>
               </div>
 
-              <h3 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-8 leading-tight">
+              <h3 className="text-3xl xs:text-4xl md:text-5xl lg:text-6xl font-bold text-white tracking-tight leading-[1.1] mb-6">
                 Formação em<br />
                 <span className="relative inline-block text-transparent bg-clip-text bg-gradient-to-r from-neuro-orange via-white to-neuro-orange bg-[length:200%_auto] animate-gradient">
                   Avaliação Neuropsicológica
@@ -405,29 +407,29 @@ export function CoursesSection() {
               initial={{ opacity: 0, scale: 0.9, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.9, y: 20 }}
-              className="relative bg-white rounded-[2.5rem] w-full max-w-lg overflow-hidden shadow-2xl"
+              className="relative bg-white rounded-[1.5rem] xs:rounded-[2.5rem] w-full max-w-lg overflow-hidden shadow-2xl"
               onClick={(e) => e.stopPropagation()}
             >
               {/* Header */}
-              <div className="bg-[#122f47] p-8 text-center relative">
+              <div className="bg-[#122f47] p-5 xs:p-8 text-center relative">
                 <button 
                   onClick={() => setIsModalOpen(false)}
-                  className="absolute top-6 right-6 text-white/40 hover:text-white transition-colors"
+                  className="absolute top-4 right-4 xs:top-6 xs:right-6 text-white/40 hover:text-white transition-colors"
                 >
                   <X className="w-6 h-6" />
                 </button>
-                <div className="w-28 h-28 bg-white/5 backdrop-blur-sm rounded-[2rem] flex items-center justify-center p-5 mx-auto mb-6 border border-white/10 shadow-2xl">
+                <div className="w-20 h-20 xs:w-28 xs:h-28 bg-white/5 backdrop-blur-sm rounded-[1.5rem] xs:rounded-[2rem] flex items-center justify-center p-4 xs:p-5 mx-auto mb-4 xs:mb-6 border border-white/10 shadow-2xl">
                   <img 
                     src="/images/logo-saber-saude-icone.png" 
                     alt="NeuroPsiEdu Icon" 
                     className="w-full h-full object-contain" 
                   />
                 </div>
-                <h4 className="text-2xl font-bold text-white mb-2">Quase lá!</h4>
-                <p className="text-blue-100/60 text-sm">Preencha seus dados para garantir prioridade na inscrição.</p>
+                <h4 className="text-xl xs:text-2xl font-bold text-white mb-2">Quase lá!</h4>
+                <p className="text-blue-100/60 text-xs xs:text-sm">Preencha seus dados para garantir prioridade na inscrição.</p>
               </div>
 
-              <div className="p-8">
+              <div className="p-5 xs:p-8">
                 {formStep === 1 ? (
                   <form onSubmit={handleSubmit} className="space-y-5">
                     <div>
@@ -567,29 +569,29 @@ export function CoursesSection() {
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.92, y: 30 }}
               transition={{ type: "spring", damping: 25, stiffness: 300 }}
-              className="relative bg-white rounded-[2.5rem] w-full max-w-2xl overflow-hidden shadow-2xl max-h-[90vh] flex flex-col"
+              className="relative bg-white rounded-[1.5rem] xs:rounded-[2.5rem] w-full max-w-2xl overflow-hidden shadow-2xl max-h-[90vh] flex flex-col"
               onClick={(e) => e.stopPropagation()}
             >
               {/* Header */}
-              <div className="bg-[#122f47] p-8 relative flex-shrink-0">
+              <div className="bg-[#122f47] p-5 xs:p-8 relative flex-shrink-0">
                 <button
                   onClick={() => setSelectedModule(null)}
-                  className="absolute top-6 right-6 text-white/40 hover:text-white transition-colors"
+                  className="absolute top-4 right-4 xs:top-6 xs:right-6 text-white/40 hover:text-white transition-colors"
                 >
                   <X className="w-6 h-6" />
                 </button>
-                <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-neuro-orange/20 border border-neuro-orange/30 mb-4">
+                <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-neuro-orange/20 border border-neuro-orange/30 mb-3 xs:mb-4">
                   <span className="text-[10px] font-black text-neuro-orange tracking-[0.2em] uppercase">
                     Módulo {moduleData[selectedModule].num}
                   </span>
                 </div>
-                <h4 className="text-xl md:text-2xl font-bold text-white leading-snug pr-10">
+                <h4 className="text-lg xs:text-xl md:text-2xl font-bold text-white leading-snug pr-10">
                   {moduleData[selectedModule].title}
                 </h4>
               </div>
 
               {/* Body — scrollable */}
-              <div className="overflow-y-auto flex-1 p-8 space-y-8">
+              <div className="overflow-y-auto flex-1 p-5 xs:p-8 space-y-6 xs:space-y-8">
                 <div>
                   <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-3">Sobre o Módulo</p>
                   <p className="text-slate-600 text-sm leading-relaxed">{moduleData[selectedModule].resumo}</p>
@@ -627,7 +629,7 @@ export function CoursesSection() {
               </div>
 
               {/* Footer CTA */}
-              <div className="p-8 pt-4 flex-shrink-0 border-t border-slate-100">
+              <div className="p-5 pt-3 xs:p-8 xs:pt-4 flex-shrink-0 border-t border-slate-100">
                 <a
                   href={`https://wa.me/5561982088284?text=${encodeURIComponent(`Olá! Tenho interesse em me inscrever no Módulo ${moduleData[selectedModule].num} — ${moduleData[selectedModule].title}. Pode me ajudar?`)}`}
                   target="_blank"
