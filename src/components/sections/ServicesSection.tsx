@@ -1,29 +1,29 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Brain, Baby, User, Activity, ClipboardCheck, ArrowRight, MessageCircle, CheckCircle2, Award, Network } from "lucide-react";
+import { Brain, Baby, User, Users, Activity, ClipboardCheck, ArrowRight, MessageCircle, CheckCircle2, Award, Network } from "lucide-react";
 
 export function ServicesSection() {
   const services = [
     {
       title: "Infantil e Adolescente",
-      desc: "Investigação de dificuldades escolares, atrasos no desenvolvimento, TDAH, TEA e comportamento.",
+      desc: "Avaliação neuropsicológica especializada para investigar transtornos do neurodesenvolvimento, dificuldades de aprendizagem, atrasos no desenvolvimento cognitivo e emocional, além de quadros como TDAH, TEA e prejuízos no desempenho escolar e funcional.",
       icon: Baby,
-      points: ["Dificuldades de Aprendizagem", "TDAH e TEA", "Habilidades Sociais"],
+      points: ["Investigação de TDAH, TEA, Dificuldades intelectuais e outros...", "Desenvolvimento Cognitivo e Comportamental", "Desempenho Escolar e Habilidades Sociais"],
       color: "blue"
     },
     {
       title: "Adulto e Idoso",
-      desc: "Avaliação de queixas de memória, atenção, foco no trabalho e diagnóstico de demências.",
+      desc: "Avaliação neuropsicológica especializada para investigar funções cognitivas, desempenho e funcionalidade social, acadêmica, familiar e profissional, além de identificar prejuízos cognitivos e doenças relacionadas ao envelhecimento.",
       icon: User,
-      points: ["Declínio Cognitivo", "Foco e Produtividade", "Saúde Mental"],
+      points: ["Memória, Atenção e Funções Cognitivas", "Desempenho e Funcionalidade no Dia a Dia", "Investigação do Envelhecimento Cognitivo"],
       color: "cyan"
     },
     {
-      title: "Laudos e Devolutivas",
-      desc: "Entrega de resultados detalhados com orientação prática para família e escola.",
+      title: "Laudo Neuropsicológico e Plano de Intervenção",
+      desc: "Resultados detalhados para compreender dificuldades e potencialidades, direcionando intervenções mais assertivas para família, escola e tratamento clínico, com estratégias terapêuticas individualizadas para cada caso.",
       icon: ClipboardCheck,
-      points: ["Laudo Completo", "Orientação Técnica", "Encaminhamentos"],
+      points: ["Laudo Neuropsicológico Completo", "Estratégias Terapêuticas Personalizadas", "Orientações para Família e Escola"],
       color: "orange"
     }
   ];
@@ -52,7 +52,7 @@ export function ServicesSection() {
             transition={{ delay: 0.1 }}
             className="text-4xl md:text-5xl font-bold text-neuro-blue mb-6 leading-tight"
           >
-            Compreender o cérebro é o <span className="text-[#42b6a5]">primeiro passo</span> para a transformação
+            Compreender o funcionamento cerebral é o <span className="text-[#42b6a5]">primeiro passo</span> para transformar o desenvolvimento e a qualidade de vida
           </motion.h2>
           
           <motion.p
@@ -62,7 +62,7 @@ export function ServicesSection() {
             transition={{ delay: 0.2 }}
             className="text-lg text-slate-600 leading-relaxed"
           >
-            Oferecemos uma jornada completa de avaliação neuropsicológica, unindo rigor científico e acolhimento humano para todas as fases da vida.
+            Investigamos o funcionamento cerebral, os comportamentos e os aspectos emocionais para direcionar estratégias personalizadas e assertivas em todas as fases da vida.
           </motion.p>
         </div>
 
@@ -88,7 +88,7 @@ export function ServicesSection() {
                 {service.title}
               </h3>
               
-              <p className="text-slate-500 mb-8 leading-relaxed">
+              <p className="text-slate-500 mb-8 leading-relaxed text-center">
                 {service.desc}
               </p>
               
@@ -176,12 +176,12 @@ export function ServicesSection() {
           <div className="relative z-10 max-w-4xl mx-auto flex flex-col items-center">
             {/* Headline */}
             <h3 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-8 leading-[1.15] max-w-3xl">
-              Descubra respostas com uma <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#f3821a] to-[#ffb347] animate-gradient">avaliação neuropsicológica</span> especializada.
+              Tire suas dúvidas antes de iniciar a <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#f3821a] to-[#ffb347] animate-gradient">avaliação neuropsicológica</span>
             </h3>
 
             {/* Subheadline */}
             <p className="text-blue-100/70 text-lg md:text-xl mb-12 max-w-2xl leading-relaxed">
-              Converse com nossa equipe especializada e entenda como a avaliação neuropsicológica pode trazer mais clareza, direcionamento e qualidade de vida.
+              Converse diretamente com nossa especialista e compreenda como funciona o processo de avaliação neuropsicológica, quais dificuldades podem ser investigadas e quais caminhos podem ser mais adequados para o seu caso.
             </p>
 
             {/* CTA Button */}
@@ -192,14 +192,14 @@ export function ServicesSection() {
               className="group relative flex items-center gap-4 bg-gradient-to-r from-[#f3821a] to-[#e07516] hover:from-[#e07516] hover:to-[#f3821a] text-white px-12 py-6 rounded-2xl font-black text-base uppercase tracking-widest transition-all shadow-[0_20px_50px_-10px_rgba(243,130,26,0.4)] hover:-translate-y-1"
             >
               <MessageCircle className="w-6 h-6 fill-current" />
-              Agendar Pré-Avaliação
+              Agendar Sessão
               <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
             </a>
 
             {/* Trust Note */}
             <div className="mt-8 flex items-center gap-2 text-blue-100/40 text-[13px] font-medium">
               <CheckCircle2 className="w-4 h-4" />
-              Atendimento seguro, sigiloso e humanizado.
+              Um primeiro atendimento para acolher, orientar e esclarecer suas necessidades de forma humanizada e especializada.
             </div>
 
             {/* Bottom Features */}

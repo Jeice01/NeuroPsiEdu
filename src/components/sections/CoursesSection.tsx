@@ -2,12 +2,13 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { GraduationCap, Calendar, Award, BookOpen, ArrowRight, Star, Clock, CheckCircle2, Activity, Network, Sparkles, Users, Brain, X, Send, User, Mail, Phone, Briefcase } from "lucide-react";
+import { GraduationCap, Calendar, Award, ArrowRight, Clock, CheckCircle2, Activity, Network, X, User, Mail, Phone } from "lucide-react";
 import { supabase } from "@/lib/supabase";
 
 export function CoursesSection() {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [formStep, setFormStep] = useState(1); // 1: Form, 2: Success
+  const [formStep, setFormStep] = useState(1);
+  const [selectedModule, setSelectedModule] = useState<number | null>(null);
   
   const [formData, setFormData] = useState({
     nome: "",
@@ -16,7 +17,7 @@ export function CoursesSection() {
     isPsicologo: "sim"
   });
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.SyntheticEvent) => {
     e.preventDefault();
     
     try {
@@ -45,14 +46,126 @@ export function CoursesSection() {
       alert("Houve um erro ao salvar seus dados. Por favor, tente novamente.");
     }
   };
-  const modules = [
-    { num: "01", title: "Transtorno do Des. Intelectual (DI) e Altas Habilidades", desc: "Avaliação Clínica e Neuropsicológica avançada." },
-    { num: "02", title: "TDAH (Déficit de Atenção e Hiperatividade)", desc: "Protocolos de avaliação clínica e neuropsicológica." },
-    { num: "03", title: "TEA (Transtorno do Espectro Autista)", desc: "Diagnóstico diferencial e avaliação clínica especializada." },
-    { num: "04", title: "Transtornos de Aprendizagem e Dislexia", desc: "Abordagem neuropsicológica focada na aprendizagem." },
-    { num: "05", title: "Avaliação da Pessoa Idosa", desc: "Foco clínico em declínio cognitivo e demências." },
-    { num: "06", title: "Personalidade e Dinâmica das Emoções", desc: "Avaliação técnica de traços e regulação emocional." },
-    { num: "07", title: "Escrita de Laudos e Raciocínio Clínico", desc: "Prática de redação técnica e fechamento de casos." },
+  const moduleData = [
+    {
+      num: "01",
+      title: "Avaliação Clínica e Neuropsicológica do Transtorno do Desenvolvimento Intelectual (DI) e Altas Habilidades",
+      resumo: "Este módulo aborda a avaliação clínica e neuropsicológica do desenvolvimento cognitivo: o Transtorno do Desenvolvimento Intelectual (Deficiência Intelectual) e as Altas Habilidades/Superdotação. O profissional aprenderá a identificar, diferenciar e avaliar essas condições por meio de instrumentos padronizados e do raciocínio clínico neuropsicológico.",
+      conteudos: [
+        "Teoria e conceitos gerais sobre inteligência",
+        "Critérios diagnósticos do Transtorno do Desenvolvimento Intelectual (Deficiência Intelectual) conforme DSM-5 e CID-11",
+        "Conceito e teoria acerca de Superdotação e Altas Habilidades",
+      ],
+      testes: [
+        "WISC IV — Escala Wechsler de Inteligência para Crianças (4ª edição)",
+        "WAIS III — Escala Wechsler de Inteligência para Adultos (3ª edição)",
+      ],
+    },
+    {
+      num: "02",
+      title: "Avaliação Clínica e Neuropsicológica do TDAH",
+      resumo: "Este módulo é dedicado à avaliação clínica e neuropsicológica do TDAH. São abordados desde os fundamentos teóricos sobre atenção e funções executivas até os critérios diagnósticos e os principais instrumentos utilizados na prática clínica.",
+      conteudos: [
+        "Teoria e conceitos gerais sobre atenção",
+        "Tipos de atenção: concentrada, sustentada, seletiva, alternada e dividida",
+        "Funções Executivas (FE): teoria e conceitos gerais",
+        "Análise de laudos e históricos clínicos com déficits atencionais e nas Funções Executivas",
+        "Avaliação clínica do TDAH e critérios diagnósticos",
+      ],
+      testes: [
+        "BPA — Bateria Psicológica da Atenção",
+        "Teste D-2-R — Teste de Atenção Concentrada",
+        "FDT — Teste dos Cinco Dígitos",
+        "BDEFS — Bateria de Disfunções Executivas de Barkley",
+        "EPF-TDAH — Escala de Prejuízos Funcionais do TDAH",
+        "ETDAH-AD — Escala de Transtorno do Déficit de Atenção e Hiperatividade",
+        "Inventários e material de apoio diagnóstico do TDAH",
+      ],
+    },
+    {
+      num: "03",
+      title: "Avaliação Clínica e Neuropsicológica do TEA",
+      resumo: "Este módulo apresenta a avaliação clínica e neuropsicológica do TEA. O foco está na compreensão dos critérios diagnósticos, nas particularidades do desenvolvimento da linguagem e na aplicação de instrumentos especializados de rastreio e avaliação.",
+      conteudos: [
+        "Teoria e conceitos gerais sobre o Transtorno do Espectro Autista",
+        "Critérios diagnósticos do TEA conforme DSM-5 e CID-11",
+        "Desenvolvimento e avaliação da linguagem no contexto do TEA",
+      ],
+      testes: [
+        "Anamnese estruturada para suspeita de TEA",
+        "PROTEA-R — Sistema de Avaliação da Suspeita de Transtorno do Espectro Autista",
+        "SRS-2 — Escala de Responsividade Social",
+        "M-CHAT — Modified Checklist for Autism in Toddlers",
+        "CARS — Childhood Autism Rating Scale",
+        "ATA — Escala de Traços Autísticos",
+        "Inventários de avaliação complementar",
+      ],
+    },
+    {
+      num: "04",
+      title: "Avaliação Clínica e Neuropsicológica dos Transtornos Específicos de Aprendizagem (Dislexia, Discalculia e Disortografia)",
+      resumo: "Este módulo aborda os Transtornos Específicos de Aprendizagem, com ênfase na avaliação neuropsicológica da Dislexia. O profissional aprenderá a reconhecer as características clínicas da dislexia, discalculia e disortografia, além de aplicar e interpretar os principais instrumentos de avaliação das habilidades de leitura, escrita e processamento fonológico.",
+      conteudos: [
+        "Teoria e conceitos gerais sobre Transtornos Específicos de Aprendizagem",
+        "Dislexia: características, impacto e critérios diagnósticos",
+        "Discalculia e disortografia: conceitos e diferenciação clínica",
+        "Critérios diagnósticos conforme DSM-5 e CID-11",
+      ],
+      testes: [
+        "CONFIAS — Consciência Fonológica: Instrumento de Avaliação Sequencial",
+        "PROLEC — Provas de Avaliação dos Processos de Leitura",
+        "TDE II — Teste de Desenvolvimento Escolar (2ª edição)",
+        "TENA — Teste de Nomeação Automática",
+      ],
+    },
+    {
+      num: "05",
+      title: "Avaliação Clínica e Neuropsicológica da Pessoa Idosa",
+      resumo: "Este módulo é dedicado à avaliação neuropsicológica da pessoa idosa, com foco na avaliação das funções cognitivas, nos transtornos neurocognitivos maiores e menores e demências. O profissional será capacitado a identificar déficits cognitivos, diferenciar quadros clínicos e utilizar instrumentos apropriados para essa faixa etária.",
+      conteudos: [
+        "Teoria e conceitos gerais sobre memória",
+        "Transtornos Neurocognitivos: demências e rebaixamentos cognitivos",
+        "Análise de laudos e históricos clínicos com déficits cognitivos relacionados a Transtornos Neurocognitivos",
+        "Inventários e recursos clínicos complementares de análise",
+      ],
+      testes: [
+        "RAVLT — Teste de Aprendizagem Auditivo-Verbal de Rey",
+        "NEUPSILIN — Instrumento de Avaliação Neuropsicológica Breve",
+        "MTL — Bateria Montreal Toulouse de Avaliação da Linguagem",
+        "CDR — Clinical Dementia Rating (Escala de Avaliação Clínica da Demência)",
+        "NPI — Inventário Neuropsiquiátrico",
+        "KATZ — Escala de Independência nas Atividades da Vida Diária",
+      ],
+    },
+    {
+      num: "06",
+      title: "Avaliação de Traços de Personalidade e Aspectos Emocionais na Prática Clínica",
+      resumo: "Este módulo apresenta a avaliação de traços de personalidade e da dinâmica emocional. O profissional aprenderá a utilizar testes projetivos e de autorrelato para compreender o funcionamento da personalidade do avaliando, integrando os resultados ao raciocínio clínico neuropsicológico.",
+      conteudos: [
+        "Teoria e conceitos gerais sobre personalidade",
+        "Modelos explicativos da personalidade e sua relação com a avaliação psicológica",
+        "A dinâmica das emoções e sua expressão nos instrumentos projetivos e fatoriais",
+      ],
+      testes: [
+        "Pirâmides Coloridas de Pfister — avaliação projetiva da dinâmica afetiva e emocional",
+        "Teste Palográfico — avaliação da personalidade por meio da escrita",
+        "BFP — Bateria Fatorial de Personalidade (modelo dos Cinco Grandes Fatores)",
+      ],
+    },
+    {
+      num: "07",
+      title: "Escrita de Laudos e Raciocínio Clínico com Inteligência Artificial",
+      resumo: "O módulo final integra todo o aprendizado do curso por meio da escrita de laudos neuropsicológicos e do desenvolvimento do raciocínio clínico. O profissional aprenderá a estruturar documentos técnicos de forma assertiva, ética e fundamentada, utilizando inclusive ferramentas de Inteligência Artificial como apoio ao processo.",
+      conteudos: [
+        "Resolução nº 6 do CFP — elaboração de documentos escritos produzidos pelo(a) psicólogo(a) no exercício profissional",
+        "Etapas de elaboração de um laudo neuropsicológico",
+        "Escrita de resultados de forma assertiva e conclusiva",
+        "Tipos de raciocínios clínicos voltados para responder à demanda do laudo",
+        "Construção de gráficos e tabelas para interpretação dos dados da avaliação",
+        "Uso de Inteligência Artificial (IA) como ferramenta de apoio à escrita do laudo",
+      ],
+      testes: [],
+    },
   ];
 
   const badges = [
@@ -79,20 +192,29 @@ export function CoursesSection() {
             className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-white border border-slate-200 shadow-sm mb-8"
           >
             <GraduationCap className="w-4 h-4 text-neuro-orange" />
-            <span className="text-[11px] font-black text-slate-500 tracking-[0.2em] uppercase italic">Elite Educacional</span>
+            <span className="text-[11px] font-black text-slate-500 tracking-[0.2em] uppercase italic">Aprenda Neuropsicologia na prática clínica real</span>
           </motion.div>
           
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-4xl md:text-6xl font-bold text-neuro-blue leading-[1.1] mb-8 max-w-4xl"
+            className="text-4xl md:text-6xl font-bold text-neuro-blue leading-[1.1] mb-6 max-w-4xl mx-auto"
           >
-            Formação de <span className="text-neuro-orange">Elite</span> para quem busca o topo da <span className="relative inline-block text-transparent bg-clip-text bg-gradient-to-r from-neuro-blue via-[#3b82f6] to-neuro-blue bg-[length:200%_auto] animate-gradient">
+            Da teoria à prática clínica da <span className="relative inline-block text-transparent bg-clip-text bg-gradient-to-r from-neuro-blue via-[#3b82f6] to-neuro-blue bg-[length:200%_auto] animate-gradient">
               Neuropsicologia
               <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full animate-[shimmer_3s_infinite] pointer-events-none" />
             </span>
           </motion.h2>
+
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-lg text-slate-600 leading-relaxed max-w-2xl mx-auto"
+          >
+            Desenvolva segurança profissional com uma formação baseada em evidências científicas, experiência clínica e aplicação prática da avaliação neuropsicológica.
+          </motion.p>
 
           {/* Social Proof Stats */}
           <div className="flex flex-wrap justify-center gap-10 mt-4">
@@ -113,169 +235,157 @@ export function CoursesSection() {
           </div>
         </div>
 
-        {/* FEATURED PROGRAM: Pós-Graduação Stripe/Apple Style */}
+        {/* FEATURED PROGRAM: Formação Continuada */}
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="relative group rounded-[3.5rem] bg-[#0a1e30] p-1 md:p-2 mb-24 overflow-hidden shadow-[0_40px_100px_-20px_rgba(10,30,48,0.3)] transition-all duration-700 hover:shadow-[0_50px_120px_-20px_rgba(243,130,26,0.15)]"
+          className="relative group rounded-[3.5rem] bg-[#0a1e30] p-1 md:p-2 mb-24 overflow-hidden shadow-[0_40px_100px_-20px_rgba(10,30,48,0.3)] transition-all duration-700 hover:shadow-[0_50px_120px_-20px_rgba(28,69,104,0.2)]"
         >
-          {/* Animated Internal Glow */}
-          <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-neuro-orange/10 rounded-full blur-[100px] translate-x-1/3 -translate-y-1/3 opacity-50 pointer-events-none group-hover:opacity-70 transition-opacity" />
+          <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-neuro-blue/15 rounded-full blur-[100px] translate-x-1/3 -translate-y-1/3 opacity-60 pointer-events-none group-hover:opacity-80 transition-opacity" />
           <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-neuro-cyan/10 rounded-full blur-[80px] -translate-x-1/3 translate-y-1/3 opacity-30 pointer-events-none" />
 
-          <div className="relative z-10 bg-gradient-to-br from-[#122f47] to-[#0a1e30] rounded-[3.2rem] p-8 md:p-16 flex flex-col lg:flex-row gap-16 items-center">
+          <div className="relative z-10 bg-gradient-to-br from-[#122f47] to-[#0a1e30] rounded-[3.2rem] p-8 md:p-16 flex flex-col lg:flex-row gap-12 lg:gap-16 items-start">
+            {/* Left: info */}
             <div className="flex-1">
-              <motion.div 
-                initial={{ opacity: 0, x: -20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                className="inline-flex items-center gap-3 px-6 py-2.5 rounded-full bg-white/5 border border-white/10 backdrop-blur-md mb-10 group/badge relative overflow-hidden"
-              >
-                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent -translate-x-full group-hover/badge:translate-x-full transition-transform duration-1000" />
-                <div className="flex items-center gap-2">
-                  <div className="w-2 h-2 rounded-full bg-neuro-orange animate-pulse shadow-[0_0_12px_#f3821a]" />
-                  <span className="text-[10px] font-black text-blue-100/60 tracking-[0.2em] uppercase">Pós-Graduação</span>
-                </div>
+              <div className="inline-flex items-center gap-3 px-6 py-2.5 rounded-full bg-white/5 border border-white/10 backdrop-blur-md mb-10">
+                <div className="w-2 h-2 rounded-full bg-neuro-cyan animate-pulse" />
+                <span className="text-[10px] font-black text-blue-100/60 tracking-[0.2em] uppercase">Formação Continuada</span>
                 <div className="h-4 w-[1px] bg-white/10" />
-                <span className="text-[10px] font-black text-neuro-orange tracking-[0.2em] uppercase animate-gradient bg-clip-text text-transparent bg-gradient-to-r from-neuro-orange to-[#ffb347]">
-                  Inscrições em Breve
-                </span>
-              </motion.div>
-              
+                <span className="text-[10px] font-black text-neuro-cyan tracking-[0.2em] uppercase">Vagas Abertas</span>
+              </div>
+
               <h3 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-8 leading-tight">
-                Pós-Graduação em <br />
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-white to-blue-200">Neuropsicologia</span>
+                Formação em<br />
+                <span className="relative inline-block text-transparent bg-clip-text bg-gradient-to-r from-neuro-orange via-white to-neuro-orange bg-[length:200%_auto] animate-gradient">
+                  Avaliação Neuropsicológica
+                  <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full animate-[shimmer_3s_infinite] pointer-events-none" />
+                </span>
               </h3>
-              
-              <p className="text-blue-100/70 text-lg leading-relaxed mb-12 max-w-2xl">
-                Uma experiência de imersão definitiva que combina o rigor acadêmico com a vivência clínica intensiva. Projetada para transformar sua carreira em uma jornada de autoridade.
+
+              <p className="text-white font-bold text-lg mb-3">Avaliação Neuropsicológica na Prática Clínica</p>
+              <p className="text-blue-100/70 text-base leading-relaxed mb-10 max-w-xl">
+                Formação prática para psicólogos que desejam desenvolver segurança clínica na avaliação neuropsicológica, unindo raciocínio clínico, aplicação de testes e supervisão especializada.
               </p>
 
-              {/* Trust Badges Grid */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-12">
-                {badges.map((badge, idx) => (
-                  <div key={idx} className="flex items-center gap-4 p-4 rounded-2xl bg-white/5 border border-white/5 hover:bg-white/10 hover:border-white/10 transition-all group/badge">
-                    <div className="w-10 h-10 rounded-xl bg-neuro-orange/10 flex items-center justify-center text-neuro-orange group-hover/badge:scale-110 transition-transform">
-                      <badge.icon className="w-5 h-5" />
-                    </div>
-                    <div>
-                      <p className="text-white font-bold text-sm leading-none mb-1">{badge.label}</p>
-                      <p className="text-blue-100/40 text-[10px] font-medium uppercase tracking-wider">{badge.sub}</p>
-                    </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-12">
+                <div className="flex items-center gap-4 p-4 rounded-2xl bg-white/5 border border-white/5 hover:bg-white/10 transition-all">
+                  <Calendar className="w-5 h-5 text-neuro-cyan flex-shrink-0" />
+                  <div>
+                    <p className="text-white font-bold text-sm leading-none mb-1">Encontros presenciais mensais</p>
+                    <p className="text-blue-100/40 text-[10px] uppercase tracking-wider">Periodicidade</p>
                   </div>
-                ))}
-              </div>
-
-              <div className="flex flex-col sm:flex-row items-center gap-8">
-                <button 
-                  onClick={() => {
-                    setFormStep(1);
-                    setIsModalOpen(true);
-                  }}
-                  className="relative w-full sm:w-auto overflow-hidden bg-[#f3821a] hover:bg-[#ff8c1a] text-white px-12 py-6 rounded-2xl font-black text-sm uppercase tracking-widest transition-all shadow-[0_20px_40px_-10px_rgba(243,130,26,0.5)] active:scale-95 text-center group"
-                >
-                  <span className="relative z-10 flex items-center justify-center gap-3">
-                    Garantir Minha Vaga
-                    <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
-                  </span>
-                </button>
-                <div className="flex items-center gap-3">
-                  <span className="text-blue-100/40 text-xs font-bold uppercase tracking-widest">+100 profissionais inscritos</span>
+                </div>
+                <div className="flex items-center gap-4 p-4 rounded-2xl bg-white/5 border border-white/5 hover:bg-white/10 transition-all">
+                  <Clock className="w-5 h-5 text-neuro-cyan flex-shrink-0" />
+                  <div>
+                    <p className="text-white font-bold text-sm leading-none mb-1">220h de prática clínica supervisionada</p>
+                    <p className="text-blue-100/40 text-[10px] uppercase tracking-wider">Carga Horária</p>
+                  </div>
                 </div>
               </div>
+
+              <a
+                href="https://wa.me/5561982088284?text=Quero%20saber%20mais%20sobre%20a%20Forma%C3%A7%C3%A3o%20Continuada%2C%20pode%20me%20ajudar%3F"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-3 bg-neuro-orange hover:bg-neuro-orange-light text-white px-12 py-6 rounded-2xl font-black text-sm uppercase tracking-widest transition-all shadow-[0_20px_40px_-10px_rgba(242,140,40,0.6)] hover:shadow-[0_25px_50px_-10px_rgba(242,140,40,0.7)] hover:-translate-y-1 active:scale-95 group"
+              >
+                Quero Me Inscrever
+                <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
+              </a>
             </div>
 
-            {/* Premium Stamp Seal */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0.5, rotate: -20 }}
-              whileInView={{ opacity: 1, scale: 1, rotate: -15 }}
-              viewport={{ once: true }}
-              className="absolute top-10 right-10 w-40 h-40 rounded-full border-[6px] border-neuro-orange/30 flex items-center justify-center p-1.5 group-hover:scale-110 transition-transform duration-700 hidden lg:flex"
-            >
-              <div className="w-full h-full rounded-full border-2 border-neuro-orange/50 border-dashed flex flex-col items-center justify-center text-neuro-orange">
-                <span className="text-[12px] font-black uppercase tracking-[0.2em] leading-none">Lançamento</span>
-                <span className="text-2xl font-black uppercase leading-tight mt-1">Em Breve</span>
-                <div className="w-12 h-[1px] bg-neuro-orange/30 my-2" />
-                <span className="text-[10px] font-bold uppercase opacity-60">NeuroPsiEdu</span>
-              </div>
-            </motion.div>
-
-            {/* Aspirational Side Visual (Brain) */}
-            <div className="hidden lg:block w-[350px] h-[350px] relative">
-              <div className="absolute inset-0 bg-gradient-to-r from-neuro-orange/20 to-transparent rounded-full blur-[80px]" />
-              <Brain className="w-full h-full text-white/5" strokeWidth={0.5} />
+            {/* Right: modules list */}
+            <div className="lg:w-[400px] w-full space-y-2.5">
+              <p className="text-[10px] font-black text-blue-100/30 uppercase tracking-[0.25em] mb-5">Módulos do Curso</p>
+              {moduleData.map((mod, idx) => (
+                <div
+                  key={mod.num}
+                  onClick={() => setSelectedModule(idx)}
+                  className="flex items-start gap-4 p-4 rounded-2xl bg-white/5 border border-white/5 hover:bg-neuro-orange/10 hover:border-neuro-orange/40 transition-all group/mod cursor-pointer"
+                >
+                  <span className="w-8 h-8 rounded-lg bg-neuro-blue/30 text-neuro-cyan font-black text-xs flex items-center justify-center flex-shrink-0 group-hover/mod:bg-neuro-orange group-hover/mod:text-white transition-colors">
+                    {mod.num}
+                  </span>
+                  <div className="flex-1 min-w-0">
+                    <p className="text-white/80 text-sm font-semibold leading-snug group-hover/mod:text-neuro-orange transition-colors">{mod.title}</p>
+                    <p className="text-white/30 text-[10px] uppercase tracking-widest mt-1 group-hover/mod:text-neuro-orange/60 transition-colors">Ver detalhes →</p>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
         </motion.div>
 
-        {/* CURRICULUM: Linear/Apple Style Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
-          
-          <div className="lg:col-span-4 lg:sticky lg:top-32">
-            <h4 className="text-3xl font-bold text-neuro-blue mb-6">Formação Continuada em Avaliação Neuropsicológica</h4>
-            <p className="text-slate-500 mb-10 leading-relaxed text-lg">
-              Um treinamento intensivo focado em testes e raciocínio clínico neuropsicológico e da personalidade.
+        {/* PÓS-GRADUAÇÃO: Secondary */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.7 }}
+          className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start"
+        >
+          {/* Left: title + description + badges + CTA */}
+          <div className="lg:col-span-5">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-slate-100 border border-slate-200 mb-6">
+              <div className="w-1.5 h-1.5 rounded-full bg-neuro-orange animate-pulse" />
+              <span className="text-[10px] font-black text-slate-500 tracking-[0.2em] uppercase">Pós-Graduação</span>
+              <span className="text-slate-300">·</span>
+              <span className="text-[10px] font-black text-neuro-orange tracking-[0.2em] uppercase">Inscrições em Breve</span>
+            </div>
+
+            <h4 className="text-3xl md:text-4xl font-bold text-neuro-blue mb-5 leading-tight">
+              Pós-Graduação em Neuropsicologia
+            </h4>
+
+            <p className="text-slate-500 mb-8 leading-relaxed text-base">
+              Uma experiência de imersão definitiva que combina o rigor acadêmico com a vivência clínica intensiva. Projetada para transformar sua carreira em uma jornada de autoridade.
             </p>
-            
-            <div className="space-y-4">
-              <div className="p-6 rounded-[2rem] bg-white border border-slate-200 shadow-sm flex items-center gap-6">
-                <div className="w-14 h-14 rounded-2xl bg-neuro-blue/5 flex items-center justify-center text-neuro-blue">
-                  <Calendar className="w-7 h-7" />
-                </div>
-                <div>
-                  <p className="text-xs font-black text-slate-400 uppercase tracking-[0.2em] mb-1">Periodicidade</p>
-                  <p className="text-lg font-bold text-neuro-blue">Um final de semana por mês</p>
-                </div>
-              </div>
-              <div className="p-6 rounded-[2rem] bg-white border border-slate-200 shadow-sm flex items-center gap-6">
-                <div className="w-14 h-14 rounded-2xl bg-neuro-orange/5 flex items-center justify-center text-neuro-orange">
-                  <Clock className="w-7 h-7" />
-                </div>
-                <div>
-                  <p className="text-xs font-black text-slate-400 uppercase tracking-[0.2em] mb-1">Carga Horária</p>
-                  <p className="font-bold text-neuro-blue">7 Módulos | 220h de Prática</p>
-                </div>
-              </div>
-            </div>
 
-            <div className="mt-10">
-              <button className="group flex items-center gap-3 text-neuro-orange font-black text-sm uppercase tracking-widest hover:gap-5 transition-all bg-neuro-orange/5 px-8 py-4 rounded-2xl border border-neuro-orange/10 hover:bg-neuro-orange hover:text-white duration-500">
-                Saber Mais Sobre Este Curso
-                <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
-              </button>
-            </div>
-          </div>
-
-          <div className="lg:col-span-8 grid grid-cols-1 md:grid-cols-2 gap-6">
-            {modules.map((mod, idx) => (
-              <motion.div
-                key={idx}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: idx * 0.1 }}
-                className="group relative bg-white rounded-[2rem] p-8 border border-slate-100 hover:border-neuro-orange/30 shadow-sm hover:shadow-[0_20px_40px_-10px_rgba(0,0,0,0.05)] transition-all duration-500 overflow-hidden"
-              >
-                {/* Micro-Interaction Hover Glow */}
-                <div className="absolute top-0 right-0 w-32 h-32 bg-neuro-orange/5 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity" />
-                
-                <div className="relative z-10">
-                  <div className="w-10 h-10 rounded-xl bg-slate-50 text-slate-400 font-black text-sm flex items-center justify-center mb-6 group-hover:bg-neuro-orange group-hover:text-white transition-all duration-500 shadow-sm">
-                    {mod.num}
+            <div className="space-y-3 mb-8">
+              {badges.map((badge, idx) => (
+                <div key={idx} className="flex items-center gap-4 p-4 rounded-2xl bg-white border border-slate-100 shadow-sm">
+                  <div className="w-10 h-10 rounded-xl bg-slate-50 flex items-center justify-center text-slate-400 flex-shrink-0">
+                    <badge.icon className="w-5 h-5" />
                   </div>
-                  <h5 className="font-bold text-neuro-blue mb-3 text-lg leading-tight group-hover:text-neuro-orange transition-colors">
-                    {mod.title}
-                  </h5>
-                  <p className="text-sm text-slate-500 leading-relaxed opacity-70 group-hover:opacity-100 transition-opacity">
-                    {mod.desc}
-                  </p>
+                  <div>
+                    <p className="font-bold text-slate-700 text-sm leading-none mb-0.5">{badge.label}</p>
+                    <p className="text-slate-400 text-[10px] uppercase tracking-wider">{badge.sub}</p>
+                  </div>
                 </div>
-              </motion.div>
-            ))}
+              ))}
+            </div>
+
+            <button
+              onClick={() => { setFormStep(1); setIsModalOpen(true); }}
+              className="group flex items-center gap-3 text-neuro-orange font-black text-sm uppercase tracking-widest transition-all bg-neuro-orange/5 px-8 py-4 rounded-2xl border border-neuro-orange/10 hover:bg-neuro-orange hover:text-white duration-500"
+            >
+              Entrar na Lista de Espera
+              <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
+            </button>
           </div>
 
-        </div>
+          {/* Right: Em breve card */}
+          <div className="lg:col-span-7 flex items-center justify-center">
+            <div className="w-full rounded-[2.5rem] border border-slate-100 bg-white shadow-sm p-10 md:p-14 flex flex-col items-center text-center">
+              <div className="w-20 h-20 rounded-[1.5rem] bg-slate-50 border border-slate-100 flex items-center justify-center mb-8">
+                <GraduationCap className="w-10 h-10 text-slate-300" />
+              </div>
+              <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.3em] mb-3">Reconhecimento MEC</p>
+              <h5 className="text-2xl font-bold text-neuro-blue mb-4 leading-tight">
+                Lançamento em Breve
+              </h5>
+              <p className="text-slate-400 text-sm leading-relaxed max-w-sm mb-8">
+                A pós-graduação está em fase final de estruturação. Entre na lista de espera e garanta prioridade na inscrição com condições exclusivas.
+              </p>
+              <div className="flex items-center gap-3 px-6 py-3 rounded-full bg-slate-50 border border-slate-100">
+                <div className="w-2 h-2 rounded-full bg-neuro-orange animate-pulse" />
+                <span className="text-xs font-bold text-slate-500 uppercase tracking-widest">+100 profissionais na lista</span>
+              </div>
+            </div>
+          </div>
+        </motion.div>
 
       </div>
 
@@ -434,6 +544,99 @@ export function CoursesSection() {
                     </div>
                   </motion.div>
                 )}
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
+
+      {/* MODULE DETAIL MODAL */}
+      <AnimatePresence>
+        {selectedModule !== null && (
+          <div className="fixed inset-0 z-[200] flex items-center justify-center p-4">
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setSelectedModule(null)}
+              className="absolute inset-0 bg-[#0a1e30]/90 backdrop-blur-sm"
+            />
+
+            <motion.div
+              initial={{ opacity: 0, scale: 0.92, y: 30 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.92, y: 30 }}
+              transition={{ type: "spring", damping: 25, stiffness: 300 }}
+              className="relative bg-white rounded-[2.5rem] w-full max-w-2xl overflow-hidden shadow-2xl max-h-[90vh] flex flex-col"
+              onClick={(e) => e.stopPropagation()}
+            >
+              {/* Header */}
+              <div className="bg-[#122f47] p-8 relative flex-shrink-0">
+                <button
+                  onClick={() => setSelectedModule(null)}
+                  className="absolute top-6 right-6 text-white/40 hover:text-white transition-colors"
+                >
+                  <X className="w-6 h-6" />
+                </button>
+                <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-neuro-orange/20 border border-neuro-orange/30 mb-4">
+                  <span className="text-[10px] font-black text-neuro-orange tracking-[0.2em] uppercase">
+                    Módulo {moduleData[selectedModule].num}
+                  </span>
+                </div>
+                <h4 className="text-xl md:text-2xl font-bold text-white leading-snug pr-10">
+                  {moduleData[selectedModule].title}
+                </h4>
+              </div>
+
+              {/* Body — scrollable */}
+              <div className="overflow-y-auto flex-1 p-8 space-y-8">
+                <div>
+                  <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-3">Sobre o Módulo</p>
+                  <p className="text-slate-600 text-sm leading-relaxed">{moduleData[selectedModule].resumo}</p>
+                </div>
+
+                <div>
+                  <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-3">Conteúdos Teóricos</p>
+                  <ul className="space-y-2">
+                    {moduleData[selectedModule].conteudos.map((item, i) => (
+                      <li key={i} className="flex items-start gap-3">
+                        <div className="w-5 h-5 rounded-full bg-neuro-blue/10 flex items-center justify-center flex-shrink-0 mt-0.5">
+                          <CheckCircle2 className="w-3 h-3 text-neuro-blue" />
+                        </div>
+                        <span className="text-slate-600 text-sm leading-relaxed">{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                {moduleData[selectedModule].testes.length > 0 && (
+                  <div>
+                    <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-3">Testes e Instrumentos</p>
+                    <ul className="space-y-2">
+                      {moduleData[selectedModule].testes.map((item, i) => (
+                        <li key={i} className="flex items-start gap-3">
+                          <div className="w-5 h-5 rounded-full bg-neuro-orange/10 flex items-center justify-center flex-shrink-0 mt-0.5">
+                            <Activity className="w-3 h-3 text-neuro-orange" />
+                          </div>
+                          <span className="text-slate-600 text-sm leading-relaxed">{item}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+              </div>
+
+              {/* Footer CTA */}
+              <div className="p-8 pt-4 flex-shrink-0 border-t border-slate-100">
+                <a
+                  href={`https://wa.me/5561982088284?text=${encodeURIComponent(`Olá! Tenho interesse em me inscrever no Módulo ${moduleData[selectedModule].num} — ${moduleData[selectedModule].title}. Pode me ajudar?`)}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-center gap-3 w-full bg-neuro-orange hover:bg-neuro-orange-light text-white py-5 rounded-2xl font-black text-sm uppercase tracking-widest transition-all shadow-lg shadow-neuro-orange/20 hover:shadow-neuro-orange/30 hover:-translate-y-0.5 active:scale-95"
+                >
+                  Quero Me Inscrever
+                  <ArrowRight className="w-5 h-5" />
+                </a>
               </div>
             </motion.div>
           </div>

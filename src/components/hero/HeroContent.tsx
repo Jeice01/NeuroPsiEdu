@@ -60,7 +60,7 @@ export function HeroContent() {
 
       <motion.h1
         animate={heading}
-        className="flex flex-col font-display tracking-tight max-w-[90%] md:max-w-2xl"
+        className="flex flex-col font-display tracking-tight max-w-[90%] md:max-w-3xl"
       >
         <span className="text-[2.5rem] sm:text-6xl lg:text-[4.5rem] font-bold leading-[1.05] text-neuro-blue block">
           Excelência em
@@ -71,8 +71,8 @@ export function HeroContent() {
         <span className="text-[2.5rem] sm:text-6xl lg:text-[4.5rem] font-bold leading-[1.05] text-[#42b6a5] block">
           Neuropsicológica
         </span>
-        <span className="text-[2.5rem] sm:text-6xl lg:text-[4.5rem] font-bold leading-[1.05] text-neuro-blue block">
-          e Ensino
+        <span className="text-[2rem] sm:text-5xl lg:text-[3.5rem] xl:text-[4rem] font-bold leading-[1.05] text-neuro-blue block">
+          e Capacitação Profissional
         </span>
       </motion.h1>
 
@@ -80,7 +80,7 @@ export function HeroContent() {
         animate={paragraph}
         className="text-lg md:text-xl text-slate-500 leading-relaxed max-w-xl font-medium"
       >
-        Avaliação neuropsicológica completa e formação profissional com abordagem científica, humana e moderna.
+        Diagnóstico especializado e ensino profissional com excelência científica e prática clínica aplicada.
       </motion.p>
 
       <motion.div

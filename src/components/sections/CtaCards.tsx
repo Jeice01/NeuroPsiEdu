@@ -6,14 +6,14 @@ import { Users, GraduationCap, CheckCircle2, Calendar, BookOpen } from "lucide-r
 
 const cards = [
   {
-    title: "Quero Atendimento Neuropsicológico",
-    description: "Avaliação completa, diagnóstico preciso e acompanhamento especializado para todas as idades.",
+    title: "Quero Agendar Minha Avaliação",
+    description: "Avaliação neuropsicológica especializada com diagnóstico preciso, escuta qualificada e acompanhamento personalizado em todas as fases da vida.",
     icon: Users,
     color: "blue",
     list: [
       "Avaliação Infantil, Adulto e Idoso",
-      "Diagnóstico Neuropsicológico",
-      "Acompanhamento Personalizado",
+      "Diagnóstico Neuropsicológico Especializado",
+      "Acompanhamento Individualizado",
       "Atendimento Online e Presencial"
     ],
     buttonText: "Agendar Consulta",
@@ -22,14 +22,14 @@ const cards = [
   },
   {
     title: "Quero Me Capacitar",
-    description: "Formação profissional de excelência com base científica e aplicação prática clínica.",
+    description: "Formação para psicólogos que desejam atuar com mais segurança clínica, excelência técnica e aprofundamento em neuropsicologia.",
     icon: GraduationCap,
     color: "orange",
     list: [
-      "Cursos e Especializações",
-      "Neuropsicologia na Prática",
-      "Formação com Certificação",
-      "Mentoria com Especialistas"
+      "Formação em Neuropsicologia na Prática",
+      "Cursos com Aplicação Clínica Real",
+      "Certificação e Atualização Profissional",
+      "Acompanhamento com Especialistas"
     ],
     buttonText: "Conhecer Formação",
     buttonIcon: BookOpen,
@@ -79,7 +79,7 @@ export function CtaCards() {
                 </h3>
               </div>
 
-              <p className="text-slate-500 text-lg mb-8 leading-relaxed">
+              <p className="text-slate-500 text-lg mb-8 leading-relaxed text-center">
                 {card.description}
               </p>
 

@@ -46,18 +46,21 @@ export function Navbar() {
 
         {/* Desktop Nav */}
         <nav className="hidden md:flex items-center gap-10">
-          <a href="#inicio" className="text-[15px] font-bold text-neuro-blue hover:text-neuro-orange transition-colors duration-200">
+          <Link href="/#inicio" className="text-[15px] font-bold text-neuro-blue hover:text-neuro-orange transition-colors duration-200">
             Início
-          </a>
-          <a href="#atendimento" className="text-[15px] font-bold text-neuro-blue hover:text-neuro-orange transition-colors duration-200">
+          </Link>
+          <Link href="/#atendimento" className="text-[15px] font-bold text-neuro-blue hover:text-neuro-orange transition-colors duration-200">
             Atendimentos
-          </a>
-          <a href="#cursos" className="text-[15px] font-bold text-neuro-blue hover:text-neuro-orange transition-colors duration-200">
+          </Link>
+          <Link href="/#cursos" className="text-[15px] font-bold text-neuro-blue hover:text-neuro-orange transition-colors duration-200">
             Capacitação
-          </a>
-          <a href="#sobre" className="text-[15px] font-bold text-neuro-blue hover:text-neuro-orange transition-colors duration-200">
+          </Link>
+          <Link href="/#sobre" className="text-[15px] font-bold text-neuro-blue hover:text-neuro-orange transition-colors duration-200">
             Sobre Nós
-          </a>
+          </Link>
+          <Link href="/blog" className="text-[15px] font-bold text-neuro-blue hover:text-neuro-orange transition-colors duration-200">
+            Blog
+          </Link>
         </nav>
 
         {/* Action Button */}
@@ -98,10 +101,11 @@ export function Navbar() {
           animate={{ opacity: 1, y: 0 }}
           className="md:hidden absolute top-full left-0 right-0 bg-white/95 backdrop-blur-xl border-b border-slate-200 p-6 flex flex-col gap-6 shadow-xl"
         >
-          <a href="#inicio" className="text-lg font-semibold text-neuro-blue/90 hover:text-neuro-orange transition-colors" onClick={() => setMobileMenuOpen(false)}>Início</a>
-          <a href="#atendimento" className="text-lg font-semibold text-neuro-blue/90 hover:text-neuro-orange transition-colors" onClick={() => setMobileMenuOpen(false)}>Atendimentos</a>
-          <a href="#cursos" className="text-lg font-semibold text-neuro-blue/90 hover:text-neuro-orange transition-colors" onClick={() => setMobileMenuOpen(false)}>Capacitação</a>
-          <a href="#sobre" className="text-lg font-semibold text-neuro-blue/90 hover:text-neuro-orange transition-colors" onClick={() => setMobileMenuOpen(false)}>Sobre Nós</a>
+          <Link href="/#inicio" className="text-lg font-semibold text-neuro-blue/90 hover:text-neuro-orange transition-colors" onClick={() => setMobileMenuOpen(false)}>Início</Link>
+          <Link href="/#atendimento" className="text-lg font-semibold text-neuro-blue/90 hover:text-neuro-orange transition-colors" onClick={() => setMobileMenuOpen(false)}>Atendimentos</Link>
+          <Link href="/#cursos" className="text-lg font-semibold text-neuro-blue/90 hover:text-neuro-orange transition-colors" onClick={() => setMobileMenuOpen(false)}>Capacitação</Link>
+          <Link href="/#sobre" className="text-lg font-semibold text-neuro-blue/90 hover:text-neuro-orange transition-colors" onClick={() => setMobileMenuOpen(false)}>Sobre Nós</Link>
+          <Link href="/blog" className="text-lg font-semibold text-neuro-blue/90 hover:text-neuro-orange transition-colors" onClick={() => setMobileMenuOpen(false)}>Blog</Link>
           <hr className="border-slate-200" />
           <a href="https://academia.neuropsiedu.com.br/" className="flex items-center gap-2 text-lg font-bold text-neuro-orange" onClick={() => setMobileMenuOpen(false)}>
             <User className="w-5 h-5" />
