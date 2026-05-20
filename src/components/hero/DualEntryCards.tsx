@@ -40,7 +40,7 @@ export function DualEntryCards() {
           
           <a
             href="#avaliacoes"
-            className="flex items-center justify-between w-full p-4 rounded-2xl bg-slate-50/50 hover:bg-white border border-slate-100 hover:border-neuro-cyan/30 hover:shadow-lg hover:shadow-neuro-cyan/5 transition-all duration-300 group/btn"
+            className="flex items-center justify-center gap-4 w-full p-4 rounded-2xl bg-slate-50/50 hover:bg-white border border-slate-100 hover:border-neuro-cyan/30 hover:shadow-lg hover:shadow-neuro-cyan/5 transition-all duration-300 group/btn"
           >
             <span className="font-semibold text-slate-900 group-hover/btn:text-neuro-cyan transition-colors">Agendar Consulta</span>
             <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center shadow-sm border border-slate-100 group-hover/btn:bg-neuro-cyan group-hover/btn:border-neuro-cyan group-hover/btn:text-white transition-all duration-300 group-hover/btn:scale-110">
@@ -84,7 +84,7 @@ export function DualEntryCards() {
           
           <a
             href="#cursos"
-            className="flex items-center justify-between w-full p-4 rounded-2xl bg-slate-50/50 hover:bg-white border border-slate-100 hover:border-neuro-blue/30 hover:shadow-lg hover:shadow-neuro-blue/5 transition-all duration-300 group/btn"
+            className="flex items-center justify-center gap-4 w-full p-4 rounded-2xl bg-slate-50/50 hover:bg-white border border-slate-100 hover:border-neuro-blue/30 hover:shadow-lg hover:shadow-neuro-blue/5 transition-all duration-300 group/btn"
           >
             <span className="font-semibold text-slate-900 group-hover/btn:text-neuro-blue transition-colors">Conhecer Formação</span>
             <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center shadow-sm border border-slate-100 group-hover/btn:bg-neuro-blue group-hover/btn:border-neuro-blue group-hover/btn:text-white transition-all duration-300 group-hover/btn:scale-110">
