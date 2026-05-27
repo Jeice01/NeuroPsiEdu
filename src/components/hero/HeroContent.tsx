@@ -85,13 +85,13 @@ export function HeroContent() {
 
       <motion.div
         animate={buttons}
-        className="flex flex-col sm:flex-row items-center gap-5 mt-10"
+        className="flex flex-col md:flex-row items-center gap-5 mt-10 w-full"
       >
         <a
           href="https://wa.me/5561982088284?text=Quero%20uma%20avalia%C3%A7%C3%A3o%2C%20pode%20me%20ajudar%3F"
           target="_blank"
           rel="noopener noreferrer"
-          className="group relative flex w-full sm:w-auto items-center justify-center gap-3 rounded-xl bg-neuro-blue px-10 py-4.5 text-[15px] font-bold text-white transition-all hover:bg-neuro-blue-dark shadow-[0_15px_30px_-5px_rgba(28,69,104,0.3)]"
+          className="group relative flex w-full md:w-auto items-center justify-center gap-3 rounded-xl bg-neuro-blue px-10 py-4.5 text-[15px] font-bold text-white transition-all hover:bg-neuro-blue-dark shadow-[0_15px_30px_-5px_rgba(28,69,104,0.3)]"
         >
           <CalendarHeart className="w-5 h-5" />
           Agendar Avaliação
@@ -101,10 +101,10 @@ export function HeroContent() {
           href="https://wa.me/5561982088284?text=Quero%20saber%20mais%20sobre%20os%20cursos%2C%20pode%20me%20ajudar%3F"
           target="_blank"
           rel="noopener noreferrer"
-          className="group flex w-full sm:w-auto items-center justify-center gap-3 rounded-xl bg-white px-10 py-4.5 text-[15px] font-bold text-neuro-blue border-2 border-slate-100 transition-all hover:border-neuro-blue/30 hover:bg-slate-50 shadow-[0_10px_20px_-5px_rgba(0,0,0,0.02)]"
+          className="group flex w-full md:w-auto items-center justify-center gap-3 rounded-xl bg-white px-10 py-4.5 text-[15px] font-bold text-neuro-blue border-2 border-slate-100 transition-all hover:border-neuro-blue/30 hover:bg-slate-50 shadow-[0_10px_20px_-5px_rgba(0,0,0,0.02)]"
         >
           <BookOpen className="w-5 h-5" />
-          Conhecer Cursos
+          Nossos Cursos
           <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1 opacity-40 group-hover:opacity-100" />
         </a>
       </motion.div>

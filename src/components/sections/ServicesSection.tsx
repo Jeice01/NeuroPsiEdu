@@ -66,7 +66,7 @@ export function ServicesSection() {
           </motion.p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 justify-center">
           {services.map((service, idx) => (
             <motion.div
               key={idx}
@@ -74,7 +74,7 @@ export function ServicesSection() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: idx * 0.15 }}
-              className="group bg-white rounded-3xl p-8 border border-slate-100 shadow-[0_15px_40px_-10px_rgba(0,0,0,0.02)] hover:shadow-[0_25px_60px_-15px_rgba(28,69,104,0.1)] transition-all duration-500 hover:-translate-y-2 flex flex-col"
+              className="group bg-white rounded-3xl p-8 border border-slate-100 shadow-[0_15px_40px_-10px_rgba(0,0,0,0.02)] hover:shadow-[0_25px_60px_-15px_rgba(28,69,104,0.1)] transition-all duration-500 hover:-translate-y-2 flex flex-col w-full max-w-[380px] xs:max-w-[420px] sm:max-w-md md:max-w-none mx-auto"
             >
               <div className={`w-14 h-14 rounded-2xl flex items-center justify-center mb-8 transition-transform group-hover:scale-110 duration-500 ${
                 service.color === 'blue' ? 'bg-neuro-blue/5 text-neuro-blue' : 

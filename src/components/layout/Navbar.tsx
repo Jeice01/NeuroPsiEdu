@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { motion, useAnimation } from "framer-motion";
+import { motion, useAnimation, AnimatePresence } from "framer-motion";
 import { Menu, X, User, CalendarHeart } from "lucide-react";
 import Link from "next/link";
 
@@ -45,7 +45,7 @@ export function Navbar() {
         </Link>
 
         {/* Desktop Nav */}
-        <nav className="hidden md:flex items-center gap-10">
+        <nav className="hidden lg:flex items-center gap-10">
           <Link href="/#inicio" className="text-[15px] font-bold text-neuro-blue hover:text-neuro-orange transition-colors duration-200">
             Início
           </Link>
@@ -64,7 +64,7 @@ export function Navbar() {
         </nav>
 
         {/* Action Button */}
-        <div className="hidden md:flex items-center gap-8">
+        <div className="hidden lg:flex items-center gap-8">
           <a
             href="https://academia.neuropsiedu.com.br/"
             target="_blank"
@@ -87,42 +87,86 @@ export function Navbar() {
 
         {/* Mobile Menu Toggle */}
         <button
-          className="md:hidden text-slate-600 dark:text-slate-300"
+          className="lg:hidden text-slate-600 dark:text-slate-300 cursor-pointer"
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
         >
           {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
         </button>
       </div>
 
-      {/* Mobile Menu */}
-      {mobileMenuOpen && (
-        <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="md:hidden absolute top-full left-0 right-0 bg-white/95 backdrop-blur-xl border-b border-slate-200 p-6 flex flex-col gap-6 shadow-xl"
-        >
-          <Link href="/#inicio" className="text-lg font-semibold text-neuro-blue/90 hover:text-neuro-orange transition-colors" onClick={() => setMobileMenuOpen(false)}>Início</Link>
-          <Link href="/#atendimento" className="text-lg font-semibold text-neuro-blue/90 hover:text-neuro-orange transition-colors" onClick={() => setMobileMenuOpen(false)}>Atendimentos</Link>
-          <Link href="/#cursos" className="text-lg font-semibold text-neuro-blue/90 hover:text-neuro-orange transition-colors" onClick={() => setMobileMenuOpen(false)}>Capacitação</Link>
-          <Link href="/#sobre" className="text-lg font-semibold text-neuro-blue/90 hover:text-neuro-orange transition-colors" onClick={() => setMobileMenuOpen(false)}>Sobre Nós</Link>
-          <Link href="/blog" className="text-lg font-semibold text-neuro-blue/90 hover:text-neuro-orange transition-colors" onClick={() => setMobileMenuOpen(false)}>Blog</Link>
-          <hr className="border-slate-200" />
-          <a href="https://academia.neuropsiedu.com.br/" className="flex items-center gap-2 text-lg font-bold text-neuro-orange" onClick={() => setMobileMenuOpen(false)}>
-            <User className="w-5 h-5" />
-            Área do Aluno
-          </a>
-          <a
-            href="https://wa.me/5561982088284?text=Quero%20uma%20avalia%C3%A7%C3%A3o%2C%20pode%20me%20ajudar%3F"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="w-full flex items-center justify-center gap-2 py-3.5 rounded-xl bg-neuro-blue text-white text-center font-semibold shadow-md"
-            onClick={() => setMobileMenuOpen(false)}
-          >
-            <CalendarHeart className="w-5 h-5" />
-            Agendar Avaliação
-          </a>
-        </motion.div>
-      )}
+      {/* Mobile Drawer Menu */}
+      <AnimatePresence>
+        {mobileMenuOpen && (
+          <>
+            {/* Backdrop */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 0.5 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setMobileMenuOpen(false)}
+              className="lg:hidden fixed inset-0 bg-[#0a1e30] z-40"
+            />
+            {/* Drawer */}
+            <motion.div
+              initial={{ x: "100%" }}
+              animate={{ x: 0 }}
+              exit={{ x: "100%" }}
+              transition={{ type: "tween", duration: 0.3, ease: "easeInOut" }}
+              className="lg:hidden fixed top-0 right-0 bottom-0 w-[280px] xs:w-[320px] bg-white z-50 shadow-2xl p-6 flex flex-col gap-6"
+            >
+              {/* Header with close button */}
+              <div className="flex items-center justify-between border-b border-slate-100 pb-4">
+                <img 
+                  src="/images/logo-vertical.png" 
+                  alt="NeuroPsiEdu Logo" 
+                  className="h-[30px] w-auto object-contain" 
+                />
+                <button 
+                  onClick={() => setMobileMenuOpen(false)} 
+                  className="text-slate-600 hover:text-neuro-orange transition-colors cursor-pointer"
+                >
+                  <X size={24} />
+                </button>
+              </div>
+
+              {/* Links */}
+              <nav className="flex flex-col gap-5 mt-4">
+                <Link href="/#inicio" className="text-base font-bold text-neuro-blue hover:text-neuro-orange transition-colors" onClick={() => setMobileMenuOpen(false)}>Início</Link>
+                <Link href="/#atendimento" className="text-base font-bold text-neuro-blue hover:text-neuro-orange transition-colors" onClick={() => setMobileMenuOpen(false)}>Atendimentos</Link>
+                <Link href="/#cursos" className="text-base font-bold text-neuro-blue hover:text-neuro-orange transition-colors" onClick={() => setMobileMenuOpen(false)}>Capacitação</Link>
+                <Link href="/#sobre" className="text-base font-bold text-neuro-blue hover:text-neuro-orange transition-colors" onClick={() => setMobileMenuOpen(false)}>Sobre Nós</Link>
+                <Link href="/blog" className="text-base font-bold text-neuro-blue hover:text-neuro-orange transition-colors" onClick={() => setMobileMenuOpen(false)}>Blog</Link>
+              </nav>
+
+              <hr className="border-slate-100 my-2" />
+
+              {/* Actions */}
+              <div className="flex flex-col gap-4 mt-auto">
+                <a
+                  href="https://academia.neuropsiedu.com.br/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-center gap-2 w-full py-3.5 rounded-xl bg-neuro-orange/10 border-2 border-neuro-orange text-neuro-orange font-bold text-sm hover:bg-neuro-orange hover:text-white transition-all duration-200"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  <User className="w-5 h-5 fill-current" />
+                  <span>Área do Aluno</span>
+                </a>
+                <a
+                  href="https://wa.me/5561982088284?text=Quero%20uma%20avalia%C3%A7%C3%A3o%2C%20pode%20me%20ajudar%3F"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-center gap-2.5 w-full py-3.5 rounded-xl bg-neuro-blue text-white font-bold text-sm hover:bg-neuro-blue-dark transition-all shadow-[0_10px_20px_-5px_rgba(28,69,104,0.3)]"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  <CalendarHeart className="w-4 h-4" />
+                  Agendar Avaliação
+                </a>
+              </div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
     </motion.header>
   );
 }
