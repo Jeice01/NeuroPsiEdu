@@ -93,13 +93,29 @@ function validateFullName(value: string): boolean {
   return parts.every((part) => part.length >= 2);
 }
 
+const BLOCKED_NUMBERS = new Set([
+  "99999999999","11111111111","00000000000",
+  "61999999999","11999999999","21999999999",
+  "61900000000","11900000000",
+]);
+
+function hasAllSameDigits(value: string): boolean {
+  return /^(\d)\1+$/.test(value);
+}
+
 function validateBrazilianWhatsapp(value: string): boolean {
   const digits = onlyDigits(value);
   if (digits.length !== 11) return false;
+
   const ddd = digits.slice(0, 2);
-  const firstMobileDigit = digits[2];
+  const mobileNumber = digits.slice(2);
+
   if (!VALID_DDDS.has(ddd)) return false;
-  if (firstMobileDigit !== "9") return false;
+  if (digits[2] !== "9") return false;
+  if (hasAllSameDigits(digits)) return false;
+  if (hasAllSameDigits(mobileNumber)) return false;
+  if (BLOCKED_NUMBERS.has(digits)) return false;
+
   return true;
 }
 
