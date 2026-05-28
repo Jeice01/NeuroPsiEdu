@@ -98,9 +98,7 @@ export function HeroContent() {
           <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
         </a>
         <a
-          href="https://wa.me/5561982088284?text=Quero%20saber%20mais%20sobre%20os%20cursos%2C%20pode%20me%20ajudar%3F"
-          target="_blank"
-          rel="noopener noreferrer"
+          href="/fnp"
           className="group flex w-full md:w-auto items-center justify-center gap-3 rounded-xl bg-white px-10 py-4.5 text-[15px] font-bold text-neuro-blue border-2 border-slate-100 transition-all hover:border-neuro-blue/30 hover:bg-slate-50 shadow-[0_10px_20px_-5px_rgba(0,0,0,0.02)]"
         >
           <BookOpen className="w-5 h-5" />
