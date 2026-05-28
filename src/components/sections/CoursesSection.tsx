@@ -288,9 +288,7 @@ export function CoursesSection() {
               </div>
 
               <a
-                href="https://wa.me/5561982088284?text=Quero%20saber%20mais%20sobre%20a%20Forma%C3%A7%C3%A3o%20Continuada%2C%20pode%20me%20ajudar%3F"
-                target="_blank"
-                rel="noopener noreferrer"
+                href="/fnp"
                 className="inline-flex items-center gap-3 bg-neuro-orange hover:bg-neuro-orange-light text-white px-12 py-6 rounded-2xl font-black text-sm uppercase tracking-widest transition-all shadow-[0_20px_40px_-10px_rgba(242,140,40,0.6)] hover:shadow-[0_25px_50px_-10px_rgba(242,140,40,0.7)] hover:-translate-y-1 active:scale-95 group"
               >
                 Quero Me Inscrever

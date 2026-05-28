@@ -33,7 +33,7 @@ const cards = [
     ],
     buttonText: "Conhecer Formação",
     buttonIcon: BookOpen,
-    href: "https://wa.me/5561982088284?text=Quero%20saber%20mais%20sobre%20os%20cursos%2C%20pode%20me%20ajudar%3F"
+    href: "/fnp"
   },
   {
     title: "Quero Supervisão Clínica",
