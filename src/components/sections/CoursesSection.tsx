@@ -170,7 +170,7 @@ export function CoursesSection() {
 
   const badges = [
     { icon: Award, label: "Reconhecimento MEC", sub: "Validade Nacional" },
-    { icon: Activity, label: "220h de Prática Clínica", sub: "Experiência Real" },
+    { icon: Activity, label: "140h de Prática Clínica", sub: "Experiência Real" },
     { icon: Network, label: "Formação Aplicada", sub: "Metodologia Ativa" },
     { icon: CheckCircle2, label: "Supervisão Especializada", sub: "Mentoria Direta" },
   ];
@@ -224,7 +224,7 @@ export function CoursesSection() {
             </div>
             <div className="h-10 w-[1px] bg-slate-200 hidden md:block" />
             <div className="flex flex-col items-center">
-              <span className="text-2xl font-black text-neuro-blue">220h</span>
+              <span className="text-2xl font-black text-neuro-blue">140h</span>
               <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Prática Real</span>
             </div>
             <div className="h-10 w-[1px] bg-slate-200 hidden md:block" />
@@ -281,7 +281,7 @@ export function CoursesSection() {
                 <div className="flex items-center gap-4 p-4 rounded-2xl bg-white/5 border border-white/5 hover:bg-white/10 transition-all">
                   <Clock className="w-5 h-5 text-neuro-cyan flex-shrink-0" />
                   <div>
-                    <p className="text-white font-bold text-sm leading-none mb-1">220h de prática clínica supervisionada</p>
+                    <p className="text-white font-bold text-sm leading-none mb-1">140h de prática clínica supervisionada</p>
                     <p className="text-blue-100/40 text-[10px] uppercase tracking-wider">Carga Horária</p>
                   </div>
                 </div>
