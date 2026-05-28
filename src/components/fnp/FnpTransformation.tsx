@@ -129,7 +129,7 @@ export function FnpTransformation() {
                   </div>
 
                   <div className="bg-emerald-500/5 border border-emerald-500/10 p-3 rounded-lg">
-                    <p className="text-[10px] text-emerald-400 font-bold uppercase tracking-wider mb-1">Com o Método FNP</p>
+                    <p className="text-[10px] text-emerald-400 font-bold uppercase tracking-wider mb-1">Com o Método FANP</p>
                     <p className="text-slate-300 leading-relaxed font-medium">{trans.after}</p>
                   </div>
                 </div>

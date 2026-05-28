@@ -44,7 +44,7 @@ export function FnpNavbar() {
               NeuroPsi<span className="text-neuro-orange">EDU</span>
             </span>
             <span className="bg-white/10 text-white/70 text-[10px] font-semibold px-2 py-0.5 rounded-full uppercase tracking-wider">
-              8ª Turma ANP
+              8ª Turma FANP
             </span>
           </Link>
 
@@ -142,7 +142,7 @@ export function FnpNavbar() {
                   <ArrowRight className="w-4 h-4" />
                 </a>
                 <span className="text-center text-xs text-slate-500">
-                  8ª Turma ANP · Vagas Limitadas
+                  8ª Turma FANP · Vagas Limitadas
                 </span>
               </div>
             </motion.div>

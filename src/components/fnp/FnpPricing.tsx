@@ -73,7 +73,7 @@ export function FnpPricing() {
               <div className="space-y-6">
                 <div>
                   <span className="text-[10px] text-slate-400 uppercase tracking-widest font-bold block mb-1">Formação Completa</span>
-                  <h4 className="font-display font-black text-xl text-white">8ª Turma FNP · Brasília</h4>
+                  <h4 className="font-display font-black text-xl text-white">8ª Turma FANP · Brasília</h4>
                 </div>
 
                 <div className="space-y-2 border-y border-white/5 py-6">
@@ -93,7 +93,7 @@ export function FnpPricing() {
 
                 <div className="space-y-4">
                   <a
-                    href="https://wa.me/5561982088284?text=Quero%20me%20inscrever%20na%208a%20Turma%20ANP%20da%20Forma%C3%A7%C3%A3o%20em%20Avalia%C3%A7%C3%A3o"
+                    href="https://wa.me/5561982088284?text=Quero%20me%20inscrever%20na%208a%20Turma%20FANP%20da%20Forma%C3%A7%C3%A3o%20em%20Avalia%C3%A7%C3%A3o"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="group w-full py-4 rounded-xl text-center font-bold text-slate-950 bg-gradient-to-r from-neuro-orange to-orange-500 hover:from-orange-400 hover:to-orange-600 transition-all duration-300 shadow-[0_0_20px_rgba(242,140,40,0.2)] flex items-center justify-center gap-2"

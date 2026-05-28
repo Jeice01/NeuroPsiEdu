@@ -73,7 +73,7 @@ export function FnpHero() {
                 <span className="relative inline-flex rounded-full h-3 w-3 bg-neuro-orange"></span>
               </span>
               <span className="glass-dark px-4 py-1.5 rounded-full text-xs font-semibold tracking-wider text-orange-400 border border-orange-500/20 uppercase">
-                Inscrições Abertas · 8ª Turma ANP
+                Inscrições Abertas · 8ª Turma FANP
               </span>
             </motion.div>
 

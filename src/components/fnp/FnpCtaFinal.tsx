@@ -66,7 +66,7 @@ export function FnpCtaFinal() {
             href="#investimento"
             className="group relative px-10 py-5 rounded-2xl text-base sm:text-lg font-bold text-white bg-gradient-to-r from-neuro-orange to-orange-600 hover:from-orange-500 hover:to-orange-700 transition-all duration-300 shadow-[0_0_40px_rgba(242,140,40,0.35)] hover:shadow-[0_0_50px_rgba(242,140,40,0.5)] flex items-center justify-center gap-3 w-full max-w-md mx-auto"
           >
-            <span>Garantir Vaga na 8ª Turma FNP</span>
+            <span>Garantir Vaga na 8ª Turma FANP</span>
             <ArrowRight className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
           </a>
 
