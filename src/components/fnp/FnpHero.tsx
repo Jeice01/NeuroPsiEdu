@@ -2,8 +2,10 @@
 
 import { motion, Variants } from "framer-motion";
 import { ArrowRight, Calendar, MapPin, Users, Award } from "lucide-react";
+import { useLeadModal } from "./FnpLeadContext";
 
 export function FnpHero() {
+  const { openModal } = useLeadModal();
   const containerVariants: Variants = {
     hidden: { opacity: 0 },
     visible: {
@@ -124,13 +126,13 @@ export function FnpHero() {
               variants={itemVariants}
               className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 pt-4"
             >
-              <a
-                href="#investimento"
+              <button
+                onClick={() => openModal("hero-cta")}
                 className="group relative px-8 py-4 rounded-xl text-base font-bold text-white bg-gradient-to-r from-neuro-orange to-orange-600 hover:from-orange-500 hover:to-orange-700 transition-all duration-300 shadow-[0_0_30px_rgba(242,140,40,0.3)] hover:shadow-[0_0_40px_rgba(242,140,40,0.5)] text-center flex items-center justify-center gap-3"
               >
                 <span>Quero garantir minha vaga</span>
                 <ArrowRight className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
-              </a>
+              </button>
               <a
                 href="#modulos"
                 className="px-8 py-4 rounded-xl text-base font-semibold text-slate-300 hover:text-white bg-white/5 hover:bg-white/10 border border-white/10 transition-all duration-300 text-center"

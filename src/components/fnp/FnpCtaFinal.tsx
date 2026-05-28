@@ -2,8 +2,10 @@
 
 import { motion } from "framer-motion";
 import { ArrowRight, Sparkles, ShieldCheck } from "lucide-react";
+import { useLeadModal } from "./FnpLeadContext";
 
 export function FnpCtaFinal() {
+  const { openModal } = useLeadModal();
   return (
     <section className="relative py-28 bg-gradient-to-b from-slate-950 via-[#0b1d31] to-slate-950 text-white overflow-hidden border-t border-white/5">
       
@@ -62,13 +64,13 @@ export function FnpCtaFinal() {
           transition={{ duration: 0.5, delay: 0.2 }}
           className="flex flex-col items-center gap-4 pt-4"
         >
-          <a
-            href="#investimento"
-            className="group relative px-10 py-5 rounded-2xl text-base sm:text-lg font-bold text-white bg-gradient-to-r from-neuro-orange to-orange-600 hover:from-orange-500 hover:to-orange-700 transition-all duration-300 shadow-[0_0_40px_rgba(242,140,40,0.35)] hover:shadow-[0_0_50px_rgba(242,140,40,0.5)] flex items-center justify-center gap-3 w-full max-w-md mx-auto"
+          <button
+            onClick={() => openModal("cta-final")}
+            className="group relative px-10 py-5 rounded-2xl text-base sm:text-lg font-bold text-white bg-gradient-to-r from-neuro-orange to-orange-600 hover:from-orange-500 hover:to-orange-700 transition-all duration-300 shadow-[0_0_40px_rgba(242,140,40,0.35)] hover:shadow-[0_0_50px_rgba(242,140,40,0.5)] flex items-center justify-center gap-3 w-full max-w-md mx-auto active:scale-[0.98]"
           >
             <span>Garantir Vaga na 8ª Turma FANP</span>
             <ArrowRight className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
-          </a>
+          </button>
 
           <div className="flex items-center gap-2 text-slate-400 text-xs justify-center pt-2">
             <ShieldCheck className="w-4 h-4 text-emerald-400" />

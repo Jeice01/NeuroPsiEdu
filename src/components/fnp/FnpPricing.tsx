@@ -1,8 +1,10 @@
 "use client";
 
 import { Check, ShieldCheck, ArrowRight } from "lucide-react";
+import { useLeadModal } from "./FnpLeadContext";
 
 export function FnpPricing() {
+  const { openModal } = useLeadModal();
   const inclusions = [
     "7 módulos presenciais (teoria + prática dirigida)",
     "Prática supervisionada com testes e instrumentos psicológicos",
@@ -92,18 +94,16 @@ export function FnpPricing() {
                 </div>
 
                 <div className="space-y-4">
-                  <a
-                    href="https://wa.me/5561982088284?text=Quero%20me%20inscrever%20na%208a%20Turma%20FANP%20da%20Forma%C3%A7%C3%A3o%20em%20Avalia%C3%A7%C3%A3o"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="group w-full py-4 rounded-xl text-center font-bold text-slate-950 bg-gradient-to-r from-neuro-orange to-orange-500 hover:from-orange-400 hover:to-orange-600 transition-all duration-300 shadow-[0_0_20px_rgba(242,140,40,0.2)] flex items-center justify-center gap-2"
+                  <button
+                    onClick={() => openModal("pricing-card")}
+                    className="group w-full py-4 rounded-xl text-center font-bold text-slate-950 bg-gradient-to-r from-neuro-orange to-orange-500 hover:from-orange-400 hover:to-orange-600 transition-all duration-300 shadow-[0_0_20px_rgba(242,140,40,0.2)] flex items-center justify-center gap-2 active:scale-[0.98]"
                   >
                     <span>Garantir minha vaga</span>
                     <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
-                  </a>
-                  
+                  </button>
+
                   <p className="text-center text-[10px] text-slate-500 font-light leading-relaxed">
-                    Clique acima para falar com nosso consultor acadêmico e acertar a forma de pagamento de sua preferência.
+                    Preencha o formulário e nossa equipe entrará em contato para orientar sobre matrícula e pagamento.
                   </p>
                 </div>
               </div>

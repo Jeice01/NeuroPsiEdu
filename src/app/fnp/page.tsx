@@ -1,17 +1,5 @@
 import { Metadata } from "next";
-import { FnpNavbar } from "@/components/fnp/FnpNavbar";
-import { FnpHero } from "@/components/fnp/FnpHero";
-import { FnpPainPoints } from "@/components/fnp/FnpPainPoints";
-import { FnpTargetAudience } from "@/components/fnp/FnpTargetAudience";
-import { FnpTransformation } from "@/components/fnp/FnpTransformation";
-import { FnpDifferential } from "@/components/fnp/FnpDifferential";
-import { FnpModules } from "@/components/fnp/FnpModules";
-import { FnpCalendar } from "@/components/fnp/FnpCalendar";
-import { FnpAbout } from "@/components/fnp/FnpAbout";
-import { FnpPricing } from "@/components/fnp/FnpPricing";
-import { FnpFaq } from "@/components/fnp/FnpFaq";
-import { FnpCtaFinal } from "@/components/fnp/FnpCtaFinal";
-import { FnpFooter } from "@/components/fnp/FnpFooter";
+import { FnpPageClient } from "@/components/fnp/FnpPageClient";
 
 export const metadata: Metadata = {
   title: "Formação em Avaliação Neuropsicológica | NeuroPsiEdu",
@@ -26,19 +14,7 @@ export const metadata: Metadata = {
 export default function FnpPage() {
   return (
     <main className="bg-slate-950 min-h-screen text-white font-sans antialiased overflow-x-hidden">
-      <FnpNavbar />
-      <FnpHero />
-      <FnpPainPoints />
-      <FnpTargetAudience />
-      <FnpTransformation />
-      <FnpDifferential />
-      <FnpModules />
-      <FnpCalendar />
-      <FnpAbout />
-      <FnpPricing />
-      <FnpFaq />
-      <FnpCtaFinal />
-      <FnpFooter />
+      <FnpPageClient />
     </main>
   );
 }

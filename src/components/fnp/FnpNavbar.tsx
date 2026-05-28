@@ -4,10 +4,12 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, ArrowRight } from "lucide-react";
 import Link from "next/link";
+import { useLeadModal } from "./FnpLeadContext";
 
 export function FnpNavbar() {
   const [scrolled, setScrolled] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  const { openModal } = useLeadModal();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -63,14 +65,14 @@ export function FnpNavbar() {
 
           {/* Desktop CTA */}
           <div className="hidden lg:flex items-center gap-4">
-            <a
-              href="#investimento"
+            <button
+              onClick={() => openModal("navbar-desktop")}
               className="relative group overflow-hidden px-5 py-2.5 rounded-xl text-sm font-semibold text-white bg-gradient-to-r from-neuro-orange to-orange-600 transition-all duration-300 hover:shadow-[0_0_20px_rgba(242,140,40,0.4)] flex items-center gap-2"
             >
               <span className="relative z-10">Garantir Vaga</span>
               <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
               <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
-            </a>
+            </button>
           </div>
 
           {/* Mobile Menu Button */}
@@ -133,14 +135,13 @@ export function FnpNavbar() {
               </div>
 
               <div className="flex flex-col gap-4 pt-8 border-t border-white/10">
-                <a
-                  href="#investimento"
-                  onClick={() => setIsOpen(false)}
+                <button
+                  onClick={() => { setIsOpen(false); openModal("navbar-mobile"); }}
                   className="w-full text-center py-3.5 px-6 rounded-xl font-semibold text-white bg-gradient-to-r from-neuro-orange to-orange-600 shadow-lg hover:shadow-orange-500/20 flex items-center justify-center gap-2"
                 >
                   <span>Garantir Vaga</span>
                   <ArrowRight className="w-4 h-4" />
-                </a>
+                </button>
                 <span className="text-center text-xs text-slate-500">
                   8ª Turma FANP · Vagas Limitadas
                 </span>
