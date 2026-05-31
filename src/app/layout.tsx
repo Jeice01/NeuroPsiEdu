@@ -21,6 +21,16 @@ export default function RootLayout({
   return (
     <html lang="pt-BR" className="scroll-smooth">
       <head>
+        {/* Cookiebot — deve ser o primeiro script do <head> */}
+        <Script
+          id="Cookiebot"
+          src="https://consent.cookiebot.com/uc.js"
+          data-cbid="bb101498-b476-4898-bc7d-7917299af0af"
+          data-blockingmode="auto"
+          type="text/javascript"
+          strategy="beforeInteractive"
+        />
+
         {/* Structured Data — Local Business / Medical Clinic */}
         <script
           type="application/ld+json"
