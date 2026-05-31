@@ -21,6 +21,33 @@ export default function RootLayout({
   return (
     <html lang="pt-BR" className="scroll-smooth">
       <head>
+        {/* Structured Data — Local Business / Medical Clinic */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "MedicalClinic",
+              "name": "NeuroPsiEdu",
+              "description": "Avaliação neuropsicológica especializada infantil, adulto e idoso.",
+              "url": "https://neuropsiedu.com.br",
+              "logo": "https://neuropsiedu.com.br/images/logo-vertical.png",
+              "address": {
+                "@type": "PostalAddress",
+                "streetAddress": "Ed. Conect Towers - QS 1 BLOCO D, 11º andar - Sala 1129",
+                "addressLocality": "Águas Claras, Brasília",
+                "addressRegion": "DF",
+                "addressCountry": "BR"
+              },
+              "contactPoint": {
+                "@type": "ContactPoint",
+                "telephone": "+55-61-98208-8284",
+                "contactType": "Atendimento"
+              }
+            }),
+          }}
+        />
+
         {/* Google Analytics */}
         <Script
           id="gtag-js"
