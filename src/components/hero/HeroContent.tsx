@@ -91,7 +91,7 @@ export function HeroContent() {
           href="https://wa.me/5561982088284?text=Quero%20uma%20avalia%C3%A7%C3%A3o%2C%20pode%20me%20ajudar%3F"
           target="_blank"
           rel="noopener noreferrer"
-          className="group relative flex w-full md:w-auto items-center justify-center gap-3 rounded-xl bg-neuro-blue px-10 py-4.5 text-[15px] font-bold text-white transition-all hover:bg-neuro-blue-dark shadow-[0_15px_30px_-5px_rgba(28,69,104,0.3)]"
+          className="group relative flex w-full md:w-auto items-center justify-center gap-3 rounded-xl bg-neuro-blue px-10 py-4.5 text-[15px] font-bold text-white transition-all duration-300 hover:bg-neuro-blue-dark hover:-translate-y-1 shadow-[0_15px_30px_-5px_rgba(28,69,104,0.3)] hover:shadow-[0_15px_30px_-5px_rgba(28,69,104,0.4)] active:scale-95"
         >
           <CalendarHeart className="w-5 h-5" />
           Agendar Avaliação
