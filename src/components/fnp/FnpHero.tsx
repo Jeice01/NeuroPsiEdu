@@ -59,14 +59,14 @@ export function FnpHero() {
       <div className="absolute inset-0 hero-grid-bg opacity-[0.05] pointer-events-none" />
 
       <div className="container mx-auto px-6 max-w-7xl relative z-10 w-full">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-8 items-center">
           
           {/* Left Column - Content */}
           <motion.div
             variants={containerVariants}
             initial="hidden"
             animate="visible"
-            className="lg:col-span-7 text-left space-y-8 flex flex-col justify-center"
+            className="text-left space-y-8 flex flex-col justify-center"
           >
             {/* Badge */}
             <motion.div variants={itemVariants} className="inline-flex self-start">
@@ -142,77 +142,18 @@ export function FnpHero() {
             </motion.div>
           </motion.div>
 
-          {/* Right Column - Visual representation */}
-          <div className="lg:col-span-5 relative flex items-center justify-center min-h-[400px] lg:min-h-[500px]">
-            <div className="relative w-full max-w-[420px] aspect-square flex items-center justify-center">
-              
-              {/* Outer Orbit Ring */}
-              <motion.div
-                variants={orbitVariants}
-                animate="animate"
-                className="absolute inset-0 rounded-full border border-dashed border-slate-700/40 pointer-events-none"
-              />
-
-              {/* Inner Orbit Ring */}
-              <motion.div
-                variants={reverseOrbitVariants}
-                animate="animate"
-                className="absolute inset-8 rounded-full border border-slate-800/60 pointer-events-none"
-              />
-
-              {/* Cognitive node points on orbits */}
-              <div className="absolute top-[10%] left-[20%] w-3 h-3 rounded-full bg-neuro-orange blur-[2px] animate-pulse" />
-              <div className="absolute bottom-[15%] right-[25%] w-2 h-2 rounded-full bg-cyan-400 blur-[1px] animate-pulse" />
-              <div className="absolute top-[60%] right-[5%] w-2 h-2 rounded-full bg-violet-400 blur-[1px] animate-pulse" />
-
-              {/* Main Brain Image Container */}
-              <motion.div
-                initial={{ scale: 0.8, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                transition={{ type: "spring", duration: 1.5 }}
-                className="relative z-10 w-[80%] aspect-square flex items-center justify-center animate-float-slow"
-              >
-                {/* Glow behind the brain */}
-                <div className="absolute w-[60%] h-[60%] bg-neuro-blue/40 rounded-full blur-[70px] -z-10 pointer-events-none animate-pulse-glow" />
-                <img
-                  src="/images/brain-3d.png"
-                  alt="Modelo Cognitivo 3D"
-                  className="w-full h-full object-contain filter drop-shadow-[0_0_30px_rgba(28,69,104,0.3)] select-none pointer-events-none"
-                />
-              </motion.div>
-
-              {/* Interactive Floating Micro-Card 1 */}
-              <motion.div
-                initial={{ x: 50, opacity: 0 }}
-                animate={{ x: 0, opacity: 1 }}
-                transition={{ delay: 0.8, duration: 0.8 }}
-                className="absolute bottom-8 -left-6 z-20 glass-dark p-3 rounded-xl border border-white/10 shadow-2xl flex items-center gap-3 animate-float-slow"
-              >
-                <div className="w-8 h-8 rounded-lg bg-orange-500/10 border border-orange-500/20 flex items-center justify-center">
-                  <span className="text-orange-400 text-xs font-bold">QA</span>
-                </div>
-                <div>
-                  <p className="text-[10px] text-slate-400 uppercase tracking-widest font-semibold">Análise de Casos</p>
-                  <p className="text-xs text-white font-bold">Discussões Clínicas</p>
-                </div>
-              </motion.div>
-
-              {/* Interactive Floating Micro-Card 2 */}
-              <motion.div
-                initial={{ x: -50, opacity: 0 }}
-                animate={{ x: 0, opacity: 1 }}
-                transition={{ delay: 1, duration: 0.8 }}
-                className="absolute top-12 -right-4 z-20 glass-dark p-3 rounded-xl border border-white/10 shadow-2xl flex items-center gap-3 animate-float-slower"
-              >
-                <div className="w-8 h-8 rounded-lg bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center">
-                  <span className="text-cyan-400 text-xs font-bold">100%</span>
-                </div>
-                <div>
-                  <p className="text-[10px] text-slate-400 uppercase tracking-widest font-semibold">Abordagem Prática</p>
-                  <p className="text-xs text-white font-bold">Supervisão de Testes</p>
-                </div>
-              </motion.div>
-
+          {/* Right Column - Video embed */}
+          <div className="flex items-center justify-center min-h-[400px] lg:min-h-[500px] px-4 lg:px-0">
+            <div className="w-full max-w-[720px]">
+              <div className="relative w-full aspect-video rounded-2xl shadow-2xl border border-orange-500/20 ring-1 ring-orange-400/10 overflow-hidden bg-slate-950">
+                <iframe
+                  className="w-full h-full"
+                  src="https://www.youtube.com/embed/ApwOzxMUqvE"
+                  title="Vídeo explicativo NeuroPsiEdu FNP"
+                  allow="autoplay; encrypted-media; picture-in-picture"
+                  allowFullScreen
+                ></iframe>
+              </div>
             </div>
           </div>
 
