@@ -13,7 +13,7 @@ export function CinematicVisual() {
   }, [brainControls]);
 
   return (
-    <div className="relative w-full z-0 mt-8 lg:mt-0 lg:ml-0 xl:ml-10 2xl:ml-20">
+    <div className="relative w-full z-0 mt-8 lg:mt-0">
 
       {/* ── MOBILE LAYOUT (< sm) ─────────────────────────────── */}
       <div className="sm:hidden flex flex-col items-center gap-5 py-6">
@@ -111,7 +111,7 @@ export function CinematicVisual() {
       </div>
 
       {/* ── DESKTOP LAYOUT (>= sm) ───────────────────────────── */}
-      <div className="hidden sm:flex relative h-[450px] md:h-[550px] lg:h-[650px] xl:h-[750px] items-center justify-center lg:justify-center xl:justify-end perspective-[2000px]">
+      <div className="hidden sm:flex relative h-[450px] md:h-[550px] lg:h-[650px] xl:h-[750px] items-center justify-center perspective-[2000px]">
         {/* Background Glow */}
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] md:w-[600px] md:h-[600px] bg-neuro-blue/5 glow-effect blur-[120px] rounded-full mix-blend-multiply opacity-30" />
 
@@ -139,7 +139,7 @@ export function CinematicVisual() {
           <motion.div
             animate={{ y: [0, -12, 0] }}
             transition={{ duration: 6.5, repeat: Infinity, ease: "easeInOut", delay: 0.2 }}
-            className="absolute -left-10 md:-left-20 lg:-left-10 xl:-left-20 top-4 md:top-12 z-30 scale-105 md:scale-110 lg:scale-95 xl:scale-110"
+            className="absolute -left-10 md:-left-20 lg:-left-10 xl:-left-12 top-4 md:top-12 z-30 scale-105 md:scale-110 lg:scale-95 xl:scale-110"
           >
             <div className="bg-white/95 backdrop-blur-xl rounded-2xl p-3 md:p-4 flex items-center gap-3 w-32 md:w-40 shadow-[0_0_25px_rgba(28,69,104,0.3)] border-[1.5px] border-neuro-blue">
               <div className="w-8 h-8 md:w-12 md:h-12 rounded-lg bg-neuro-blue/10 flex-shrink-0 flex items-center justify-center">
@@ -181,7 +181,7 @@ export function CinematicVisual() {
           <motion.div
             animate={{ y: [0, -10, 0] }}
             transition={{ duration: 5.8, repeat: Infinity, ease: "easeInOut", delay: 1.1 }}
-            className="absolute -right-10 md:-right-20 lg:-right-10 xl:-right-20 top-4 md:top-12 z-30 scale-105 md:scale-110 lg:scale-95 xl:scale-110"
+            className="absolute -right-10 md:-right-20 lg:-right-10 xl:-right-12 top-4 md:top-12 z-30 scale-105 md:scale-110 lg:scale-95 xl:scale-110"
           >
             <div className="bg-white/95 backdrop-blur-xl rounded-2xl p-3 md:p-4 flex items-center gap-3 w-32 md:w-40 shadow-[0_0_25px_rgba(66,182,165,0.4)] border-[1.5px] border-neuro-cyan">
               <div className="w-8 h-8 md:w-12 md:h-12 rounded-lg bg-neuro-cyan/10 flex-shrink-0 flex items-center justify-center">
@@ -195,7 +195,7 @@ export function CinematicVisual() {
           <motion.div
             animate={{ y: [0, 10, 0] }}
             transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 1.4 }}
-            className="absolute -left-8 md:-left-20 lg:-left-12 xl:-left-20 top-36 md:top-48 z-20 lg:scale-95 xl:scale-100"
+            className="absolute -left-8 md:-left-20 lg:-left-12 xl:-left-12 top-36 md:top-48 z-20 lg:scale-95 xl:scale-100"
           >
             <div className="bg-white/95 backdrop-blur-xl rounded-2xl p-2.5 md:p-3 flex items-center gap-3 w-36 md:w-44 shadow-[0_15px_35px_rgba(0,0,0,0.05)] border border-slate-100">
               <div className="w-8 h-8 md:w-10 md:h-10 rounded-lg bg-neuro-blue/5 flex-shrink-0 flex items-center justify-center border border-neuro-blue/10">
@@ -209,7 +209,7 @@ export function CinematicVisual() {
           <motion.div
             animate={{ y: [0, 12, 0] }}
             transition={{ duration: 6.2, repeat: Infinity, ease: "easeInOut", delay: 1.7 }}
-            className="absolute -right-6 md:-right-16 lg:-right-8 xl:-right-16 top-36 md:top-48 z-20 lg:scale-95 xl:scale-100"
+            className="absolute -right-6 md:-right-16 lg:-right-8 xl:-right-10 top-36 md:top-48 z-20 lg:scale-95 xl:scale-100"
           >
             <div className="bg-white/95 backdrop-blur-xl rounded-2xl p-2.5 md:p-3 flex items-center gap-3 w-32 md:w-36 shadow-[0_15px_35px_rgba(0,0,0,0.05)] border border-slate-100">
               <div className="w-8 h-8 md:w-10 md:h-10 rounded-lg bg-neuro-blue/5 flex-shrink-0 flex items-center justify-center border border-neuro-blue/10">
@@ -251,7 +251,7 @@ export function CinematicVisual() {
           <motion.div
             animate={{ y: [0, 15, 0] }}
             transition={{ duration: 6, repeat: Infinity, ease: "easeInOut", delay: 2.6 }}
-            className="absolute right-0 md:-right-12 lg:right-0 xl:-right-12 bottom-8 md:bottom-16 z-20 lg:scale-90 xl:scale-100"
+            className="absolute right-0 md:-right-12 lg:right-0 xl:-right-8 bottom-8 md:bottom-16 z-20 lg:scale-90 xl:scale-100"
           >
             <div className="bg-white/95 backdrop-blur-xl rounded-2xl p-2.5 md:p-3 flex items-center gap-3 w-32 md:w-36 shadow-[0_15px_35px_rgba(0,0,0,0.05)] border border-slate-100">
               <div className="w-7 h-7 md:w-10 md:h-10 rounded-lg bg-neuro-cyan/5 flex-shrink-0 flex items-center justify-center border border-neuro-cyan/10">
