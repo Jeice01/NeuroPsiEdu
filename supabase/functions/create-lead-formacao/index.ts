@@ -38,9 +38,14 @@ const validBrazilianDDDs = [
 
 function getCorsHeaders(req: Request) {
   const origin = req.headers.get("origin") || "";
-  const allowedOrigin = allowedOrigins.includes(origin)
-    ? origin
-    : "https://neuropsiedu.com.br";
+  const isCodespacesPreview =
+    origin.endsWith(".app.github.dev") ||
+    origin.endsWith(".githubpreview.dev");
+
+  const allowedOrigin =
+    allowedOrigins.includes(origin) || isCodespacesPreview
+      ? origin
+      : "https://neuropsiedu.com.br";
 
   return {
     "Access-Control-Allow-Origin": allowedOrigin,
