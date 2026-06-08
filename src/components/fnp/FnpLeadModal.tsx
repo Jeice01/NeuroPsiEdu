@@ -4,6 +4,12 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, CheckCircle2, AlertCircle, Loader2, ArrowRight, ShieldCheck } from "lucide-react";
 
+declare global {
+  interface Window {
+    dataLayer?: Array<Record<string, unknown>>;
+  }
+}
+
 // ─── Edge Function URL ───────────────────────────────────────────────────────
 const EDGE_FN_URL =
   "https://avfzuudrjnglqrkyxwkz.supabase.co/functions/v1/create-lead-formacao";
@@ -233,6 +239,18 @@ export function FnpLeadModal({ isOpen, onClose, botaoOrigem }: Props) {
         data.message ||
         "Recebemos seus dados! Nossa equipe entrará em contato pelo WhatsApp com as informações da 8ª Turma FANP."
       );
+
+      // GTM / Google Ads
+      if (typeof window !== "undefined") {
+        window.dataLayer = window.dataLayer || [];
+
+        window.dataLayer.push({
+        event: "lead_formacao",
+        formacao: "FANP",
+        pagina: "/fnp",
+        perfil: form.perfil || "nao_informado",
+        interesse_principal: form.interesse_principal || "nao_informado",});
+      }
       setSuccess(true);
     } catch (err: unknown) {
       setApiError(

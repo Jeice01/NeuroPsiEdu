@@ -285,6 +285,18 @@ export function ManuseioArmaLeadModal({
         data.message ||
           "Recebemos seus dados! Nossa equipe entrará em contato pelo WhatsApp com todas as informações da Formação em Avaliação Psicológica para Manuseio de Arma de Fogo."
       );
+      // GTM / Google Ads
+      if (typeof window !== "undefined") {
+        window.dataLayer = window.dataLayer || [];
+
+        window.dataLayer.push({
+          event: "lead_formacao",
+          formacao: "MANUSEIO_ARMA",
+          pagina: "/formacao-manuseio-arma",
+          perfil: form.perfil || "nao_informado",
+          botao_origem: buttonOrigin,
+        });
+      }
       setSuccess(true);
 
       if (typeof window !== "undefined") {
