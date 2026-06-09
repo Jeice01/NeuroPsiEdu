@@ -5,7 +5,6 @@ import {
   ArrowRight,
   Award,
   Clock,
-  MapPin,
   ShieldCheck,
   Users,
 } from "lucide-react";
@@ -83,22 +82,22 @@ export function ManuseioArmaHero() {
             >
               <div className="flex items-center gap-2.5 glass-dark px-4 py-3 rounded-xl border border-white/5">
                 <Award className="w-4 h-4 text-neuro-orange" />
-                <span className="text-slate-200">12 protocolos reais</span>
-              </div>
-
-              <div className="flex items-center gap-2.5 glass-dark px-4 py-3 rounded-xl border border-white/5">
-                <Clock className="w-4 h-4 text-neuro-orange" />
-                <span className="text-slate-200">12 protocolos reais</span>
+                <span className="text-slate-200">138 horas de formação</span>
               </div>
 
               <div className="flex items-center gap-2.5 glass-dark px-4 py-3 rounded-xl border border-white/5">
                 <Users className="w-4 h-4 text-neuro-orange" />
+                <span className="text-slate-200">Supervisão presencial individualizada</span>
+              </div>
+
+              <div className="flex items-center gap-2.5 glass-dark px-4 py-3 rounded-xl border border-white/5">
+                <ShieldCheck className="w-4 h-4 text-neuro-orange" />
                 <span className="text-slate-200">Polícia Federal e CFP</span>
               </div>
 
               <div className="flex items-center gap-2.5 glass-dark px-4 py-3 rounded-xl border border-white/5">
-                <MapPin className="w-4 h-4 text-neuro-orange" />
-                <span className="text-slate-200">Ed. ConnectTower</span>
+                <Clock className="w-4 h-4 text-neuro-orange" />
+                <span className="text-slate-200">Casos reais e aplicação prática</span>
               </div>
             </motion.div>
 
