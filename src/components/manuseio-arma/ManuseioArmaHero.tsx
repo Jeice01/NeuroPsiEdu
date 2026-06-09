@@ -72,9 +72,9 @@ export function ManuseioArmaHero() {
               variants={itemVariants}
               className="text-slate-300 text-base sm:text-lg md:text-xl leading-relaxed max-w-2xl font-light"
             >
-              Desenvolva a sua segurança técnica e domine a aplicação,
-              correção e interpretação dos instrumentos exigidos, sob supervisão
-              prática e individualizada.
+              Aprenda com segurança técnica e domine a aplicação, correção,
+              interpretação e escrita de resultados de instrumentos exigidos para o
+              avaliação psicológica para Manuseio de Arma de Fogo.
             </motion.p>
 
             <motion.div
