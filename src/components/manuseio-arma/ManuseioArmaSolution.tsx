@@ -30,8 +30,8 @@ export function ManuseioArmaSolution() {
     {
       icon: <Layers className="w-5 h-5 text-violet-400" />,
       title: "Integração de Instrumentos",
-      before: "Aplicar testes de forma isolada, sem clareza sobre como integrar os achados.",
-      after: "Leitura integrada entre Palográfico, Pfister, IFP, BPA, BETA III, TEPIC-M-2, FDT e BDEFS.",
+      before: "Analisar os resultados dos testes de forma isolada, fragmentada e sem clareza de como integrá-los.",
+      after: "Análise e compreensão integrada dos resultados da avaliação dos testes exigidos pela PF e CFP.",
     },
     {
       icon: <Target className="w-5 h-5 text-emerald-400" />,
@@ -55,7 +55,7 @@ export function ManuseioArmaSolution() {
       icon: <Award className="w-5 h-5 text-rose-400" />,
       title: "Supervisão Individual",
       before: "Estudar sozinho, sem correção prática e sem análise dos próprios protocolos.",
-      after: "120 horas de supervisão individualizada com 12 protocolos acompanhados.",
+      after: "120 horas de supervisão presencial e individualizada para a produção de 20 protocolos dos testes de personalidade.",
     },
     {
       icon: <BadgeCheck className="w-5 h-5 text-teal-400" />,
