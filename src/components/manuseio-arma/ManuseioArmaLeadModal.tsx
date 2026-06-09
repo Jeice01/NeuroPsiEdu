@@ -254,7 +254,7 @@ export function ManuseioArmaLeadModal({
       interesse_principal: form.interesse_principal || null,
       mensagem: form.mensagem.trim() || null,
       formacao_interesse:
-        "Formação em Avaliação Psicológica para Manuseio de Arma de Fogo",
+        "Formação em Avaliação Neuropsicológica para Manuseio de Arma de Fogo",
       pagina_origem:
         "https://neuropsiedu.com.br/formacao-manuseio-arma",
       botao_origem: buttonOrigin,
@@ -283,7 +283,7 @@ export function ManuseioArmaLeadModal({
 
       setSuccessMessage(
         data.message ||
-          "Recebemos seus dados! Nossa equipe entrará em contato pelo WhatsApp com todas as informações da Formação em Avaliação Psicológica para Manuseio de Arma de Fogo."
+          "Recebemos seus dados! Nossa equipe entrará em contato pelo WhatsApp com todas as informações da Formação em Avaliação Neuropsicológica para Manuseio de Arma de Fogo."
       );
       // GTM / Google Ads
       if (typeof window !== "undefined") {
@@ -304,7 +304,7 @@ export function ManuseioArmaLeadModal({
         window.dataLayer.push({
           event: "lead_formacao_manuseio_arma",
           formacao_interesse:
-            "Formação em Avaliação Psicológica para Manuseio de Arma de Fogo",
+            "Formação em Avaliação Neuropsicológica para Manuseio de Arma de Fogo",
           botao_origem: buttonOrigin,
         });
       }
@@ -360,7 +360,7 @@ export function ManuseioArmaLeadModal({
                 </span>
 
                 <h2 className="font-display font-black text-xl sm:text-2xl text-white leading-tight">
-                  Formação em Avaliação Psicológica para Manuseio de Arma de
+                  Formação em Avaliação Neuropsicológica para Manuseio de Arma de
                   Fogo
                 </h2>
 
