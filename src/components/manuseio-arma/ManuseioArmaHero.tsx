@@ -64,7 +64,7 @@ export function ManuseioArmaHero() {
             >
               Desenvolva a Segurança Técnica Necessária para Atuar em{" "}
               <span className="bg-clip-text text-transparent bg-gradient-to-r from-neuro-orange via-orange-400 to-amber-300">
-                Avaliação Neuropsicológica para Manuseio de Arma de Fogo
+                Avaliação Psicológica para Manuseio de Arma de Fogo
               </span>
             </motion.h1>
 
