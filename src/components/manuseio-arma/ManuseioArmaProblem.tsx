@@ -22,7 +22,7 @@ export function ManuseioArmaProblem() {
       icon: <ClipboardCheck className="w-6 h-6 text-neuro-orange" />,
       title: "Dúvidas sobre instrumentos",
       description:
-        "A escolha, aplicação e interpretação dos testes exigem domínio técnico. Sem método, o profissional pode se sentir inseguro diante dos protocolos.",
+        "A escolha, a aplicação e a interpretação dos resultados dos testes psicológicos exigem domínio técnico. Sem o método e a prática adequada, o profissional pode se sentir inseguro para emitir seu laudo conclusivo.",
     },
     {
       icon: <Scale className="w-6 h-6 text-neuro-orange" />,
@@ -46,7 +46,7 @@ export function ManuseioArmaProblem() {
       icon: <AlertTriangle className="w-6 h-6 text-neuro-orange" />,
       title: "Credenciamento e atuação profissional",
       description:
-        "Além da formação técnica, é comum haver dúvidas sobre credenciamento, exigências práticas e caminhos para ampliar a atuação com responsabilidade.",
+        "Além da formação técnica, é comum haver dúvidas sobre como se credenciar, quais exigências legais e metodológicas envolve essa avaliação.",
     },
   ];
 
