@@ -125,8 +125,8 @@ export function ManuseioArmaHero() {
               variants={itemVariants}
               className="text-sm text-orange-300 font-medium"
             >
-              ⚠️ Turma limitada a 10 psicólogos devido à proposta de supervisão
-              individualizada.
+              ⚠️ Turma limitada a 10 alunos para garantir a qualidade do conteúdo
+              e das supervisões presenciais e individualizadas.
             </motion.p>
           </motion.div>
 
