@@ -54,7 +54,7 @@ export function ManuseioArmaHero() {
                 <span className="relative inline-flex rounded-full h-3 w-3 bg-neuro-orange" />
               </span>
               <span className="glass-dark px-4 py-1.5 rounded-full text-xs font-semibold tracking-wider text-orange-400 border border-orange-500/20 uppercase">
-                Formação Presencial · Turma Limitada
+                📍 Formação 100% Presencial em Brasília/DF
               </span>
             </motion.div>
 
@@ -64,7 +64,7 @@ export function ManuseioArmaHero() {
             >
               Desenvolva a Segurança Técnica Necessária para Atuar em{" "}
               <span className="bg-clip-text text-transparent bg-gradient-to-r from-neuro-orange via-orange-400 to-amber-300">
-                Avaliações Psicológicas para Manuseio de Arma de Fogo.
+                Avaliação Psicológica para Manuseio de Arma de Fogo
               </span>
             </motion.h1>
 
@@ -72,10 +72,9 @@ export function ManuseioArmaHero() {
               variants={itemVariants}
               className="text-slate-300 text-base sm:text-lg md:text-xl leading-relaxed max-w-2xl font-light"
             >
-              Uma formação presencial, prática e supervisionada para psicólogos
-              e estudantes de Psicologia que desejam compreender os critérios
-              técnicos, instrumentos, legislação e análise clínica envolvidos na
-              avaliação psicológica para manuseio de arma de fogo.
+              Desenvolva a sua segurança técnica e domine a aplicação,
+              correção e interpretação dos instrumentos exigidos, sob supervisão
+              prática e individualizada.
             </motion.p>
 
             <motion.div
@@ -84,22 +83,22 @@ export function ManuseioArmaHero() {
             >
               <div className="flex items-center gap-2.5 glass-dark px-4 py-3 rounded-xl border border-white/5">
                 <Award className="w-4 h-4 text-neuro-orange" />
-                <span className="text-slate-200">Certificado 138h</span>
+                <span className="text-slate-200">12 protocolos reais</span>
               </div>
 
               <div className="flex items-center gap-2.5 glass-dark px-4 py-3 rounded-xl border border-white/5">
                 <Clock className="w-4 h-4 text-neuro-orange" />
-                <span className="text-slate-200">120h de supervisão</span>
+                <span className="text-slate-200">12 protocolos reais</span>
               </div>
 
               <div className="flex items-center gap-2.5 glass-dark px-4 py-3 rounded-xl border border-white/5">
                 <Users className="w-4 h-4 text-neuro-orange" />
-                <span className="text-slate-200">Apenas 10 vagas</span>
+                <span className="text-slate-200">Polícia Federal e CFP</span>
               </div>
 
               <div className="flex items-center gap-2.5 glass-dark px-4 py-3 rounded-xl border border-white/5">
                 <MapPin className="w-4 h-4 text-neuro-orange" />
-                <span className="text-slate-200">Águas Claras · Brasília/DF</span>
+                <span className="text-slate-200">Ed. ConnectTower</span>
               </div>
             </motion.div>
 
@@ -111,7 +110,7 @@ export function ManuseioArmaHero() {
                 onClick={() => openModal("hero-cta")}
                 className="group relative px-8 py-4 rounded-xl text-base font-bold text-white bg-gradient-to-r from-neuro-orange to-orange-600 hover:from-orange-500 hover:to-orange-700 transition-all duration-300 shadow-[0_0_30px_rgba(242,140,40,0.3)] hover:shadow-[0_0_40px_rgba(242,140,40,0.5)] text-center flex items-center justify-center gap-3"
               >
-                <span>Quero Receber Informações da Formação</span>
+                <span>Quero garantir minha pré-inscrição</span>
                 <ArrowRight className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
               </button>
 
@@ -127,8 +126,8 @@ export function ManuseioArmaHero() {
               variants={itemVariants}
               className="text-sm text-orange-300 font-medium"
             >
-              Turma limitada a 10 participantes para garantir acompanhamento
-              próximo e supervisão individualizada.
+              ⚠️ Turma limitada a 10 psicólogos devido à proposta de supervisão
+              individualizada.
             </motion.p>
           </motion.div>
 
