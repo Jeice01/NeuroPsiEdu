@@ -100,26 +100,38 @@ export function ManuseioArmaLogistics() {
 
             <div className="mt-8">
               <p className="text-slate-500 text-sm uppercase tracking-widest">
-                Valor da formação
+                Investimento Total da Formação
               </p>
 
               <p className="mt-2 text-5xl font-black text-white">
-                R$ 1.997
+                R$ 3.985,00
+              </p>
+
+              <p className="mt-3 text-sm text-slate-300">
+                ou parcelado em até 10x
               </p>
             </div>
 
             <div className="mt-8 rounded-2xl border border-orange-500/20 bg-orange-500/10 p-5">
               <p className="text-orange-300 text-sm font-bold uppercase tracking-widest">
-                Condição Especial
+                O investimento inclui
               </p>
 
-              <p className="mt-2 text-3xl font-black text-white">
-                R$ 1.697
-              </p>
-
-              <p className="mt-2 text-sm text-slate-300">
-                Exclusivo para os 3 primeiros inscritos.
-              </p>
+              <div className="mt-4 space-y-3 text-sm text-slate-300">
+                {[
+                  "Formação presencial em Brasília/DF",
+                  "138 horas de capacitação",
+                  "120 horas de supervisão prática individualizada",
+                  "Casos reais e aplicação prática",
+                  "Acompanhamento técnico especializado",
+                  "Certificado de conclusão",
+                ].map((item) => (
+                  <p key={item} className="flex items-start gap-2">
+                    <span className="text-orange-300">✓</span>
+                    <span>{item}</span>
+                  </p>
+                ))}
+              </div>
             </div>
 
             <div className="mt-8 flex items-center gap-3 rounded-xl bg-white/5 p-4 border border-white/10">

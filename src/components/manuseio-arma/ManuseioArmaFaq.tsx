@@ -41,7 +41,7 @@ export function ManuseioArmaFaq() {
     {
       question: "Qual é o investimento?",
       answer:
-        "O investimento da formação é de R$ 1.997. Os 3 primeiros inscritos terão condição especial de R$ 1.697.",
+        "O investimento total da formação é de R$ 3.985,00, com possibilidade de parcelamento em até 10x. Esse valor inclui a formação presencial, 138 horas de capacitação, 120 horas de supervisão prática individualizada, acompanhamento técnico especializado e certificação.",
     },
     {
       question: "Como funciona o processo de matrícula?",
