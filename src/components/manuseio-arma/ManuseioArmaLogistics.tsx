@@ -120,6 +120,7 @@ export function ManuseioArmaLogistics() {
               <div className="mt-4 space-y-3 text-sm text-slate-300">
                 {[
                   "Formação presencial em Brasília/DF",
+                  "18 horas de aulas teóricas presenciais",
                   "138 horas de capacitação",
                   "120 horas de supervisão prática individualizada",
                   "Casos reais e aplicação prática",
