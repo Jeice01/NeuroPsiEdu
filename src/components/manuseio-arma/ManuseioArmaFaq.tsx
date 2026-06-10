@@ -16,7 +16,7 @@ export function ManuseioArmaFaq() {
     {
       question: "Qual é a carga horária?",
       answer:
-        "A formação possui certificado de 138 horas, incluindo 120 horas de supervisão individual.",
+        "A formação possui carga horária total de 138 horas, sendo 18 horas de aulas teóricas presenciais e 120 horas de supervisão presencial e individualizada.",
     },
     {
       question: "Quem pode participar?",
@@ -26,12 +26,12 @@ export function ManuseioArmaFaq() {
     {
       question: "A supervisão é individual?",
       answer:
-        "Sim. O principal diferencial da formação é a supervisão individualizada, com acompanhamento de 12 protocolos, sendo 6 de Palográfico e 6 de Pfister.",
+        "Sim. A supervisão é presencial e individualizada, com acompanhamento de 20 protocolos, sendo 10 protocolos do Teste Palográfico na Avaliação da Personalidade e 10 protocolos do Teste Pirâmides Coloridas de Pfister.",
     },
     {
       question: "Quais instrumentos serão abordados?",
       answer:
-        "Serão abordados legislação e normativas, credenciamento, Palográfico, Pfister, IFP, BPA, BETA III, TEPIC-M-2, FDT, BDEFS e integração dos resultados.",
+        "Serão abordados os temas e instrumentos: Anamnese Aprofundada; legislação e normativas referentes à Avaliação Psicológica para o Manuseio de Arma de Fogo; orientações sobre o credenciamento; Teste Palográfico na Avaliação da Personalidade; Teste Pirâmides Coloridas de Pfister; Inventário Fatorial de Personalidade (IFP); Bateria Psicológica da Atenção (BPA); Teste de Atenção Difusa (TEDIF); Teste Não Verbal de Inteligência Geral (BETA III); Teste Pictórico da Memória (TEPIC-M-2); Teste dos Cinco Dígitos (FDT); e Bateria de Disfunções Executivas de Barkley (BDEFS).",
     },
     {
       question: "A turma tem limite de vagas?",
