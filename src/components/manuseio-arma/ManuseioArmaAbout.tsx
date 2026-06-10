@@ -93,20 +93,28 @@ export function ManuseioArmaAbout() {
               </p>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
               <div className="glass-dark rounded-2xl border border-white/10 p-5">
-                <Award className="w-6 h-6 text-neuro-orange" />
-                <p className="mt-3 text-2xl font-black text-white">138h</p>
+                <GraduationCap className="w-6 h-6 text-cyan-400" />
+                <p className="mt-3 text-2xl font-black text-white">18h</p>
                 <p className="mt-1 text-sm text-slate-400">
-                  Certificação da formação
+                  Curso presencial - 1ª etapa da formação
                 </p>
               </div>
 
               <div className="glass-dark rounded-2xl border border-white/10 p-5">
-                <GraduationCap className="w-6 h-6 text-cyan-400" />
+                <CheckCircle2 className="w-6 h-6 text-neuro-orange" />
                 <p className="mt-3 text-2xl font-black text-white">120h</p>
                 <p className="mt-1 text-sm text-slate-400">
-                  Supervisão individual
+                  Supervisão presencial e individualizada
+                </p>
+              </div>
+
+              <div className="glass-dark rounded-2xl border border-white/10 p-5">
+                <Award className="w-6 h-6 text-violet-400" />
+                <p className="mt-3 text-2xl font-black text-white">138h</p>
+                <p className="mt-1 text-sm text-slate-400">
+                  Aulas teóricas + supervisão
                 </p>
               </div>
             </div>
