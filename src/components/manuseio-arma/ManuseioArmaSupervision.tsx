@@ -17,21 +17,21 @@ export function ManuseioArmaSupervision() {
   const highlights = [
     {
       icon: <ClipboardCheck className="w-6 h-6 text-neuro-orange" />,
-      title: "12 protocolos supervisionados",
+      title: "20 protocolos supervisionados",
       description:
-        "Você terá acompanhamento prático para desenvolver análise técnica em protocolos reais ou simulados.",
+        "Produção supervisionada de protocolos dos principais testes de personalidade exigidos no processo avaliativo.",
     },
     {
       icon: <FileSearch className="w-6 h-6 text-cyan-400" />,
-      title: "6 protocolos de Palográfico",
+      title: "10 protocolos de Palográfico",
       description:
-        "Supervisão voltada à leitura, interpretação e integração dos dados do Palográfico.",
+        "10 protocolos do Teste Palográfico na avaliação da personalidade.",
     },
     {
       icon: <ShieldCheck className="w-6 h-6 text-violet-400" />,
-      title: "6 protocolos de Pfister",
+      title: "10 protocolos de Pfister",
       description:
-        "Análise acompanhada dos indicadores emocionais e de personalidade relacionados ao Pfister.",
+        "10 protocolos do Teste Pirâmides Coloridas de Pfister.",
     },
   ];
 
@@ -58,8 +58,8 @@ export function ManuseioArmaSupervision() {
             </span>
 
             <h2 className="font-display font-black text-3xl sm:text-4xl lg:text-5xl tracking-tight text-white leading-tight">
-              120 horas de supervisão individual para consolidar sua segurança
-              técnica.
+              120 horas de supervisão presencial e individual para consolidar seu
+              aprendizado e segurança técnica na emissão do seu laudo conclusivo.
             </h2>
 
             <p className="text-slate-300 text-base sm:text-lg leading-relaxed font-light">
@@ -71,9 +71,9 @@ export function ManuseioArmaSupervision() {
 
             <div className="space-y-3 pt-2">
               {[
-                "Supervisão individualizada para fortalecer a tomada de decisão.",
-                "Discussão técnica dos protocolos com orientação da profissional responsável.",
-                "Turma limitada para garantir acompanhamento próximo.",
+                "Supervisão individualizada realizada de forma presencial para possibilitar maior qualidade na aprendizagem.",
+                "Análise clínica dos resultados e integração de dados da avaliação com orientação direta e individualizada.",
+                "Turma reduzida a 10 alunos no máximo para garantir a qualidade de todo o processo de aprendizagem.",
               ].map((item) => (
                 <div key={item} className="flex items-start gap-3">
                   <CheckCircle2 className="w-5 h-5 text-neuro-orange mt-0.5 shrink-0" />
@@ -110,7 +110,7 @@ export function ManuseioArmaSupervision() {
                 </div>
 
                 <div className="rounded-2xl border border-white/10 bg-white/5 p-5 text-center">
-                  <p className="text-4xl font-black text-white">12</p>
+                  <p className="text-4xl font-black text-white">20</p>
                   <p className="mt-2 text-xs uppercase tracking-widest text-slate-400">
                     Protocolos
                   </p>
