@@ -27,49 +27,49 @@ export function ManuseioArmaLearn() {
     {
       title: "Teste Palográfico",
       description:
-        "Aplicação, análise e interpretação técnica dos protocolos.",
+        "Aplicação, análise e interpretação de 10 protocolos do Teste Palográfico na avaliação da personalidade.",
       icon: <ClipboardList className="w-6 h-6 text-violet-400" />,
     },
     {
       title: "Pfister",
       description:
-        "Leitura dos indicadores emocionais e aspectos relacionados à personalidade.",
+        "Análise e leitura de indicadores de forças e fraquezas na regulação das emoções com a entrega de 10 protocolos do Teste Pirâmides Coloridas de Pfister.",
       icon: <Brain className="w-6 h-6 text-pink-400" />,
     },
     {
       title: "IFP",
       description:
-        "Utilização do instrumento para análise complementar do perfil psicológico.",
+        "Utilização de instrumento complementar da avaliação de traços de personalidade por meio de autorrelato.",
       icon: <FileText className="w-6 h-6 text-emerald-400" />,
     },
     {
       title: "BPA",
       description:
-        "Avaliação dos aspectos atencionais relevantes para o processo avaliativo.",
+        "Avaliação do desempenho atencional dos candidatos ao Manuseio de Arma de Fogo.",
       icon: <Target className="w-6 h-6 text-amber-400" />,
     },
     {
       title: "BETA III",
       description:
-        "Aplicação e interpretação dos resultados dentro do contexto da avaliação.",
+        "Avaliação da eficiência da inteligência não verbal e velocidade de processamento mental.",
       icon: <Brain className="w-6 h-6 text-rose-400" />,
     },
     {
       title: "TEPIC-M-2",
       description:
-        "Compreensão dos indicadores e utilização prática na avaliação psicológica.",
+        "Avaliação das habilidades de memória visual dos candidatos.",
       icon: <ClipboardList className="w-6 h-6 text-sky-400" />,
     },
     {
       title: "FDT",
       description:
-        "Análise dos aspectos relacionados ao controle cognitivo e processamento.",
+        "Avaliação das funções executivas de regulação do controle cognitivo dos candidatos.",
       icon: <Target className="w-6 h-6 text-teal-400" />,
     },
     {
       title: "BDEFS",
       description:
-        "Avaliação de aspectos executivos e prejuízos funcionais associados.",
+        "Avaliação da capacidade de gerenciamento executivo e regulação do comportamento e emoções.",
       icon: <FileText className="w-6 h-6 text-orange-400" />,
     },
     {
