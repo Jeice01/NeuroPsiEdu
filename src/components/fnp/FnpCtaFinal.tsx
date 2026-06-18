@@ -1,7 +1,8 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ArrowRight, Sparkles, ShieldCheck } from "lucide-react";
+import { ArrowRight, Send, Sparkles, ShieldCheck } from "lucide-react";
+import { TELEGRAM_LINK } from "@/lib/links";
 import { useLeadModal } from "./FnpLeadContext";
 
 export function FnpCtaFinal() {
@@ -71,6 +72,15 @@ export function FnpCtaFinal() {
             <span>Garantir Vaga na 8ª Turma FANP</span>
             <ArrowRight className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
           </button>
+          <a
+            href={TELEGRAM_LINK}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex w-full max-w-md items-center justify-center gap-3 rounded-2xl border border-white/10 bg-white/5 px-10 py-4 text-base font-semibold text-slate-300 transition-all duration-300 hover:bg-white/10 hover:text-white"
+          >
+            <Send className="w-5 h-5 text-sky-300" />
+            Entrar no grupo do Telegram
+          </a>
 
           <div className="flex items-center gap-2 text-slate-400 text-xs justify-center pt-2">
             <ShieldCheck className="w-4 h-4 text-emerald-400" />

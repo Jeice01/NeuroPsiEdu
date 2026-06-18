@@ -1,7 +1,8 @@
 "use client";
 
-import { MessageCircle, Activity, Network, Sparkles, LineChart, ArrowRight } from "lucide-react";
+import { MessageCircle, Activity, Network, Sparkles, LineChart, ArrowRight, Send } from "lucide-react";
 import { motion } from "framer-motion";
+import { TELEGRAM_LINK } from "@/lib/links";
 
 export function Footer() {
   const scrollToTop = () => {
@@ -44,6 +45,15 @@ export function Footer() {
               >
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5 text-blue-100 group-hover:text-white"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
               </a>
+              <a
+                href={TELEGRAM_LINK}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Telegram NeuroPsiEdu"
+                className="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center hover:bg-sky-500 transition-all duration-300 group"
+              >
+                <Send className="w-5 h-5 text-blue-100 group-hover:text-white" />
+              </a>
             </div>
           </div>
 
@@ -70,6 +80,22 @@ export function Footer() {
                   <p className="text-xs font-bold text-blue-200/50 uppercase tracking-wider">WhatsApp</p>
                   <a href="https://wa.me/5561982088284" className="text-blue-100 hover:text-white transition-colors">
                     (61) 98208-8284
+                  </a>
+                </div>
+              </li>
+              <li className="flex items-start gap-3 group">
+                <div className="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center group-hover:bg-sky-500 transition-all duration-300 shrink-0">
+                  <Send className="w-5 h-5 text-blue-200 group-hover:text-white" />
+                </div>
+                <div>
+                  <p className="text-xs font-bold text-blue-200/50 uppercase tracking-wider">Telegram</p>
+                  <a
+                    href={TELEGRAM_LINK}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-blue-100 hover:text-white transition-colors"
+                  >
+                    NeuroPsiEdu
                   </a>
                 </div>
               </li>

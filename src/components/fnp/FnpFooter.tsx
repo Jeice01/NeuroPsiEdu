@@ -1,6 +1,7 @@
 "use client";
 
-import { ArrowRight, MessageCircle } from "lucide-react";
+import { ArrowRight, MessageCircle, Send } from "lucide-react";
+import { TELEGRAM_LINK } from "@/lib/links";
 
 export function FnpFooter() {
   const scrollToTop = () => {
@@ -38,6 +39,17 @@ export function FnpFooter() {
               <li className="text-slate-400">
                 <a href="mailto:contato@neuropsiedu.com.br" className="hover:text-white transition-colors">
                   contato@neuropsiedu.com.br
+                </a>
+              </li>
+              <li className="flex items-center gap-2 text-slate-400">
+                <Send className="w-4 h-4 text-sky-300" />
+                <a
+                  href={TELEGRAM_LINK}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-white transition-colors"
+                >
+                  Telegram NeuroPsiEdu
                 </a>
               </li>
             </ul>
