@@ -5,11 +5,9 @@ import {
   ArrowRight,
   Award,
   Clock,
-  Send,
   ShieldCheck,
   Users,
 } from "lucide-react";
-import { TELEGRAM_LINK } from "@/lib/links";
 import { useManuseioArmaLead } from "./ManuseioArmaLeadContext";
 
 export function ManuseioArmaHero() {
@@ -120,15 +118,6 @@ export function ManuseioArmaHero() {
                 className="px-8 py-4 rounded-xl text-base font-semibold text-slate-300 hover:text-white bg-white/5 hover:bg-white/10 border border-white/10 transition-all duration-300 text-center"
               >
                 Ver informações práticas
-              </a>
-              <a
-                href={TELEGRAM_LINK}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="px-8 py-4 rounded-xl text-base font-semibold text-slate-300 hover:text-white bg-white/5 hover:bg-white/10 border border-white/10 transition-all duration-300 text-center flex items-center justify-center gap-3"
-              >
-                <Send className="w-5 h-5 text-sky-300" />
-                Entrar no Telegram
               </a>
             </motion.div>
 

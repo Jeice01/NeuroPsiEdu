@@ -1,8 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ArrowRight, CheckCircle2, Send, ShieldCheck, Users } from "lucide-react";
-import { TELEGRAM_LINK } from "@/lib/links";
+import { ArrowRight, CheckCircle2, ShieldCheck, Users } from "lucide-react";
 import { useManuseioArmaLead } from "./ManuseioArmaLeadContext";
 
 export function ManuseioArmaCtaFinal() {
@@ -69,16 +68,6 @@ export function ManuseioArmaCtaFinal() {
             Quero Receber Informações da Formação
             <ArrowRight className="h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" />
           </button>
-          <a
-            href={TELEGRAM_LINK}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="mx-auto mt-4 inline-flex items-center justify-center gap-3 rounded-xl border border-white/10 bg-white/5 px-8 py-4 text-base font-semibold text-slate-300 transition-all duration-300 hover:bg-white/10 hover:text-white"
-          >
-            <Send className="h-5 w-5 text-sky-300" />
-            Entrar no grupo do Telegram
-          </a>
-
           <div className="mt-6 flex items-center justify-center gap-2 text-sm text-slate-400">
             <Users className="h-4 w-4 text-orange-300" />
             Apenas 10 vagas disponíveis para esta turma.
