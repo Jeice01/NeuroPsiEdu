@@ -71,11 +71,13 @@ revertidas com segurança.
   `out/index.html` do commit `a8d18c`.
 - Tag local de retorno: `production-baseline-2026-06-18`.
 - Branch local de trabalho: `chore/project-baseline`.
+- Tag remota publicada: `production-baseline-2026-06-18`.
+- Branch remota publicada: `origin/chore/project-baseline`.
 - O código-fonte local corresponde ao HEAD `ca122e1`.
 - Diferenças reais encontradas: `ROADMAP.md` não versionado e artefatos em
   `out` regenerados durante a auditoria técnica.
-- A autenticação SSH falhou por ausência de chave pública autorizada nesta
-  máquina. A leitura HTTPS funcionou normalmente.
+- A autenticação foi configurada pelo GitHub CLI usando HTTPS. O SSH continua
+  sem chave autorizada, mas não é necessário para as operações Git atuais.
 
 ### Critérios de aceite
 
@@ -646,6 +648,7 @@ Adicione uma linha para cada execução relevante.
 | 30/07/2026 | Fase 0.1 | Local/GitHub | Restaurar metadados Git e verificar histórico | Aprovado | HEAD remoto `ca122e1`; branch `main` | Codex |
 | 30/07/2026 | Fase 0.1 | Produção/Git | Comparar hash do HTML publicado | Aprovado | Produção idêntica ao `out/index.html` de `a8d18c` | Codex |
 | 30/07/2026 | Fase 0.1 | Local | Criar tag e branch de linha de base | Aprovado | Tag `production-baseline-2026-06-18`; branch `chore/project-baseline` | Codex |
+| 30/07/2026 | Fase 0.1 | GitHub | Publicar branch e tag de linha de base | Aprovado | Branch em `caf0b5f`; tag aponta para `a8d18c` | Codex |
 
 ---
 
@@ -665,7 +668,7 @@ Use esta seção para decisões que afetem arquitetura, segurança ou operação
 | Data | Risco ou bloqueio | Impacto | Ação necessária | Responsável | Situação |
 |---|---|---|---|---|---|
 | 30/07/2026 | Cópia local inicialmente sem metadados `.git` acessíveis | Falta de rastreabilidade e comparação local | Metadados restaurados a partir de clone HTTPS validado | Codex | Resolvido |
-| 30/07/2026 | SSH do GitHub sem chave autorizada nesta máquina | Push via URL SSH não funciona | Configurar chave SSH ou autenticação HTTPS antes da publicação | — | Aberto |
+| 30/07/2026 | SSH do GitHub sem chave autorizada nesta máquina | Push via URL SSH não funciona | GitHub CLI autenticado e Git configurado para HTTPS | Codex | Resolvido por HTTPS |
 | 30/07/2026 | `out` foi regenerado durante a auditoria | `git status` contém alterações de artefatos de build | Decidir na Fase 6 se `out` continuará versionado; não incluir alterações acidentais no commit | — | Aberto |
 | 30/07/2026 | Edge Function pública sem CAPTCHA e rate limiting | Spam e inserções abusivas | Executar Fase 1.2 | — | Aberto |
 | 30/07/2026 | Schema Supabase sem migrations versionadas | Banco não reproduzível | Executar Fase 2 | — | Aberto |
