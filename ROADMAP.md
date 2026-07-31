@@ -165,10 +165,13 @@ revertidas com segurança.
 - [ ] Registrar extensões PostgreSQL utilizadas.
 - [ ] Registrar funções, triggers, views, grants e políticas RLS.
 - [ ] Exportar uma amostra sanitizada da estrutura de dados.
-- [ ] Fazer backup da Edge Function atualmente publicada.
+- [x] Fazer backup local da implementação versionada da Edge Function.
+- [ ] Comparar o backup da Edge Function com a versão atualmente publicada.
 - [ ] Fazer backup dos arquivos atualmente publicados na Hostinger.
-- [ ] Registrar as configurações relevantes de DNS.
-- [ ] Documentar o procedimento de restauração.
+- [x] Confirmar a existência e a data do backup automático da Hostinger.
+- [x] Registrar as configurações públicas relevantes de DNS.
+- [ ] Exportar o inventário completo do Editor de Zona DNS.
+- [x] Documentar o procedimento de restauração.
 - [ ] Validar o backup em ambiente separado ou local.
 
 ### Critérios de aceite
@@ -184,6 +187,19 @@ revertidas com segurança.
 - [ ] Executar uma restauração de teste do schema.
 - [ ] Confirmar tabelas, índices, funções e políticas restauradas.
 - [ ] Registrar tempo e resultado da restauração.
+
+### Andamento em 30/07/2026
+
+- Documento operacional criado em `docs/BACKUP_RECOVERY.md`.
+- Diretório local `backups/` protegido pelo `.gitignore`.
+- Projeto Supabase usado pela Edge Function identificado, mas sem acesso na
+  sessão autenticada atual.
+- Projeto Supabase histórico acessível, porém no plano Free e sem backups
+  agendados.
+- Backup automático da Hostinger confirmado para `30/07/2026 09:09`.
+- Download da Hostinger preparado, mas a transferência local foi interrompida;
+  o arquivo temporário de 6 MiB foi rejeitado como backup inválido.
+- Nenhuma restauração foi executada em produção.
 
 ## 0.5 Linha de base de qualidade
 
