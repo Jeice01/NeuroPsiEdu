@@ -737,6 +737,7 @@ Use esta seção para decisões que afetem arquitetura, segurança ou operação
 
 | Data | Marco | Commit/PR | Observações |
 |---|---|---|---|
+| 31/07/2026 | Fase 1.3 ativada em produção | `security/lead-form-protection` | Mensagens FANP/FAMAF, origens canônicas e eventos de conversão padronizados |
 | 31/07/2026 | Fase 1.2 implantada em produção | `security/lead-form-protection` | Turnstile ativo em FNP/FAMAF, Edge Function protegida e POST integrado aprovado |
 | 30/07/2026 | Auditoria técnica inicial concluída | — | Arquitetura, build, Supabase, segurança e deploy avaliados |
 | 30/07/2026 | Documento de acompanhamento criado | — | Checklist inicial do roadmap |

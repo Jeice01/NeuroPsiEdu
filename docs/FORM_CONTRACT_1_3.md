@@ -57,9 +57,29 @@ O evento duplicado e específico do formulário FAMAF foi removido.
 
 ## Publicação
 
-O deploy deve manter a ordem usada na Fase 1.2:
+A ativação em produção foi concluída em 31/07/2026:
 
-1. gerar o frontend com a site key pública do Turnstile;
-2. publicar e validar o frontend;
-3. publicar a Edge Function;
-4. testar uma combinação válida de cada formulário e uma combinação inválida.
+1. frontend gerado com a site key pública do Turnstile;
+2. release publicado na raiz de `public_html`;
+3. ZIP de publicação removido da área pública e enviado à lixeira recuperável;
+4. modais FANP e FAMAF validados no domínio;
+5. Edge Function `create-lead-formacao` publicada no projeto
+   `avfzuudrjnglqrkyxwkz`;
+6. um POST legítimo executado para cada formulário.
+
+## Evidências de produção
+
+| Verificação | Resultado |
+|---|---|
+| Modal FANP | carregado com Turnstile |
+| Modal FAMAF | carregado com Turnstile |
+| Mensagem FANP | específica da 8ª Turma FANP |
+| Mensagem FAMAF | específica da formação para manuseio de arma |
+| Registro FANP | formação e página `/fnp` confirmadas no banco |
+| Registro FAMAF | formação e página `/famaf` confirmadas no banco |
+| Dados de teste | dois leads `example.test` removidos pelos UUIDs exatos |
+
+A combinação inválida permanece coberta pela lista fechada e pelo
+`deno check`. Não foi enviado um terceiro formulário sintético apenas para
+provocar essa rejeição em produção, evitando consumo desnecessário do limite
+por IP.
