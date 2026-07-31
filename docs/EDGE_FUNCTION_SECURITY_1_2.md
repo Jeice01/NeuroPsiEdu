@@ -8,9 +8,9 @@
 
 ## Estado
 
-A implementação local está concluída e validada. Os segredos foram configurados
-e a migration foi aplicada no Supabase. O deploy da Edge Function permanece
-pendente para entrar na mesma janela do frontend com a site key pública.
+A implementação, a migration, o frontend e a Edge Function estão implantados
+em produção. Os segredos foram configurados no Supabase e a chave pública foi
+injetada somente no build publicado na Hostinger.
 
 O histórico remoto continha cinco migrations ausentes localmente. Elas foram
 recuperadas com `supabase migration fetch`, sem alterar ou reparar o histórico.
@@ -109,19 +109,38 @@ logs.
 | Migration remota | aplicada |
 | Tabela remota | RLS habilitado e forçado; três índices |
 | Advisors Supabase | executados; sem alerta novo para a tabela |
+| Build de produção com a site key | aprovado; 16 páginas |
+| Frontend Hostinger | publicado em `public_html` |
+| Widget FNP no domínio real | verificação concluída com “Sucesso!” |
+| Widget FAMAF no domínio real | carregado |
+| Edge Function de produção | publicada |
+| POST sem CAPTCHA em produção | 400 |
+| POST com CAPTCHA inválido em produção | 400 |
+| POST válido integrado | lead registrado e confirmação exibida |
+| Limpeza do teste integrado | lead sintético removido pelo ID exato |
 
 Os testes de navegador usaram as chaves fictícias oficiais do Cloudflare. Elas
 não foram gravadas em arquivos locais nem serão usadas em produção. Referência:
 <https://developers.cloudflare.com/turnstile/troubleshooting/testing/>.
 
-Nenhuma lead foi enviada ao Supabase durante os testes.
+Durante o teste integrado foi criada uma única lead sintética com domínio
+reservado `example.test`. O registro foi confirmado no banco e removido em
+seguida pelo UUID exato.
 
-## Pendências externas para ativação
+## Ativação em produção
 
-1. Configurar `NEXT_PUBLIC_TURNSTILE_SITE_KEY` no build da Hostinger.
-2. Fazer deploy da Edge Function.
-3. Publicar o frontend com a site key na mesma janela.
-4. Executar os testes integrados de POST, CAPTCHA, repetição e banco.
+1. Build estático gerado com `NEXT_PUBLIC_TURNSTILE_SITE_KEY`.
+2. Conteúdo publicado na raiz de `public_html`, com substituição dos arquivos
+   existentes protegida pelo backup concluído na Fase 0.4.
+3. Turnstile validado no domínio real antes da atualização do backend.
+4. Edge Function `create-lead-formacao` publicada no projeto
+   `avfzuudrjnglqrkyxwkz`.
+5. CORS, métodos, JSON, limite de corpo, CAPTCHA ausente, CAPTCHA inválido e
+   POST legítimo validados contra produção.
+
+O limite repetido não foi provocado até HTTP 429 em produção para não bloquear
+temporariamente o IP legítimo usado na validação. Esse cenário permanece como
+teste controlado pendente no roadmap.
 
 ## Advisors
 
@@ -131,5 +150,6 @@ incluindo funções `security definer`, `search_path`, listagem do bucket
 `neuropsiedu.lead_rate_limit_events`. Os alertas legados devem ser tratados em
 uma fase de segurança do banco, sem ampliar o escopo deste deploy.
 
-O frontend e a Edge Function devem ser ativados na mesma janela de deploy. A
-Edge Function falha fechada quando os segredos não estão configurados.
+O frontend foi ativado primeiro e validado; em seguida a Edge Function foi
+publicada. Essa ordem evitou indisponibilidade, pois a versão anterior aceitava
+os campos adicionais enquanto a nova versão exige CAPTCHA válido.

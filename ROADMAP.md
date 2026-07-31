@@ -318,8 +318,8 @@ Implementação, evidências e pendências de ativação:
 
 ### Critérios de aceite
 
-- [ ] Requisição legítima é registrada.
-- [ ] Requisição sem CAPTCHA válido é rejeitada.
+- [x] Requisição legítima é registrada.
+- [x] Requisição sem CAPTCHA válido é rejeitada.
 - [x] Bot ou script não consegue contornar a proteção apenas alterando `Origin`.
 - [ ] Excesso de requisições recebe HTTP 429.
 - [x] Logs permitem investigar falhas sem expor PII desnecessária.
@@ -327,9 +327,9 @@ Implementação, evidências e pendências de ativação:
 
 ### Testes
 
-- [ ] POST válido.
-- [ ] POST sem CAPTCHA.
-- [ ] POST com CAPTCHA inválido.
+- [x] POST válido.
+- [x] POST sem CAPTCHA.
+- [x] POST com CAPTCHA inválido.
 - [ ] POST repetido além do limite.
 - [x] POST com corpo acima do limite.
 - [x] POST com JSON inválido.
@@ -722,7 +722,7 @@ Use esta seção para decisões que afetem arquitetura, segurança ou operação
 | 30/07/2026 | Cópia local inicialmente sem metadados `.git` acessíveis | Falta de rastreabilidade e comparação local | Metadados restaurados a partir de clone HTTPS validado | Codex | Resolvido |
 | 30/07/2026 | SSH do GitHub sem chave autorizada nesta máquina | Push via URL SSH não funciona | GitHub CLI autenticado e Git configurado para HTTPS | Codex | Resolvido por HTTPS |
 | 30/07/2026 | `out` foi regenerado durante a auditoria | `git status` contém alterações de artefatos de build | Decidir na Fase 6 se `out` continuará versionado; não incluir alterações acidentais no commit | — | Aberto |
-| 30/07/2026 | Edge Function pública sem CAPTCHA e rate limiting | Spam e inserções abusivas | Executar Fase 1.2 | — | Aberto |
+| 30/07/2026 | Edge Function pública sem CAPTCHA e rate limiting | Spam e inserções abusivas | Fase 1.2 implantada e validada em produção em 31/07/2026 | Codex | Resolvido |
 | 30/07/2026 | Schema Supabase sem migrations versionadas | Banco não reproduzível | Executar Fase 2 | — | Aberto |
 | 30/07/2026 | Deploy Hostinger aparentemente manual | Erros de publicação e rollback difícil | Executar Fase 3 | — | Aberto |
 | 30/07/2026 | Cinco vulnerabilidades altas no npm | Risco de segurança e manutenção | Executar Fase 1.1 | — | Aberto |
@@ -734,6 +734,7 @@ Use esta seção para decisões que afetem arquitetura, segurança ou operação
 
 | Data | Marco | Commit/PR | Observações |
 |---|---|---|---|
+| 31/07/2026 | Fase 1.2 implantada em produção | `security/lead-form-protection` | Turnstile ativo em FNP/FAMAF, Edge Function protegida e POST integrado aprovado |
 | 30/07/2026 | Auditoria técnica inicial concluída | — | Arquitetura, build, Supabase, segurança e deploy avaliados |
 | 30/07/2026 | Documento de acompanhamento criado | — | Checklist inicial do roadmap |
 | 30/07/2026 | Fase 0.1 concluída localmente | — | Produção identificada em `a8d18c`; tag e branch locais criadas |
