@@ -1,8 +1,11 @@
 # Linha de base de qualidade
 
-**Projeto:** NeuroPsiEdu  
-**Data da coleta:** 30/07/2026  
-**Branch:** `chore/project-baseline`  
+**Projeto:** NeuroPsiEdu
+
+**Data da coleta:** 30/07/2026
+
+**Branch:** `chore/project-baseline`
+
 **Runtime:** Node.js `24.18.1` e npm `11.16.0`
 
 Este documento registra o estado inicial do projeto antes das fases de
