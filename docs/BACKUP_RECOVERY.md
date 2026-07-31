@@ -82,11 +82,24 @@ A cópia automática está disponível no fluxo **Arquivos > Backups > Restaurar
 baixar**. O hPanel também informa que arquivos de plugins de backup, cache e
 exports de banco podem ser excluídos dos backups.
 
-A preparação do download foi concluída no hPanel, mas a transferência local
-foi interrompida após 6 MiB e deixou somente um arquivo temporário. Esse
-arquivo não é um backup válido e não deve ser usado em restauração. O backup
-remoto da Hostinger permanece disponível, mas a cópia externa ainda está
-pendente.
+A primeira transferência foi interrompida após 6 MiB e rejeitada. Uma nova
+transferência foi concluída e preservada em:
+
+`backups/2026-07-30/hostinger/u754689460.20260730120946.tar.gz`
+
+| Verificação | Resultado |
+|---|---|
+| Tamanho | 60.588.306 bytes |
+| SHA-256 | `9948E62E7070206DF10A9D1BC624E4A79BC77055DE6137D2288F8F70A1C11141` |
+| Entradas no tar | 3.147 |
+| Extração de teste | Sucesso |
+| Arquivos extraídos | 2.527 |
+| Bytes extraídos | 67.848.367 |
+| Diretórios `public_html` | 2 |
+| `index.html` sob `public_html` | 27 |
+
+O diretório temporário usado na extração foi removido. O arquivo original em
+Downloads foi mantido, e a cópia em `backups/` possui hash idêntico.
 
 ## DNS observado publicamente
 
@@ -103,9 +116,10 @@ uma mudança, pois é variável.
 | `www.neuropsiedu.com.br` | CNAME | `www.neuropsiedu.com.br.cdn.hstgr.net` |
 | `academia.neuropsiedu.com.br` | A | `185.158.133.1` |
 
-O inventário definitivo ainda deve ser exportado do Editor de Zona DNS da
-Hostinger, pois uma consulta pública não revela registros não publicados,
-anotações administrativas nem histórico.
+O inventário consolidado está em `docs/DNS_INVENTORY.md`. Ele registra as
+configurações publicadas relevantes para recuperação. Anotações
+administrativas e histórico interno do hPanel não fazem parte do DNS
+autoritativo e devem ser capturados antes de uma futura mudança de zona.
 
 ## Procedimento de backup do Supabase
 
@@ -237,7 +251,5 @@ compatíveis ou o fluxo de restauração do próprio Supabase.
 
 ## Pendências que bloqueiam a conclusão da fase
 
-- baixar novamente a cópia preparada da Hostinger até a conclusão;
-- exportar o inventário completo do Editor de Zona DNS;
 - validar separadamente a estratégia de migração dos schemas gerenciados
   `auth` e `storage`, caso uma migração integral seja necessária.

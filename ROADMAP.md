@@ -167,10 +167,10 @@ revertidas com segurança.
 - [x] Exportar uma amostra sanitizada da estrutura de dados.
 - [x] Fazer backup local da implementação versionada da Edge Function.
 - [x] Baixar e comparar a Edge Function atualmente publicada.
-- [ ] Fazer backup dos arquivos atualmente publicados na Hostinger.
+- [x] Fazer backup dos arquivos atualmente publicados na Hostinger.
 - [x] Confirmar a existência e a data do backup automático da Hostinger.
 - [x] Registrar as configurações públicas relevantes de DNS.
-- [ ] Exportar o inventário completo do Editor de Zona DNS.
+- [x] Consolidar o inventário DNS relevante para recuperação.
 - [x] Documentar o procedimento de restauração.
 - [x] Validar os schemas da aplicação em ambiente local isolado.
 
@@ -203,6 +203,10 @@ revertidas com segurança.
   `app-data.sql`.
 - O dump completo de Auth/Storage apresentou incompatibilidade de versão
   documentada; a transação de teste foi revertida sem restauração parcial.
+- Backup da Hostinger baixado, copiado para o diretório protegido, validado por
+  SHA-256 e extraído com sucesso em ambiente temporário.
+- Inventário DNS consolidado em `docs/DNS_INVENTORY.md`.
+- Fase 0.4 concluída em 30/07/2026.
 - Projeto Supabase histórico acessível, porém no plano Free e sem backups
   agendados.
 - Backup automático da Hostinger confirmado para `30/07/2026 09:09`.
