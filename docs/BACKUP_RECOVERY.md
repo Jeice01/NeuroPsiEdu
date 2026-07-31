@@ -48,10 +48,15 @@ Foram gerados os seguintes dumps lógicos:
 | `schema.sql` | 76.484 | `2E5051BCAB1A33695863530D1B01BF554645428EA6754FE0534B912CCA31CC92` |
 | `roles.sql` | 297 | `25873CEC56A2CC6514E204F420231777F85C03DA818CAA7090CDCDFA89776ECD` |
 | `data.sql` | 398.148 | `6AA913E6004EFB88EA498BCF50B52E22AECA0FA78091560810BD90437DC6E645` |
+| `app-data.sql` | 364.241 | `6314DCD33A78C3CEC1CD75A8194E604527E3E79A03E21AF88B18F3DEDCDC8554` |
 
 O schema contém 22 tabelas, 15 funções, 18 triggers e 77 políticas. O dump de
 dados contém 51 seções `COPY`. Nenhum dos três arquivos contém marcadores de
 credenciais de conexão conhecidos.
+
+O dump completo contém dados dos schemas gerenciados `auth` e `storage`. Um
+dump adicional, `app-data.sql`, contém somente `public` e `neuropsiedu`, com
+22 seções `COPY`, para restauração independente dos dados da aplicação.
 
 Uma cópia local, datada, da implementação versionada da Edge Function
 `create-lead-formacao` permanece em:
@@ -199,9 +204,40 @@ Para cada artefato concluído, registrar:
 - resultado da restauração de teste;
 - divergências encontradas.
 
+## Resultado da restauração isolada
+
+Teste executado em 30/07/2026 com banco Supabase local no Docker.
+
+1. A tentativa transacional com `data.sql` foi revertida integralmente porque
+   a versão local mais recente da tabela gerenciada
+   `auth.audit_log_entries` não possui a coluna `ip_address` presente no dump.
+2. Foi gerado `app-data.sql`, restrito aos schemas `public` e `neuropsiedu`.
+3. `roles.sql`, `schema.sql` e `app-data.sql` foram aplicados em transação
+   única, com `ON_ERROR_STOP` e triggers desabilitados durante a carga.
+4. A restauração terminou com sucesso.
+
+Objetos confirmados no destino isolado:
+
+| Verificação | Resultado |
+|---|---:|
+| Tabelas | 22 |
+| Funções | 15 |
+| Triggers de usuário | 18 |
+| Políticas RLS | 77 |
+| Extensões esperadas | 6 |
+| Registros em `neuropsiedu.leads_formacoes` | 2 |
+
+Tempo observado após o banco local ficar disponível: menos de 1 minuto para a
+aplicação e validação dos três arquivos. A preparação inicial das imagens
+Docker levou aproximadamente 5 minutos.
+
+O resultado demonstra restauração dos schemas da aplicação. Ele não comprova
+restauração independente de Auth e Storage, que exigem versões gerenciadas
+compatíveis ou o fluxo de restauração do próprio Supabase.
+
 ## Pendências que bloqueiam a conclusão da fase
 
 - baixar novamente a cópia preparada da Hostinger até a conclusão;
 - exportar o inventário completo do Editor de Zona DNS;
-- produzir uma amostra sanitizada sem dados pessoais;
-- executar a restauração de teste em ambiente separado.
+- validar separadamente a estratégia de migração dos schemas gerenciados
+  `auth` e `storage`, caso uma migração integral seja necessária.

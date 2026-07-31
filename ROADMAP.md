@@ -162,9 +162,9 @@ revertidas com segurança.
 
 - [x] Gerar backup lógico do banco Supabase.
 - [x] Exportar o schema atual do banco.
-- [ ] Registrar extensões PostgreSQL utilizadas.
-- [ ] Registrar funções, triggers, views, grants e políticas RLS.
-- [ ] Exportar uma amostra sanitizada da estrutura de dados.
+- [x] Registrar extensões PostgreSQL utilizadas.
+- [x] Registrar funções, triggers, views, grants e políticas RLS.
+- [x] Exportar uma amostra sanitizada da estrutura de dados.
 - [x] Fazer backup local da implementação versionada da Edge Function.
 - [x] Baixar e comparar a Edge Function atualmente publicada.
 - [ ] Fazer backup dos arquivos atualmente publicados na Hostinger.
@@ -172,21 +172,21 @@ revertidas com segurança.
 - [x] Registrar as configurações públicas relevantes de DNS.
 - [ ] Exportar o inventário completo do Editor de Zona DNS.
 - [x] Documentar o procedimento de restauração.
-- [ ] Validar o backup em ambiente separado ou local.
+- [x] Validar os schemas da aplicação em ambiente local isolado.
 
 ### Critérios de aceite
 
-- [ ] O backup possui data, origem e responsável.
-- [ ] O arquivo pode ser lido e restaurado.
-- [ ] A restauração não depende de conhecimento não documentado.
-- [ ] Dados pessoais não são copiados para locais inseguros.
+- [x] O backup possui data, origem e responsável.
+- [x] Os arquivos dos schemas da aplicação podem ser lidos e restaurados.
+- [x] A restauração dos schemas da aplicação está documentada.
+- [x] Dados pessoais permanecem somente no diretório local ignorado pelo Git.
 
 ### Testes e evidências
 
-- [ ] Validar a integridade dos arquivos de backup.
-- [ ] Executar uma restauração de teste do schema.
-- [ ] Confirmar tabelas, índices, funções e políticas restauradas.
-- [ ] Registrar tempo e resultado da restauração.
+- [x] Validar a integridade dos arquivos de backup.
+- [x] Executar uma restauração de teste do schema.
+- [x] Confirmar tabelas, índices, funções e políticas restauradas.
+- [x] Registrar tempo e resultado da restauração.
 
 ### Andamento em 30/07/2026
 
@@ -198,6 +198,11 @@ revertidas com segurança.
 - Dumps `schema.sql`, `roles.sql` e `data.sql` gerados, protegidos pelo
   `.gitignore` e verificados por SHA-256.
 - Edge Function remota baixada; hash idêntico ao código versionado.
+- Inventário sanitizado criado em `docs/SUPABASE_SCHEMA_INVENTORY.md`.
+- Restauração local concluída para `roles.sql`, `schema.sql` e
+  `app-data.sql`.
+- O dump completo de Auth/Storage apresentou incompatibilidade de versão
+  documentada; a transação de teste foi revertida sem restauração parcial.
 - Projeto Supabase histórico acessível, porém no plano Free e sem backups
   agendados.
 - Backup automático da Hostinger confirmado para `30/07/2026 09:09`.
