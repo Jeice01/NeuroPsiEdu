@@ -272,8 +272,7 @@ export function ManuseioArmaLeadModal({
       mensagem: form.mensagem.trim() || null,
       formacao_interesse:
         "Formação em Avaliação Psicológica para Manuseio de Arma de Fogo",
-      pagina_origem:
-        "https://neuropsiedu.com.br/formacao-manuseio-arma",
+      pagina_origem: "https://neuropsiedu.com.br/famaf",
       botao_origem: buttonOrigin,
       consentimento_contato: true,
       turnstile_token: turnstileToken,
@@ -300,6 +299,10 @@ export function ManuseioArmaLeadModal({
         );
       }
 
+      if (!data.success) {
+        throw new Error("A resposta do servidor não confirmou o envio.");
+      }
+
       setSuccessMessage(
         data.message ||
           "Recebemos seus dados! Nossa equipe entrará em contato pelo WhatsApp com todas as informações da Formação em Avaliação Psicológica para Manuseio de Arma de Fogo."
@@ -311,22 +314,13 @@ export function ManuseioArmaLeadModal({
         window.dataLayer.push({
           event: "lead_formacao",
           formacao: "MANUSEIO_ARMA",
-          pagina: "/formacao-manuseio-arma",
+          pagina: "/famaf",
           perfil: form.perfil || "nao_informado",
+          interesse_principal: form.interesse_principal || "nao_informado",
           botao_origem: buttonOrigin,
         });
       }
       setSuccess(true);
-
-      if (typeof window !== "undefined") {
-        window.dataLayer = window.dataLayer || [];
-        window.dataLayer.push({
-          event: "lead_formacao_manuseio_arma",
-          formacao_interesse:
-            "Formação em Avaliação Psicológica para Manuseio de Arma de Fogo",
-          botao_origem: buttonOrigin,
-        });
-      }
     } catch (error: unknown) {
       setTurnstileToken("");
       setTurnstileResetKey((value) => value + 1);
@@ -441,7 +435,11 @@ export function ManuseioArmaLeadModal({
                     />
                   </div>
                   {apiError && (
-                    <div className="flex items-start gap-3 p-4 rounded-xl bg-red-500/10 border border-red-500/20 text-red-400 text-sm">
+                    <div
+                      role="alert"
+                      aria-live="assertive"
+                      className="flex items-start gap-3 p-4 rounded-xl bg-red-500/10 border border-red-500/20 text-red-400 text-sm"
+                    >
                       <AlertCircle className="w-5 h-5 flex-shrink-0 mt-0.5" />
                       <p>{apiError}</p>
                     </div>

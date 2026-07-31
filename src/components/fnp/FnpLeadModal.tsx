@@ -254,6 +254,10 @@ export function FnpLeadModal({ isOpen, onClose, botaoOrigem }: Props) {
         );
       }
 
+      if (!data.success) {
+        throw new Error("A resposta do servidor não confirmou o envio.");
+      }
+
       setSuccessMessage(
         data.message ||
         "Recebemos seus dados! Nossa equipe entrará em contato pelo WhatsApp com as informações da 8ª Turma FANP."
@@ -264,11 +268,13 @@ export function FnpLeadModal({ isOpen, onClose, botaoOrigem }: Props) {
         window.dataLayer = window.dataLayer || [];
 
         window.dataLayer.push({
-        event: "lead_formacao",
-        formacao: "FANP",
-        pagina: "/fnp",
-        perfil: form.perfil || "nao_informado",
-        interesse_principal: form.interesse_principal || "nao_informado",});
+          event: "lead_formacao",
+          formacao: "FANP",
+          pagina: "/fnp",
+          perfil: form.perfil || "nao_informado",
+          interesse_principal: form.interesse_principal || "nao_informado",
+          botao_origem: botaoOrigem,
+        });
       }
       setSuccess(true);
     } catch (err: unknown) {
@@ -379,7 +385,11 @@ export function FnpLeadModal({ isOpen, onClose, botaoOrigem }: Props) {
 
                   {/* Erro de API */}
                   {apiError && (
-                    <div className="flex items-start gap-3 p-4 rounded-xl bg-red-500/10 border border-red-500/20 text-red-400 text-sm">
+                    <div
+                      role="alert"
+                      aria-live="assertive"
+                      className="flex items-start gap-3 p-4 rounded-xl bg-red-500/10 border border-red-500/20 text-red-400 text-sm"
+                    >
                       <AlertCircle className="w-5 h-5 flex-shrink-0 mt-0.5" />
                       <p>{apiError}</p>
                     </div>

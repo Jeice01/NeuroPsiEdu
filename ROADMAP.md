@@ -341,23 +341,26 @@ Implementação, evidências e pendências de ativação:
 
 ## 1.3 Correções funcionais dos formulários
 
-- [ ] Corrigir a mensagem fixa da “8ª Turma FANP”.
-- [ ] Retornar mensagem apropriada para FNP.
-- [ ] Retornar mensagem apropriada para FAMAF.
-- [ ] Validar `formacao_interesse` no servidor.
-- [ ] Usar lista permitida de formações e origens.
-- [ ] Impedir que o cliente defina livremente `status_lead`.
-- [ ] Padronizar o contrato de resposta da API.
-- [ ] Padronizar mensagens de erro no frontend.
-- [ ] Evitar alertas nativos do navegador.
-- [ ] Confirmar eventos corretos no `dataLayer`.
+- [x] Corrigir a mensagem fixa da “8ª Turma FANP”.
+- [x] Retornar mensagem apropriada para FNP.
+- [x] Retornar mensagem apropriada para FAMAF.
+- [x] Validar `formacao_interesse` no servidor.
+- [x] Usar lista permitida de formações e origens.
+- [x] Impedir que o cliente defina livremente `status_lead`.
+- [x] Padronizar o contrato de resposta da API.
+- [x] Padronizar mensagens de erro no frontend.
+- [x] Evitar alertas nativos do navegador.
+- [x] Confirmar eventos corretos no `dataLayer`.
 
 ### Critérios de aceite
 
-- [ ] Cada formulário apresenta a mensagem correta.
-- [ ] Valores não permitidos são rejeitados ou normalizados.
-- [ ] O servidor controla campos administrativos.
-- [ ] Erros de rede e servidor são apresentados de forma acessível.
+- [x] Cada formulário apresenta a mensagem correta.
+- [x] Valores não permitidos são rejeitados ou normalizados.
+- [x] O servidor controla campos administrativos.
+- [x] Erros de rede e servidor são apresentados de forma acessível.
+
+Implementação e evidências:
+[`docs/FORM_CONTRACT_1_3.md`](docs/FORM_CONTRACT_1_3.md).
 
 ---
 

@@ -16,6 +16,31 @@ const RATE_LIMITS = {
   phone: { limit: 3, windowSeconds: 60 * 60 },
 } as const;
 
+const FORMATIONS = {
+  fanp: {
+    name: "8ª Turma FANP",
+    canonicalPage: "https://neuropsiedu.com.br/fnp",
+    allowedPages: new Set([
+      "https://neuropsiedu.com.br/fnp",
+      "https://neuropsiedu.com.br/fnp/",
+    ]),
+    successMessage:
+      "Recebemos seus dados! Nossa equipe entrará em contato pelo WhatsApp com as informações da 8ª Turma FANP.",
+  },
+  famaf: {
+    name: "Formação em Avaliação Psicológica para Manuseio de Arma de Fogo",
+    canonicalPage: "https://neuropsiedu.com.br/famaf",
+    allowedPages: new Set([
+      "https://neuropsiedu.com.br/famaf",
+      "https://neuropsiedu.com.br/famaf/",
+      "https://neuropsiedu.com.br/formacao-manuseio-arma",
+      "https://neuropsiedu.com.br/formacao-manuseio-arma/",
+    ]),
+    successMessage:
+      "Recebemos seus dados! Nossa equipe entrará em contato pelo WhatsApp com todas as informações da Formação em Avaliação Psicológica para Manuseio de Arma de Fogo.",
+  },
+} as const;
+
 const validBrazilianDDDs = new Set([
   "11","12","13","14","15","16","17","18","19",
   "21","22","24","27","28",
@@ -32,6 +57,7 @@ const validBrazilianDDDs = new Set([
 
 type RateLimitScope = keyof typeof RATE_LIMITS;
 type SupabaseAdmin = SupabaseClient;
+type Formation = (typeof FORMATIONS)[keyof typeof FORMATIONS];
 
 function configuredSet(name: string) {
   return new Set(
@@ -109,6 +135,20 @@ function limitText(value: unknown, maxLength: number) {
   const normalized = normalizeText(value);
   if (!normalized) return null;
   return normalized.slice(0, maxLength);
+}
+
+function resolveFormation(
+  formationValue: unknown,
+  pageValue: unknown,
+): Formation | null {
+  const formation = normalizeText(formationValue);
+  const page = normalizeText(pageValue);
+
+  if (!formation || !page) return null;
+
+  return Object.values(FORMATIONS).find((candidate) =>
+    candidate.name === formation && candidate.allowedPages.has(page)
+  ) || null;
 }
 
 function onlyDigits(value: string) {
@@ -465,6 +505,19 @@ Deno.serve(async (req) => {
       );
     }
 
+    const formation = resolveFormation(
+      body.formacao_interesse,
+      body.pagina_origem,
+    );
+    if (!formation) {
+      logSecurity("formation_rejected", requestId);
+      return jsonResponse(
+        origin,
+        { error: "Formação ou página de origem inválida." },
+        400,
+      );
+    }
+
     const emailHash = await hmacSha256(email, rateLimitSalt);
     const phoneHash = await hmacSha256(whatsapp, rateLimitSalt);
     const identifierLimits = await Promise.all([
@@ -500,11 +553,8 @@ Deno.serve(async (req) => {
       cidade_estado: limitText(body.cidade_estado, 180),
       interesse_principal: limitText(body.interesse_principal, 220),
       mensagem: limitText(body.mensagem, 1200),
-      formacao_interesse:
-        limitText(body.formacao_interesse, 180) || "8ª Turma FANP",
-      pagina_origem:
-        limitText(body.pagina_origem, 300) ||
-        "https://neuropsiedu.com.br/fnp",
+      formacao_interesse: formation.name,
+      pagina_origem: formation.canonicalPage,
       botao_origem: limitText(body.botao_origem, 180),
       consentimento_contato: consentimentoContato,
       status_lead: "novo",
@@ -534,8 +584,7 @@ Deno.serve(async (req) => {
 
     return jsonResponse(origin, {
       success: true,
-      message:
-        "Recebemos seus dados! Nossa equipe entrará em contato pelo WhatsApp.",
+      message: formation.successMessage,
     });
   } catch (error) {
     if (error instanceof Response) {
