@@ -1,3 +1,5 @@
+create schema if not exists neuropsiedu;
+
 create table if not exists neuropsiedu.lead_rate_limit_events (
   id bigint generated always as identity primary key,
   scope text not null

@@ -1,6 +1,8 @@
 # Inventário sanitizado do schema Supabase
 
-Data da coleta: 30/07/2026
+Data da coleta inicial: 30/07/2026
+
+Atualizado após a Fase 2.1 em: 31/07/2026
 
 Origem: projeto `avfzuudrjnglqrkyxwkz` (`projetoorbis`)
 
@@ -13,9 +15,9 @@ incluído.
 | Objeto | Quantidade |
 |---|---:|
 | Schemas de aplicação exportados | 2 |
-| Tabelas | 22 |
+| Tabelas | 24 |
 | Funções | 15 |
-| Triggers de usuário | 18 |
+| Triggers de usuário | 19 |
 | Views | 0 |
 | Políticas RLS | 77 |
 | Extensões declaradas | 6 |
@@ -27,6 +29,8 @@ políticas estão preservados no `schema.sql` protegido e não versionado.
 
 ### `neuropsiedu`
 
+- `espera_pos`
+- `lead_rate_limit_events`
 - `leads_formacoes`
 
 ### `public`
@@ -79,6 +83,7 @@ políticas estão preservados no `schema.sql` protegido e não versionado.
 ## Triggers
 
 - `trg_leads_formacoes_updated_at`
+- `trg_espera_pos_updated_at`
 - `trigger_notify_mentions`
 - `update_comments_updated_at`
 - `update_notifications_updated_at`

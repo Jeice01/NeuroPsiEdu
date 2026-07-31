@@ -28,8 +28,8 @@ Para cada entrega:
 | Fase | Tema | Prioridade | Situação |
 |---|---|---:|---|
 | 0 | Preparação e segurança operacional | P0 | 🔄 |
-| 1 | Correções críticas de segurança | P0 | [ ] |
-| 2 | Banco Supabase reproduzível e seguro | P0 | [ ] |
+| 1 | Correções críticas de segurança | P0 | [x] |
+| 2 | Banco Supabase reproduzível e seguro | P0 | 🔄 |
 | 3 | CI/CD e deploy automatizado | P1 | [ ] |
 | 4 | Testes automatizados | P1 | [ ] |
 | 5 | SEO, performance e acessibilidade | P2 | [ ] |
@@ -372,18 +372,21 @@ Implementação e evidências:
 
 ## 2.1 Migrations
 
-- [ ] Criar migration do schema `neuropsiedu`.
-- [ ] Criar migration da tabela `leads_formacoes`.
-- [ ] Criar migration da tabela `espera_pos`.
-- [ ] Decidir se `tab_pos` ainda é necessária.
-- [ ] Criar migration de `tab_pos` ou removê-la.
-- [ ] Versionar primary keys.
-- [ ] Versionar valores padrão e timestamps.
-- [ ] Versionar constraints de tamanho e formato.
-- [ ] Versionar índices de consulta.
-- [ ] Criar estratégia de deduplicação.
-- [ ] Versionar functions, triggers e views utilizadas.
-- [ ] Não fixar versões de extensões sem necessidade.
+- [x] Criar migration do schema `neuropsiedu`.
+- [x] Criar migration da tabela `leads_formacoes`.
+- [x] Criar migration da tabela `espera_pos`.
+- [x] Decidir se `tab_pos` ainda é necessária.
+- [x] Criar migration de `tab_pos` ou removê-la.
+- [x] Versionar primary keys.
+- [x] Versionar valores padrão e timestamps.
+- [x] Versionar constraints de tamanho e formato.
+- [x] Versionar índices de consulta.
+- [x] Criar estratégia de deduplicação.
+- [x] Versionar functions, triggers e views utilizadas.
+- [x] Não fixar versões de extensões sem necessidade.
+
+Implementação, decisões e evidências:
+[`docs/SUPABASE_MIGRATIONS_2_1.md`](docs/SUPABASE_MIGRATIONS_2_1.md).
 
 ## 2.2 RLS, grants e Data API
 
@@ -701,6 +704,9 @@ Adicione uma linha para cada execução relevante.
 | 30/07/2026 | Fase 0.3 | Local/Git | Varredura de secrets no estado atual e histórico | Aprovado com observação | Somente chave pública `anon` em bundles históricos | Codex |
 | 30/07/2026 | Fase 0.3 | Local | Inventário de variáveis e configurações públicas | Aprovado | `docs/CONFIGURATION.md` | Codex |
 | 30/07/2026 | Fase 0.3 | Local | Validar regras de ignore para ambientes | Aprovado | Somente arquivos `.env.example` podem ser versionados | Codex |
+| 31/07/2026 | Fase 2.1 | Local | Recriar banco com `supabase db reset --local --no-seed` | Aprovado | Todas as migrations aplicadas do zero | Codex |
+| 31/07/2026 | Fase 2.1 | Local | Testar constraints, deduplicação e triggers | Aprovado | `supabase/tests/phase_2_1_schema.sql` | Codex |
+| 31/07/2026 | Fase 2.1 | Supabase | Aplicar e validar migration remota | Aprovado | Migration `20260731045319`; lint sem erros | Codex |
 
 ---
 
@@ -715,6 +721,8 @@ Use esta seção para decisões que afetem arquitetura, segurança ou operação
 | 30/07/2026 | Fixar Node.js `24.18.1` e npm `11.16.0` | Node 24 é LTS, possui suporte superior ao Node 22 e inclui essa versão do npm | Permanecer no Node 22 LTS ou usar Node 26 Current | Codex |
 | 30/07/2026 | Manter nomes legacy das variáveis Supabase nesta fase | O código atual consome `ANON_KEY` e `SERVICE_ROLE_KEY`; renomear sem migrar o código quebraria os ambientes | Migrar agora para `sb_publishable_*` e `sb_secret_*` | Codex |
 | 30/07/2026 | Não adicionar variáveis futuras ao `.env.example` ativo | Placeholders não consumidos sugerem configuração obrigatória inexistente | Incluir antecipadamente URL da função e CAPTCHA | Codex |
+| 31/07/2026 | Não recriar `tab_pos` no projeto atual | A tabela pertence ao projeto histórico e o único componente que a usa não é importado | Migrar `tab_pos` ou manter duas estruturas de captação | Codex |
+| 31/07/2026 | Deduplicar somente leads em estado `novo` | Evita spam duplicado sem bloquear uma nova inscrição futura | Unicidade permanente por e-mail ou nenhuma deduplicação | Codex |
 
 ---
 
@@ -730,6 +738,7 @@ Use esta seção para decisões que afetem arquitetura, segurança ou operação
 | 30/07/2026 | Deploy Hostinger aparentemente manual | Erros de publicação e rollback difícil | Executar Fase 3 | — | Aberto |
 | 30/07/2026 | Cinco vulnerabilidades altas no npm | Risco de segurança e manutenção | Executar Fase 1.1 | — | Aberto |
 | 30/07/2026 | Chave pública `anon` de projeto antigo presente em bundles do histórico | Projeto histórico permanece identificável e acessível conforme RLS | Confirmar desativação ou revisar RLS do project ref `lgmfuswfvlnagthmrhjw` | — | Aberto |
+| 31/07/2026 | Formulário da lista de espera usa insert direto em `public.espera_pos` | Fluxo da home continua incompatível com a tabela segura versionada | Migrar o envio para Edge Function na Fase 2.2 | — | Aberto |
 
 ---
 
@@ -737,6 +746,7 @@ Use esta seção para decisões que afetem arquitetura, segurança ou operação
 
 | Data | Marco | Commit/PR | Observações |
 |---|---|---|---|
+| 31/07/2026 | Fase 2.1 concluída | `database/version-schema-and-rls` | Schema de leads reproduzível, validado localmente e aplicado ao Supabase |
 | 31/07/2026 | Fase 1.3 ativada em produção | `security/lead-form-protection` | Mensagens FANP/FAMAF, origens canônicas e eventos de conversão padronizados |
 | 31/07/2026 | Fase 1.2 implantada em produção | `security/lead-form-protection` | Turnstile ativo em FNP/FAMAF, Edge Function protegida e POST integrado aprovado |
 | 30/07/2026 | Auditoria técnica inicial concluída | — | Arquitetura, build, Supabase, segurança e deploy avaliados |
