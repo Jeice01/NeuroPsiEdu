@@ -127,14 +127,14 @@ revertidas com segurança.
 
 ## 0.3 Inventário de configuração
 
-- [ ] Identificar todas as variáveis de ambiente utilizadas.
-- [ ] Criar `.env.example` sem valores secretos.
-- [ ] Confirmar onde estão armazenados os secrets de produção.
-- [ ] Registrar o ID do projeto Supabase sem registrar chaves privadas.
-- [ ] Registrar os domínios autorizados pela Edge Function.
-- [ ] Registrar os IDs públicos de GTM e Cookiebot.
-- [ ] Identificar integrações externas usadas pelo frontend.
-- [ ] Confirmar números, e-mails e links institucionais.
+- [x] Identificar todas as variáveis de ambiente utilizadas.
+- [x] Criar `.env.example` sem valores secretos.
+- [x] Confirmar onde estão armazenados os secrets de produção.
+- [x] Registrar o ID do projeto Supabase sem registrar chaves privadas.
+- [x] Registrar os domínios autorizados pela Edge Function.
+- [x] Registrar os IDs públicos de GTM e Cookiebot.
+- [x] Identificar integrações externas usadas pelo frontend.
+- [x] Confirmar números, e-mails e links institucionais.
 
 ### Variáveis inicialmente identificadas
 
@@ -148,15 +148,15 @@ revertidas com segurança.
 
 ### Critérios de aceite
 
-- [ ] `.env.example` contém todas as variáveis necessárias.
-- [ ] Nenhum secret real está versionado.
-- [ ] Está claro quais variáveis pertencem ao frontend, à Edge Function e à CI.
+- [x] `.env.example` contém todas as variáveis necessárias.
+- [x] Nenhum secret real está versionado.
+- [x] Está claro quais variáveis pertencem ao frontend, à Edge Function e à CI.
 
 ### Testes e evidências
 
-- [ ] Pesquisar secrets e URLs com `rg`.
-- [ ] Verificar o histórico Git em busca de chaves expostas.
-- [ ] Confirmar que `.env*` continua ignorado pelo Git.
+- [x] Pesquisar secrets e URLs com `rg`.
+- [x] Verificar o histórico Git em busca de chaves expostas.
+- [x] Confirmar que `.env*` continua ignorado pelo Git.
 
 ## 0.4 Backup e recuperação
 
@@ -657,6 +657,9 @@ Adicione uma linha para cada execução relevante.
 | 30/07/2026 | Fase 0.2 | Local | `npm ci` | Aprovado | 335 pacotes instalados | Codex |
 | 30/07/2026 | Fase 0.2 | Local | `npm run lint` | Aprovado com 10 avisos conhecidos | Saída do terminal | Codex |
 | 30/07/2026 | Fase 0.2 | Local | `npm run build` | Aprovado; 16 páginas estáticas | Saída do terminal | Codex |
+| 30/07/2026 | Fase 0.3 | Local/Git | Varredura de secrets no estado atual e histórico | Aprovado com observação | Somente chave pública `anon` em bundles históricos | Codex |
+| 30/07/2026 | Fase 0.3 | Local | Inventário de variáveis e configurações públicas | Aprovado | `docs/CONFIGURATION.md` | Codex |
+| 30/07/2026 | Fase 0.3 | Local | Validar regras de ignore para ambientes | Aprovado | Somente arquivos `.env.example` podem ser versionados | Codex |
 
 ---
 
@@ -669,6 +672,8 @@ Use esta seção para decisões que afetem arquitetura, segurança ou operação
 | 30/07/2026 | Usar `a8d18c` como referência exata de produção | Hash do HTML da Hostinger coincide com o artefato desse commit | Usar o HEAD remoto ou somente a data `Last-Modified` | Codex |
 | 30/07/2026 | Iniciar as melhorias a partir do HEAD `ca122e1` | É a versão mais recente do código-fonte e sucede a produção por um commit | Criar a branch diretamente do commit de produção | Codex |
 | 30/07/2026 | Fixar Node.js `24.18.1` e npm `11.16.0` | Node 24 é LTS, possui suporte superior ao Node 22 e inclui essa versão do npm | Permanecer no Node 22 LTS ou usar Node 26 Current | Codex |
+| 30/07/2026 | Manter nomes legacy das variáveis Supabase nesta fase | O código atual consome `ANON_KEY` e `SERVICE_ROLE_KEY`; renomear sem migrar o código quebraria os ambientes | Migrar agora para `sb_publishable_*` e `sb_secret_*` | Codex |
+| 30/07/2026 | Não adicionar variáveis futuras ao `.env.example` ativo | Placeholders não consumidos sugerem configuração obrigatória inexistente | Incluir antecipadamente URL da função e CAPTCHA | Codex |
 
 ---
 
@@ -683,6 +688,7 @@ Use esta seção para decisões que afetem arquitetura, segurança ou operação
 | 30/07/2026 | Schema Supabase sem migrations versionadas | Banco não reproduzível | Executar Fase 2 | — | Aberto |
 | 30/07/2026 | Deploy Hostinger aparentemente manual | Erros de publicação e rollback difícil | Executar Fase 3 | — | Aberto |
 | 30/07/2026 | Cinco vulnerabilidades altas no npm | Risco de segurança e manutenção | Executar Fase 1.1 | — | Aberto |
+| 30/07/2026 | Chave pública `anon` de projeto antigo presente em bundles do histórico | Projeto histórico permanece identificável e acessível conforme RLS | Confirmar desativação ou revisar RLS do project ref `lgmfuswfvlnagthmrhjw` | — | Aberto |
 
 ---
 
@@ -694,3 +700,4 @@ Use esta seção para decisões que afetem arquitetura, segurança ou operação
 | 30/07/2026 | Documento de acompanhamento criado | — | Checklist inicial do roadmap |
 | 30/07/2026 | Fase 0.1 concluída localmente | — | Produção identificada em `a8d18c`; tag e branch locais criadas |
 | 30/07/2026 | Fase 0.2 concluída | — | Runtime fixado e validado com instalação limpa, lint e build |
+| 30/07/2026 | Fase 0.3 concluída | — | Exemplos de ambiente, inventário e varredura de secrets concluídos |
