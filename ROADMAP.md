@@ -216,16 +216,19 @@ revertidas com segurança.
 
 ## 0.5 Linha de base de qualidade
 
-- [ ] Registrar resultado inicial do lint.
-- [ ] Registrar resultado inicial do build.
-- [ ] Registrar vulnerabilidades iniciais do `npm audit`.
-- [ ] Registrar tamanho inicial do diretório `public`.
-- [ ] Registrar tamanho inicial do diretório `out`.
-- [ ] Registrar tamanho inicial dos bundles principais.
-- [ ] Registrar páginas geradas pelo build.
-- [ ] Executar auditoria inicial do Lighthouse.
-- [ ] Executar auditoria inicial de acessibilidade.
-- [ ] Fazer smoke test manual dos formulários.
+- [x] Registrar resultado inicial do lint.
+- [x] Registrar resultado inicial do build.
+- [x] Registrar vulnerabilidades iniciais do `npm audit`.
+- [x] Registrar tamanho inicial do diretório `public`.
+- [x] Registrar tamanho inicial do diretório `out`.
+- [x] Registrar tamanho inicial dos bundles principais.
+- [x] Registrar páginas geradas pelo build.
+- [x] Executar auditoria inicial do Lighthouse.
+- [x] Executar auditoria inicial de acessibilidade.
+- [x] Fazer smoke test manual dos formulários.
+
+Evidências e método de comparação:
+[`docs/QUALITY_BASELINE.md`](docs/QUALITY_BASELINE.md).
 
 ### Linha de base da análise de 30/07/2026
 
@@ -243,8 +246,8 @@ revertidas com segurança.
 
 ### Critérios de aceite
 
-- [ ] Todos os resultados estão registrados com data.
-- [ ] É possível comparar as métricas antes e depois das alterações.
+- [x] Todos os resultados estão registrados com data.
+- [x] É possível comparar as métricas antes e depois das alterações.
 
 ---
 
