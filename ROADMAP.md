@@ -295,32 +295,35 @@ Resultado e evidências:
 
 **Branch sugerida:** `security/lead-form-protection`
 
-- [ ] Escolher Cloudflare Turnstile ou solução equivalente.
-- [ ] Adicionar o widget aos formulários.
-- [ ] Enviar o token junto com a requisição.
-- [ ] Validar o token exclusivamente na Edge Function.
-- [ ] Recusar token ausente, inválido, expirado ou reutilizado.
-- [ ] Implementar rate limiting.
-- [ ] Limitar requisições por hash de IP.
-- [ ] Limitar tentativas repetidas por e-mail e telefone.
-- [ ] Adicionar honeypot aos formulários.
-- [ ] Limitar o tamanho máximo do corpo HTTP.
-- [ ] Manter limites máximos por campo.
-- [ ] Restringir origens permitidas.
-- [ ] Remover curingas de preview em produção.
-- [ ] Adicionar cabeçalhos de segurança apropriados.
-- [ ] Padronizar logs sem registrar dados pessoais completos.
-- [ ] Não expor erros internos do Supabase ao navegador.
-- [ ] Retornar HTTP 429 em caso de rate limit.
+- [x] Escolher Cloudflare Turnstile ou solução equivalente.
+- [x] Adicionar o widget aos formulários.
+- [x] Enviar o token junto com a requisição.
+- [x] Validar o token exclusivamente na Edge Function.
+- [x] Recusar token ausente, inválido, expirado ou reutilizado.
+- [x] Implementar rate limiting.
+- [x] Limitar requisições por hash de IP.
+- [x] Limitar tentativas repetidas por e-mail e telefone.
+- [x] Adicionar honeypot aos formulários.
+- [x] Limitar o tamanho máximo do corpo HTTP.
+- [x] Manter limites máximos por campo.
+- [x] Restringir origens permitidas.
+- [x] Remover curingas de preview em produção.
+- [x] Adicionar cabeçalhos de segurança apropriados.
+- [x] Padronizar logs sem registrar dados pessoais completos.
+- [x] Não expor erros internos do Supabase ao navegador.
+- [x] Retornar HTTP 429 em caso de rate limit.
+
+Implementação, evidências e pendências de ativação:
+[`docs/EDGE_FUNCTION_SECURITY_1_2.md`](docs/EDGE_FUNCTION_SECURITY_1_2.md).
 
 ### Critérios de aceite
 
 - [ ] Requisição legítima é registrada.
 - [ ] Requisição sem CAPTCHA válido é rejeitada.
-- [ ] Bot ou script não consegue contornar a proteção apenas alterando `Origin`.
+- [x] Bot ou script não consegue contornar a proteção apenas alterando `Origin`.
 - [ ] Excesso de requisições recebe HTTP 429.
-- [ ] Logs permitem investigar falhas sem expor PII desnecessária.
-- [ ] A chave `service_role` não aparece no frontend nem nos logs.
+- [x] Logs permitem investigar falhas sem expor PII desnecessária.
+- [x] A chave `service_role` não aparece no frontend nem nos logs.
 
 ### Testes
 
@@ -328,13 +331,13 @@ Resultado e evidências:
 - [ ] POST sem CAPTCHA.
 - [ ] POST com CAPTCHA inválido.
 - [ ] POST repetido além do limite.
-- [ ] POST com corpo acima do limite.
-- [ ] POST com JSON inválido.
-- [ ] GET, PUT e DELETE.
-- [ ] OPTIONS/CORS.
-- [ ] Origem autorizada.
-- [ ] Origem não autorizada.
-- [ ] Falha simulada do banco.
+- [x] POST com corpo acima do limite.
+- [x] POST com JSON inválido.
+- [x] GET, PUT e DELETE.
+- [x] OPTIONS/CORS.
+- [x] Origem autorizada.
+- [x] Origem não autorizada.
+- [x] Falha simulada do banco.
 
 ## 1.3 Correções funcionais dos formulários
 

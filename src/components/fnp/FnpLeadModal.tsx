@@ -1,8 +1,9 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, CheckCircle2, AlertCircle, Loader2, ArrowRight, ShieldCheck } from "lucide-react";
+import { TurnstileWidget } from "@/components/forms/TurnstileWidget";
 
 declare global {
   interface Window {
@@ -141,6 +142,15 @@ export function FnpLeadModal({ isOpen, onClose, botaoOrigem }: Props) {
   const [successMessage, setSuccessMessage] = useState("");
   const [apiError, setApiError] = useState("");
   const [fieldErrors, setFieldErrors] = useState<Partial<Record<keyof FormState, string>>>({});
+  const [honeypot, setHoneypot] = useState("");
+  const [turnstileToken, setTurnstileToken] = useState("");
+  const [turnstileResetKey, setTurnstileResetKey] = useState(0);
+  const [captchaError, setCaptchaError] = useState("");
+
+  const handleTurnstileToken = useCallback((token: string) => {
+    setTurnstileToken(token);
+    if (token) setCaptchaError("");
+  }, []);
 
   // Reset ao abrir
   useEffect(() => {
@@ -151,6 +161,10 @@ export function FnpLeadModal({ isOpen, onClose, botaoOrigem }: Props) {
       setSuccessMessage("");
       setApiError("");
       setFieldErrors({});
+      setHoneypot("");
+      setTurnstileToken("");
+      setTurnstileResetKey((value) => value + 1);
+      setCaptchaError("");
     }
   }, [isOpen]);
 
@@ -194,7 +208,10 @@ export function FnpLeadModal({ isOpen, onClose, botaoOrigem }: Props) {
     }
 
     setFieldErrors(errs);
-    return Object.keys(errs).length === 0;
+    setCaptchaError(
+      turnstileToken ? "" : "Conclua a verificação de segurança.",
+    );
+    return Object.keys(errs).length === 0 && Boolean(turnstileToken);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -217,6 +234,8 @@ export function FnpLeadModal({ isOpen, onClose, botaoOrigem }: Props) {
       pagina_origem: "https://neuropsiedu.com.br/fnp",
       botao_origem: botaoOrigem,
       consentimento_contato: true,
+      turnstile_token: turnstileToken,
+      website: honeypot,
       ...getUtms(),
     };
 
@@ -253,6 +272,8 @@ export function FnpLeadModal({ isOpen, onClose, botaoOrigem }: Props) {
       }
       setSuccess(true);
     } catch (err: unknown) {
+      setTurnstileToken("");
+      setTurnstileResetKey((value) => value + 1);
       setApiError(
         err instanceof Error
           ? err.message
@@ -340,6 +361,21 @@ export function FnpLeadModal({ isOpen, onClose, botaoOrigem }: Props) {
               ) : (
                 /* ── Formulário ── */
                 <form onSubmit={handleSubmit} noValidate className="space-y-5">
+                  <div
+                    aria-hidden="true"
+                    className="absolute left-[-10000px] top-auto h-px w-px overflow-hidden"
+                  >
+                    <label htmlFor="fnp-website">Não preencha este campo</label>
+                    <input
+                      id="fnp-website"
+                      name="website"
+                      type="text"
+                      tabIndex={-1}
+                      autoComplete="off"
+                      value={honeypot}
+                      onChange={(event) => setHoneypot(event.target.value)}
+                    />
+                  </div>
 
                   {/* Erro de API */}
                   {apiError && (
@@ -486,6 +522,18 @@ export function FnpLeadModal({ isOpen, onClose, botaoOrigem }: Props) {
 
                   </div>
 
+                  <div>
+                    <TurnstileWidget
+                      key={turnstileResetKey}
+                      onTokenChange={handleTurnstileToken}
+                    />
+                    {captchaError && (
+                      <p className="mt-2 text-xs text-red-400">
+                        {captchaError}
+                      </p>
+                    )}
+                  </div>
+
                   {/* ── Consentimento LGPD ── */}
                   <div
                     className={`rounded-xl border p-4 transition-colors ${
@@ -537,7 +585,7 @@ export function FnpLeadModal({ isOpen, onClose, botaoOrigem }: Props) {
                   {/* ── Botão de envio ── */}
                   <button
                     type="submit"
-                    disabled={loading}
+                    disabled={loading || !turnstileToken}
                     className="w-full py-4 rounded-xl font-bold text-[15px] text-white bg-gradient-to-r from-neuro-orange to-orange-600 hover:from-orange-500 hover:to-orange-700 disabled:opacity-60 disabled:cursor-not-allowed transition-all duration-300 shadow-[0_0_30px_rgba(242,140,40,0.2)] hover:shadow-[0_0_40px_rgba(242,140,40,0.35)] flex items-center justify-center gap-3 active:scale-[0.98]"
                   >
                     {loading ? (
