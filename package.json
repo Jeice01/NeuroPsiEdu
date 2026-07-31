@@ -2,6 +2,11 @@
   "name": "temp-app",
   "version": "0.1.0",
   "private": true,
+  "packageManager": "npm@11.16.0",
+  "engines": {
+    "node": ">=24.18.1 <25",
+    "npm": ">=11.16.0 <12"
+  },
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build --turbopack",

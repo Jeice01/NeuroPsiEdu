@@ -96,30 +96,34 @@ revertidas com segurança.
 
 ## 0.2 Versões do ambiente
 
-- [ ] Definir a versão oficial do Node.js.
-- [ ] Definir a versão oficial do npm.
-- [ ] Criar `.nvmrc` ou `.node-version`.
-- [ ] Adicionar `engines.node` ao `package.json`.
-- [ ] Adicionar `packageManager` ao `package.json`.
-- [ ] Documentar as versões no README.
+- [x] Definir a versão oficial do Node.js.
+- [x] Definir a versão oficial do npm.
+- [x] Criar `.nvmrc` ou `.node-version`.
+- [x] Adicionar `engines.node` ao `package.json`.
+- [x] Adicionar `packageManager` ao `package.json`.
+- [x] Documentar as versões no README.
 
 ### Decisão recomendada
 
-- Node.js: versão LTS compatível com a versão adotada do Next.js.
-- npm: versão fixada por meio do campo `packageManager`.
+- Node.js: `24.18.1` LTS.
+- npm: `11.16.0`, versão distribuída com o Node.js `24.18.1`.
+- Faixa declarada: Node.js `>=24.18.1 <25` e npm `>=11.16.0 <12`.
+- Validação executada com distribuição portátil oficial, sem alterar a
+  instalação global do Windows.
 
 ### Critérios de aceite
 
-- [ ] Uma nova instalação usa versões previsíveis.
-- [ ] O build local e o build da CI usam a mesma versão do Node.js.
+- [x] Uma nova instalação usa versões previsíveis.
+- [x] O build local e o futuro build da CI possuem uma versão de Node.js
+  explicitamente definida.
 
 ### Testes e evidências
 
-- [ ] Executar `node --version`.
-- [ ] Executar `npm --version`.
-- [ ] Executar `npm ci`.
-- [ ] Executar `npm run lint`.
-- [ ] Executar `npm run build`.
+- [x] Executar `node --version`.
+- [x] Executar `npm --version`.
+- [x] Executar `npm ci`.
+- [x] Executar `npm run lint`.
+- [x] Executar `npm run build`.
 
 ## 0.3 Inventário de configuração
 
@@ -649,6 +653,10 @@ Adicione uma linha para cada execução relevante.
 | 30/07/2026 | Fase 0.1 | Produção/Git | Comparar hash do HTML publicado | Aprovado | Produção idêntica ao `out/index.html` de `a8d18c` | Codex |
 | 30/07/2026 | Fase 0.1 | Local | Criar tag e branch de linha de base | Aprovado | Tag `production-baseline-2026-06-18`; branch `chore/project-baseline` | Codex |
 | 30/07/2026 | Fase 0.1 | GitHub | Publicar branch e tag de linha de base | Aprovado | Branch em `caf0b5f`; tag aponta para `a8d18c` | Codex |
+| 30/07/2026 | Fase 0.2 | Local | Node.js `24.18.1` e npm `11.16.0` | Aprovado | Distribuição portátil oficial | Codex |
+| 30/07/2026 | Fase 0.2 | Local | `npm ci` | Aprovado | 335 pacotes instalados | Codex |
+| 30/07/2026 | Fase 0.2 | Local | `npm run lint` | Aprovado com 10 avisos conhecidos | Saída do terminal | Codex |
+| 30/07/2026 | Fase 0.2 | Local | `npm run build` | Aprovado; 16 páginas estáticas | Saída do terminal | Codex |
 
 ---
 
@@ -660,6 +668,7 @@ Use esta seção para decisões que afetem arquitetura, segurança ou operação
 |---|---|---|---|---|
 | 30/07/2026 | Usar `a8d18c` como referência exata de produção | Hash do HTML da Hostinger coincide com o artefato desse commit | Usar o HEAD remoto ou somente a data `Last-Modified` | Codex |
 | 30/07/2026 | Iniciar as melhorias a partir do HEAD `ca122e1` | É a versão mais recente do código-fonte e sucede a produção por um commit | Criar a branch diretamente do commit de produção | Codex |
+| 30/07/2026 | Fixar Node.js `24.18.1` e npm `11.16.0` | Node 24 é LTS, possui suporte superior ao Node 22 e inclui essa versão do npm | Permanecer no Node 22 LTS ou usar Node 26 Current | Codex |
 
 ---
 
@@ -684,3 +693,4 @@ Use esta seção para decisões que afetem arquitetura, segurança ou operação
 | 30/07/2026 | Auditoria técnica inicial concluída | — | Arquitetura, build, Supabase, segurança e deploy avaliados |
 | 30/07/2026 | Documento de acompanhamento criado | — | Checklist inicial do roadmap |
 | 30/07/2026 | Fase 0.1 concluída localmente | — | Produção identificada em `a8d18c`; tag e branch locais criadas |
+| 30/07/2026 | Fase 0.2 concluída | — | Runtime fixado e validado com instalação limpa, lint e build |

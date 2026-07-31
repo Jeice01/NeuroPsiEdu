@@ -1,5 +1,21 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
+## Runtime requirements
+
+This project uses the following pinned development runtime:
+
+- Node.js `24.18.1` (LTS)
+- npm `11.16.0`
+
+The Node.js version is recorded in `.nvmrc`, while `package.json` declares the
+supported Node.js and npm ranges. Before installing dependencies, confirm the
+active versions:
+
+```bash
+node --version
+npm --version
+```
+
 ## Getting Started
 
 First, run the development server:
