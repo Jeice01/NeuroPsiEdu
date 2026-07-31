@@ -260,33 +260,36 @@ de captação de leads.
 
 **Branch sugerida:** `chore/runtime-and-dependencies`
 
-- [ ] Atualizar Next.js de `15.5.18` para uma versão corrigida compatível.
-- [ ] Atualizar `eslint-config-next` para a mesma versão.
-- [ ] Executar `npm audit fix` sem `--force`.
-- [ ] Revisar alterações transitivas no `package-lock.json`.
-- [ ] Confirmar compatibilidade com React 19.
-- [ ] Revisar os avisos atuais de `sharp`, `postcss`, `brace-expansion` e `js-yaml`.
-- [ ] Confirmar se restaram vulnerabilidades aplicáveis à produção.
-- [ ] Registrar vulnerabilidades aceitas, se houver, com justificativa e prazo.
+- [x] Atualizar Next.js de `15.5.18` para uma versão corrigida compatível.
+- [x] Atualizar `eslint-config-next` para a mesma versão.
+- [x] Executar `npm audit fix` sem `--force`.
+- [x] Revisar alterações transitivas no `package-lock.json`.
+- [x] Confirmar compatibilidade com React 19.
+- [x] Revisar os avisos atuais de `sharp`, `postcss`, `brace-expansion` e `js-yaml`.
+- [x] Confirmar se restaram vulnerabilidades aplicáveis à produção.
+- [x] Registrar vulnerabilidades aceitas, se houver, com justificativa e prazo.
+
+Resultado e evidências:
+[`docs/DEPENDENCY_UPDATE_1_1.md`](docs/DEPENDENCY_UPDATE_1_1.md).
 
 ### Critérios de aceite
 
-- [ ] `npm ci` é executado com sucesso.
-- [ ] `npm run lint` não apresenta erros.
-- [ ] `npm run build` é executado com sucesso.
-- [ ] Nenhuma vulnerabilidade alta aplicável permanece sem plano documentado.
-- [ ] Todas as rotas estáticas continuam sendo geradas.
+- [x] `npm ci` é executado com sucesso.
+- [x] `npm run lint` não apresenta erros.
+- [x] `npm run build` é executado com sucesso.
+- [x] Nenhuma vulnerabilidade alta aplicável permanece sem plano documentado.
+- [x] Todas as rotas estáticas continuam sendo geradas.
 
 ### Testes
 
-- [ ] Home.
-- [ ] Blog e artigos.
-- [ ] Landing page FNP.
-- [ ] Landing page FAMAF.
-- [ ] Menu desktop.
-- [ ] Menu mobile.
-- [ ] Modais.
-- [ ] Links para WhatsApp e Telegram.
+- [x] Home.
+- [x] Blog e artigos.
+- [x] Landing page FNP.
+- [x] Landing page FAMAF.
+- [x] Menu desktop.
+- [x] Menu mobile.
+- [x] Modais.
+- [x] Links para WhatsApp e Telegram.
 
 ## 1.2 Proteção da Edge Function
 
