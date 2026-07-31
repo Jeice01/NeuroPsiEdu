@@ -1,6 +1,6 @@
 # Fase 1.2 — Proteção da Edge Function
 
-**Data:** 30/07/2026
+**Data:** 31/07/2026
 
 **Branch:** `security/lead-form-protection`
 
@@ -8,15 +8,13 @@
 
 ## Estado
 
-A implementação local está concluída e validada. A aplicação no banco, a
-configuração dos segredos e o deploy da Edge Function estão pendentes para
-evitar interromper os formulários de produção antes da criação das chaves
-Turnstile.
+A implementação local está concluída e validada. Os segredos foram configurados
+e a migration foi aplicada no Supabase. O deploy da Edge Function permanece
+pendente para entrar na mesma janela do frontend com a site key pública.
 
-Também foi identificado que o histórico remoto contém cinco migrations que não
-existem no diretório local. Por segurança, não foi executado `migration repair`
-nem `db push`. O histórico deve ser reconciliado antes da aplicação da nova
-migration.
+O histórico remoto continha cinco migrations ausentes localmente. Elas foram
+recuperadas com `supabase migration fetch`, sem alterar ou reparar o histórico.
+Depois da reconciliação, o dry-run indicou somente a nova migration.
 
 ## Arquitetura implementada
 
@@ -105,6 +103,12 @@ logs.
 | Widget FNP com chave oficial de teste | carregado |
 | Widget FAMAF com chave oficial de teste | carregado |
 | Honeypot fora da navegação por teclado | confirmado |
+| Segredos Turnstile no Supabase | quatro nomes confirmados |
+| Histórico de migrations | local e remoto reconciliados |
+| Dry-run da migration | somente a migration de rate limiting |
+| Migration remota | aplicada |
+| Tabela remota | RLS habilitado e forçado; três índices |
+| Advisors Supabase | executados; sem alerta novo para a tabela |
 
 Os testes de navegador usaram as chaves fictícias oficiais do Cloudflare. Elas
 não foram gravadas em arquivos locais nem serão usadas em produção. Referência:
@@ -114,23 +118,18 @@ Nenhuma lead foi enviada ao Supabase durante os testes.
 
 ## Pendências externas para ativação
 
-1. Criar um widget Turnstile do tipo gerenciado para:
-   - `neuropsiedu.com.br`;
-   - `www.neuropsiedu.com.br`.
-2. Configurar `NEXT_PUBLIC_TURNSTILE_SITE_KEY` no build da Hostinger.
-3. Criar um valor aleatório exclusivo, com pelo menos 32 bytes, para
-   `RATE_LIMIT_SALT`.
-4. Configurar nos segredos da Edge Function:
-   - `TURNSTILE_SECRET_KEY`;
-   - `TURNSTILE_EXPECTED_ACTION=lead_formacao`;
-   - `TURNSTILE_ALLOWED_HOSTNAMES=neuropsiedu.com.br,www.neuropsiedu.com.br`;
-   - `RATE_LIMIT_SALT`.
-5. Reconciliar o histórico local e remoto de migrations sem apagar histórico.
-6. Aplicar a migration `20260731023749_add_lead_rate_limits.sql`.
-7. Executar os advisors do Supabase.
-8. Fazer deploy da Edge Function.
-9. Publicar o frontend com a site key.
-10. Executar os testes integrados de POST, CAPTCHA, repetição e banco.
+1. Configurar `NEXT_PUBLIC_TURNSTILE_SITE_KEY` no build da Hostinger.
+2. Fazer deploy da Edge Function.
+3. Publicar o frontend com a site key na mesma janela.
+4. Executar os testes integrados de POST, CAPTCHA, repetição e banco.
+
+## Advisors
+
+Os advisors apontaram alertas preexistentes em objetos do schema `public`,
+incluindo funções `security definer`, `search_path`, listagem do bucket
+`avatars` e otimizações de políticas RLS. Nenhum alerta foi atribuído à tabela
+`neuropsiedu.lead_rate_limit_events`. Os alertas legados devem ser tratados em
+uma fase de segurança do banco, sem ampliar o escopo deste deploy.
 
 O frontend e a Edge Function devem ser ativados na mesma janela de deploy. A
 Edge Function falha fechada quando os segredos não estão configurados.
