@@ -20,13 +20,12 @@ Foram identificados dois projetos distintos:
 
 | Project ref | Papel observado | Acesso em 30/07/2026 |
 |---|---|---|
-| `avfzuudrjnglqrkyxwkz` | Edge Function usada pelos formulários publicados | Sem acesso na sessão autenticada |
+| `avfzuudrjnglqrkyxwkz` | Edge Function usada pelos formulários publicados | CLI autenticada e projeto vinculado |
 | `lgmfuswfvlnagthmrhjw` | Projeto histórico `neuropsiedu-projeto` | Acesso pelo Dashboard |
 
-O repositório está localmente vinculado a `avfzuudrjnglqrkyxwkz`. A sessão
-autenticada no Dashboard pertence a outra organização e só apresentou o
-projeto histórico. Portanto, o projeto histórico não deve ser tratado como
-backup do backend atualmente chamado pelo site.
+O repositório está localmente vinculado a `avfzuudrjnglqrkyxwkz`. A CLI foi
+autenticada novamente com a conta autorizada e validou o projeto
+`projetoorbis`, ativo, na região `sa-east-1`, com PostgreSQL `17.6.1.121`.
 
 O projeto histórico está no plano Free. O Dashboard informou que esse plano
 não inclui backups agendados. As tabelas públicas visíveis no inventário
@@ -42,14 +41,27 @@ O Dashboard sinalizou `n8n_chat_histories` como irrestrita. Essa constatação �
 um risco a revisar na fase de segurança; não foi feita alteração de RLS durante
 o backup.
 
+Foram gerados os seguintes dumps lógicos:
+
+| Artefato | Bytes | SHA-256 |
+|---|---:|---|
+| `schema.sql` | 76.484 | `2E5051BCAB1A33695863530D1B01BF554645428EA6754FE0534B912CCA31CC92` |
+| `roles.sql` | 297 | `25873CEC56A2CC6514E204F420231777F85C03DA818CAA7090CDCDFA89776ECD` |
+| `data.sql` | 398.148 | `6AA913E6004EFB88EA498BCF50B52E22AECA0FA78091560810BD90437DC6E645` |
+
+O schema contém 22 tabelas, 15 funções, 18 triggers e 77 políticas. O dump de
+dados contém 51 seções `COPY`. Nenhum dos três arquivos contém marcadores de
+credenciais de conexão conhecidos.
+
 Uma cópia local, datada, da implementação versionada da Edge Function
-`create-lead-formacao` foi criada em:
+`create-lead-formacao` permanece em:
 
 `backups/2026-07-30/supabase/edge-functions/create-lead-formacao/`
 
-Essa cópia comprova o código versionado, mas ainda precisa ser comparada com a
-função remota assim que o acesso ao projeto `avfzuudrjnglqrkyxwkz` estiver
-disponível.
+A versão publicada também foi baixada para o diretório isolado
+`backups/2026-07-30/supabase/remote-export/`. O `index.ts` remoto possui o
+mesmo SHA-256 da versão do repositório:
+`592879DBA46606E4D921019B5F1E99490DF1A26A7A1064492F38DCEA7C50B274`.
 
 ### Hostinger
 
@@ -189,9 +201,7 @@ Para cada artefato concluído, registrar:
 
 ## Pendências que bloqueiam a conclusão da fase
 
-- conceder à conta autenticada acesso ao Supabase
-  `avfzuudrjnglqrkyxwkz`, ou autenticar outra conta autorizada;
-- fornecer a senha atual do banco por meio seguro para o dump lógico;
 - baixar novamente a cópia preparada da Hostinger até a conclusão;
 - exportar o inventário completo do Editor de Zona DNS;
+- produzir uma amostra sanitizada sem dados pessoais;
 - executar a restauração de teste em ambiente separado.

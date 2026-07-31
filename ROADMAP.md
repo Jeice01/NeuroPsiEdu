@@ -160,13 +160,13 @@ revertidas com segurança.
 
 ## 0.4 Backup e recuperação
 
-- [ ] Gerar backup do banco Supabase.
-- [ ] Exportar o schema atual do banco.
+- [x] Gerar backup lógico do banco Supabase.
+- [x] Exportar o schema atual do banco.
 - [ ] Registrar extensões PostgreSQL utilizadas.
 - [ ] Registrar funções, triggers, views, grants e políticas RLS.
 - [ ] Exportar uma amostra sanitizada da estrutura de dados.
 - [x] Fazer backup local da implementação versionada da Edge Function.
-- [ ] Comparar o backup da Edge Function com a versão atualmente publicada.
+- [x] Baixar e comparar a Edge Function atualmente publicada.
 - [ ] Fazer backup dos arquivos atualmente publicados na Hostinger.
 - [x] Confirmar a existência e a data do backup automático da Hostinger.
 - [x] Registrar as configurações públicas relevantes de DNS.
@@ -193,7 +193,11 @@ revertidas com segurança.
 - Documento operacional criado em `docs/BACKUP_RECOVERY.md`.
 - Diretório local `backups/` protegido pelo `.gitignore`.
 - Projeto Supabase usado pela Edge Function identificado, mas sem acesso na
-  sessão autenticada atual.
+  sessão autenticada inicialmente.
+- CLI autenticada novamente e projeto correto vinculado.
+- Dumps `schema.sql`, `roles.sql` e `data.sql` gerados, protegidos pelo
+  `.gitignore` e verificados por SHA-256.
+- Edge Function remota baixada; hash idêntico ao código versionado.
 - Projeto Supabase histórico acessível, porém no plano Free e sem backups
   agendados.
 - Backup automático da Hostinger confirmado para `30/07/2026 09:09`.
