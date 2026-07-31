@@ -1,7 +1,8 @@
 # Backup e recuperação — NeuroPsiEdu
 
-Atualizado em: 30/07/2026  
-Responsável pela execução: operação assistida por Codex  
+Atualizado em: 30/07/2026
+
+Responsável pela execução: operação assistida por Codex
 Escopo: Supabase e Hostinger
 
 ## Regra de armazenamento
@@ -194,4 +195,3 @@ Para cada artefato concluído, registrar:
 - baixar novamente a cópia preparada da Hostinger até a conclusão;
 - exportar o inventário completo do Editor de Zona DNS;
 - executar a restauração de teste em ambiente separado.
-
