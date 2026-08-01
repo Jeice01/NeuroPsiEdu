@@ -120,10 +120,11 @@ O dump não contém views nos schemas exportados.
 O dump contém 77 políticas RLS e comandos explícitos de `GRANT`, `REVOKE` e
 privilégios padrão. A restauração isolada recriou as 77 políticas.
 
-A revisão semântica das políticas — incluindo funções `security definer`,
-permissões para `anon` e `authenticated` e uso seguro de claims — pertence à
-fase de segurança. Esta fase apenas comprovou que as definições são exportáveis
-e restauráveis.
+A revisão semântica do schema `neuropsiedu` foi concluída na Fase 2.2. As três
+tabelas usam RLS forçado, `anon` e `authenticated` não possuem acesso ao schema
+ou às tabelas e a `service_role` recebeu somente os privilégios exigidos pela
+Edge Function. O resultado e os alertas do schema `public` compartilhado estão
+em [`SUPABASE_SECURITY_2_2.md`](SUPABASE_SECURITY_2_2.md).
 
 ## Amostra sanitizada
 

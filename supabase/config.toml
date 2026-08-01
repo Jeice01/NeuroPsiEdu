@@ -1,4 +1,8 @@
 
+[api]
+schemas = ["public", "graphql_public", "neuropsiedu"]
+extra_search_path = ["public", "extensions"]
+
 [functions.create-lead-formacao]
 enabled = true
 verify_jwt = false

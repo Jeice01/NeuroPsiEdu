@@ -390,18 +390,21 @@ Implementação, decisões e evidências:
 
 ## 2.2 RLS, grants e Data API
 
-- [ ] Identificar schemas expostos pela Data API.
-- [ ] Habilitar RLS em todas as tabelas expostas.
-- [ ] Revogar leitura pública dos leads.
-- [ ] Revogar update e delete públicos.
-- [ ] Revisar inserts feitos por `anon`.
-- [ ] Substituir inserts diretos por Edge Function, se aprovado.
-- [ ] Registrar grants de `anon`.
-- [ ] Registrar grants de `authenticated`.
-- [ ] Registrar privilégios da service role utilizados pela função.
-- [ ] Revisar views com `security_invoker`.
-- [ ] Manter funções `security definer` fora de schemas expostos.
-- [ ] Executar os advisors de segurança e performance.
+- [x] Identificar schemas expostos pela Data API.
+- [x] Habilitar RLS em todas as tabelas expostas do schema `neuropsiedu`.
+- [x] Revogar leitura pública dos leads.
+- [x] Revogar update e delete públicos.
+- [x] Revisar inserts feitos por `anon`.
+- [x] Substituir inserts diretos por Edge Function.
+- [x] Registrar grants de `anon`.
+- [x] Registrar grants de `authenticated`.
+- [x] Registrar privilégios da service role utilizados pela função.
+- [x] Revisar views com `security_invoker` (nenhuma nos schemas auditados).
+- [x] Manter funções `security definer` fora do schema `neuropsiedu`.
+- [x] Executar os advisors de segurança e performance.
+
+Implementação, matriz de privilégios, testes e alertas compartilhados:
+[`docs/SUPABASE_SECURITY_2_2.md`](docs/SUPABASE_SECURITY_2_2.md).
 
 ## 2.3 Tipos e validação
 
@@ -707,6 +710,10 @@ Adicione uma linha para cada execução relevante.
 | 31/07/2026 | Fase 2.1 | Local | Recriar banco com `supabase db reset --local --no-seed` | Aprovado | Todas as migrations aplicadas do zero | Codex |
 | 31/07/2026 | Fase 2.1 | Local | Testar constraints, deduplicação e triggers | Aprovado | `supabase/tests/phase_2_1_schema.sql` | Codex |
 | 31/07/2026 | Fase 2.1 | Supabase | Aplicar e validar migration remota | Aprovado | Migration `20260731045319`; lint sem erros | Codex |
+| 01/08/2026 | Fase 2.2 | Local | Reset, teste de RLS/grants, lint e advisor | Aprovado | `supabase/tests/phase_2_2_security.sql`; advisor sem alertas | Codex |
+| 01/08/2026 | Fase 2.2 | Local | Integração da lista de espera e bloqueio da Data API anônima | Aprovado | Edge HTTP 200; `SELECT`/`INSERT` anônimos HTTP 401; dados sintéticos removidos | Codex |
+| 01/08/2026 | Fase 2.2 | Supabase | Aplicar migration, publicar Edge Function e validar privilégios | Aprovado com alertas compartilhados | Migration `20260801134914`; lint sem erros | Codex |
+| 01/08/2026 | Fase 2.2 | Local | `npm run lint` e build de produção | Aprovado com 10 avisos conhecidos | 16 páginas estáticas; site key Turnstile presente no artefato | Codex |
 
 ---
 
@@ -723,6 +730,8 @@ Use esta seção para decisões que afetem arquitetura, segurança ou operação
 | 30/07/2026 | Não adicionar variáveis futuras ao `.env.example` ativo | Placeholders não consumidos sugerem configuração obrigatória inexistente | Incluir antecipadamente URL da função e CAPTCHA | Codex |
 | 31/07/2026 | Não recriar `tab_pos` no projeto atual | A tabela pertence ao projeto histórico e o único componente que a usa não é importado | Migrar `tab_pos` ou manter duas estruturas de captação | Codex |
 | 31/07/2026 | Deduplicar somente leads em estado `novo` | Evita spam duplicado sem bloquear uma nova inscrição futura | Unicidade permanente por e-mail ou nenhuma deduplicação | Codex |
+| 01/08/2026 | Bloquear totalmente `anon` e `authenticated` no schema `neuropsiedu` | Dados pessoais de leads não devem ser acessíveis pela Data API | Criar políticas públicas de insert ou manter insert direto | Codex |
+| 01/08/2026 | Conceder privilégios mínimos à `service_role` por tabela | Limita o impacto da chave privilegiada usada pela Edge Function | Manter `ALL` no schema ou usar grants amplos | Codex |
 
 ---
 
@@ -738,7 +747,9 @@ Use esta seção para decisões que afetem arquitetura, segurança ou operação
 | 30/07/2026 | Deploy Hostinger aparentemente manual | Erros de publicação e rollback difícil | Executar Fase 3 | — | Aberto |
 | 30/07/2026 | Cinco vulnerabilidades altas no npm | Risco de segurança e manutenção | Executar Fase 1.1 | — | Aberto |
 | 30/07/2026 | Chave pública `anon` de projeto antigo presente em bundles do histórico | Projeto histórico permanece identificável e acessível conforme RLS | Confirmar desativação ou revisar RLS do project ref `lgmfuswfvlnagthmrhjw` | — | Aberto |
-| 31/07/2026 | Formulário da lista de espera usa insert direto em `public.espera_pos` | Fluxo da home continua incompatível com a tabela segura versionada | Migrar o envio para Edge Function na Fase 2.2 | — | Aberto |
+| 31/07/2026 | Formulário da lista de espera usa insert direto em `public.espera_pos` | Fluxo incompatível com o modelo seguro | Frontend migrado para a Edge Function; falta publicar o artefato na Hostinger | Codex | Em validação |
+| 01/08/2026 | Advisor remoto aponta itens do aplicativo compartilhado em `public` | Revogação ampla pode interromper o ProjectOrbis | Auditar bucket `avatars`, funções `security definer` e proteção de senhas em fase própria | — | Aberto e documentado |
+| 01/08/2026 | Chrome sem permissão de acesso a arquivos locais | Upload e teste de produção do frontend da Fase 2.2 não puderam ser concluídos | Habilitar “Allow access to file URLs” na extensão ChatGPT Chrome | Usuário | Bloqueado |
 
 ---
 
@@ -747,6 +758,7 @@ Use esta seção para decisões que afetem arquitetura, segurança ou operação
 | Data | Marco | Commit/PR | Observações |
 |---|---|---|---|
 | 31/07/2026 | Fase 2.1 concluída | `database/version-schema-and-rls` | Schema de leads reproduzível, validado localmente e aplicado ao Supabase |
+| 01/08/2026 | Segurança de banco da Fase 2.2 aplicada | `database/version-schema-and-rls` | RLS forçado, grants mínimos e Edge Function remota validados; frontend aguarda upload Hostinger |
 | 31/07/2026 | Fase 1.3 ativada em produção | `security/lead-form-protection` | Mensagens FANP/FAMAF, origens canônicas e eventos de conversão padronizados |
 | 31/07/2026 | Fase 1.2 implantada em produção | `security/lead-form-protection` | Turnstile ativo em FNP/FAMAF, Edge Function protegida e POST integrado aprovado |
 | 30/07/2026 | Auditoria técnica inicial concluída | — | Arquitetura, build, Supabase, segurança e deploy avaliados |

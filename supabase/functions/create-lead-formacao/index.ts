@@ -41,6 +41,12 @@ const FORMATIONS = {
   },
 } as const;
 
+const WAITLIST = {
+  type: "espera_pos",
+  successMessage:
+    "Recebemos seus dados! Você entrou na lista de espera da Pós-Graduação.",
+} as const;
+
 const validBrazilianDDDs = new Set([
   "11","12","13","14","15","16","17","18","19",
   "21","22","24","27","28",
@@ -287,7 +293,14 @@ async function registerRateLimit(
       expires_at: expiresAt,
     });
 
-  if (insertError) throw new Error(`rate_limit_insert_${scope}`);
+  if (insertError) {
+    console.error(JSON.stringify({
+      event: "rate_limit_insert_failed",
+      scope,
+      code: insertError.code,
+    }));
+    throw new Error(`rate_limit_insert_${scope}`);
+  }
 
   const { count, error: countError } = await supabaseAdmin
     .schema("neuropsiedu")
@@ -298,6 +311,11 @@ async function registerRateLimit(
     .gte("created_at", windowStart);
 
   if (countError || count === null) {
+    console.error(JSON.stringify({
+      event: "rate_limit_count_failed",
+      scope,
+      code: countError?.code || "missing_count",
+    }));
     throw new Error(`rate_limit_count_${scope}`);
   }
 
@@ -357,10 +375,21 @@ async function validateTurnstile(
     const result = await response.json() as {
       action?: string;
       hostname?: string;
+      metadata?: { result_with_testing_key?: boolean };
       success?: boolean;
     };
 
     if (!result.success) return false;
+
+    const testMode = Deno.env.get("TURNSTILE_TEST_MODE") === "true";
+    const officialAlwaysPassesSecret =
+      "1x0000000000000000000000000000000AA";
+    if (
+      testMode && secret === officialAlwaysPassesSecret &&
+      result.metadata?.result_with_testing_key === true
+    ) {
+      return true;
+    }
 
     const expectedAction =
       Deno.env.get("TURNSTILE_EXPECTED_ACTION") || "lead_formacao";
@@ -505,11 +534,13 @@ Deno.serve(async (req) => {
       );
     }
 
-    const formation = resolveFormation(
-      body.formacao_interesse,
-      body.pagina_origem,
-    );
-    if (!formation) {
+    const leadType = normalizeText(body.lead_type);
+    const isWaitlist = leadType === WAITLIST.type;
+    const formation = isWaitlist
+      ? null
+      : resolveFormation(body.formacao_interesse, body.pagina_origem);
+
+    if ((leadType && !isWaitlist) || (!isWaitlist && !formation)) {
       logSecurity("formation_rejected", requestId);
       return jsonResponse(
         origin,
@@ -541,33 +572,60 @@ Deno.serve(async (req) => {
     }
 
     const userAgent = req.headers.get("user-agent") || "";
-    const { error } = await supabaseAdmin
-      .schema("neuropsiedu")
-      .from("leads_formacoes")
-      .insert({
-      nome: nome.slice(0, 180),
-      whatsapp,
-      email,
-      perfil: limitText(body.perfil, 120),
-      crp_ou_instituicao: limitText(body.crp_ou_instituicao, 180),
-      cidade_estado: limitText(body.cidade_estado, 180),
-      interesse_principal: limitText(body.interesse_principal, 220),
-      mensagem: limitText(body.mensagem, 1200),
-      formacao_interesse: formation.name,
-      pagina_origem: formation.canonicalPage,
-      botao_origem: limitText(body.botao_origem, 180),
-      consentimento_contato: consentimentoContato,
-      status_lead: "novo",
-      utm_source: limitText(body.utm_source, 120),
-      utm_medium: limitText(body.utm_medium, 120),
-      utm_campaign: limitText(body.utm_campaign, 180),
-      utm_content: limitText(body.utm_content, 180),
-      utm_term: limitText(body.utm_term, 180),
-      user_agent: userAgent.slice(0, 500),
-      ip_hash: ipHash,
-      });
+    const insertResult = isWaitlist
+      ? await supabaseAdmin
+        .schema("neuropsiedu")
+        .from("espera_pos")
+        .insert({
+          nome: nome.slice(0, 180),
+          telefone: whatsapp,
+          email,
+          is_psicologo: body.is_psicologo === "não" ? "não" : "sim",
+          origem: "pos-graduacao",
+          consentimento_contato: consentimentoContato,
+          status_lead: "novo",
+        })
+      : await supabaseAdmin
+        .schema("neuropsiedu")
+        .from("leads_formacoes")
+        .insert({
+          nome: nome.slice(0, 180),
+          whatsapp,
+          email,
+          perfil: limitText(body.perfil, 120),
+          crp_ou_instituicao: limitText(body.crp_ou_instituicao, 180),
+          cidade_estado: limitText(body.cidade_estado, 180),
+          interesse_principal: limitText(body.interesse_principal, 220),
+          mensagem: limitText(body.mensagem, 1200),
+          formacao_interesse: formation!.name,
+          pagina_origem: formation!.canonicalPage,
+          botao_origem: limitText(body.botao_origem, 180),
+          consentimento_contato: consentimentoContato,
+          status_lead: "novo",
+          utm_source: limitText(body.utm_source, 120),
+          utm_medium: limitText(body.utm_medium, 120),
+          utm_campaign: limitText(body.utm_campaign, 180),
+          utm_content: limitText(body.utm_content, 180),
+          utm_term: limitText(body.utm_term, 180),
+          user_agent: userAgent.slice(0, 500),
+          ip_hash: ipHash,
+        });
+
+    const { error } = insertResult;
 
     if (error) {
+      if (error.code === "23505") {
+        logSecurity("lead_duplicate", requestId, {
+          type: isWaitlist ? WAITLIST.type : "formacao",
+        });
+        return jsonResponse(origin, {
+          success: true,
+          message: isWaitlist
+            ? WAITLIST.successMessage
+            : formation!.successMessage,
+        });
+      }
+
       console.error(JSON.stringify({
         event: "lead_insert_failed",
         request_id: requestId,
@@ -580,11 +638,15 @@ Deno.serve(async (req) => {
       );
     }
 
-    logSecurity("lead_created", requestId);
+    logSecurity("lead_created", requestId, {
+      type: isWaitlist ? WAITLIST.type : "formacao",
+    });
 
     return jsonResponse(origin, {
       success: true,
-      message: formation.successMessage,
+      message: isWaitlist
+        ? WAITLIST.successMessage
+        : formation!.successMessage,
     });
   } catch (error) {
     if (error instanceof Response) {
