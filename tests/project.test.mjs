@@ -44,6 +44,8 @@ test("the Hostinger workflow deploys the approved artifact without embedded cred
   assert.match(workflow, /actions\/download-artifact@v7/);
   assert.match(workflow, /HEAD:deploy/);
   assert.match(workflow, /secrets\.HOSTINGER_DEPLOY_WEBHOOK/);
+  assert.match(workflow, /X-GitHub-Event: push/);
+  assert.match(workflow, /hostinger-push\.json/);
   assert.match(workflow, /deploy\.json/);
   assert.doesNotMatch(workflow, /service[_-]?role/i);
   assert.doesNotMatch(workflow, /https:\/\/.*hostinger.*webhook/i);

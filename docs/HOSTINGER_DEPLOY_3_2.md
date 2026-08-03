@@ -11,7 +11,7 @@ O domínio `neuropsiedu.com.br` usa o recurso Git da Hostinger, configurado com:
 O workflow `Deploy Hostinger` é iniciado somente depois de uma execução bem-sucedida
 da CI na `main`. Ele baixa o artefato estático aprovado pela própria execução da CI,
 publica somente seu conteúdo na raiz da branch `deploy` e chama o webhook de
-implantação automática da Hostinger.
+implantação automática da Hostinger com um evento `push` compatível com o GitHub.
 
 O webhook está armazenado no GitHub Actions como o secret
 `HOSTINGER_DEPLOY_WEBHOOK`. Seu valor nunca deve ser inserido no repositório ou
