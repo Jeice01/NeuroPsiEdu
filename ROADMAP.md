@@ -408,19 +408,22 @@ Implementação, matriz de privilégios, testes e alertas compartilhados:
 
 ## 2.3 Tipos e validação
 
-- [ ] Gerar tipos TypeScript do banco.
-- [ ] Versionar os tipos gerados.
-- [ ] Tipar os inserts da Edge Function.
-- [ ] Tipar respostas e erros do Supabase.
-- [ ] Validar migrations em banco local ou de staging.
+- [x] Gerar tipos TypeScript do banco.
+- [x] Versionar os tipos gerados.
+- [x] Tipar os inserts da Edge Function.
+- [x] Tipar respostas e erros do Supabase.
+- [x] Validar migrations em banco local ou de staging.
 
 ### Critérios de aceite da fase
 
-- [ ] Um projeto Supabase vazio pode ser recriado pelas migrations.
-- [ ] Leads não podem ser lidos publicamente.
-- [ ] O frontend não possui acesso administrativo.
-- [ ] Os advisors não apresentam alerta crítico não documentado.
-- [ ] O schema real corresponde ao schema versionado.
+- [x] Um projeto Supabase vazio pode ser recriado pelas migrations.
+- [x] Leads não podem ser lidos publicamente.
+- [x] O frontend não possui acesso administrativo.
+- [x] Os advisors não apresentam alerta crítico não documentado.
+- [x] O schema real corresponde ao schema versionado.
+
+Geração, integração dos tipos, correção de drift e evidências:
+[`docs/SUPABASE_TYPES_2_3.md`](docs/SUPABASE_TYPES_2_3.md).
 
 ---
 
@@ -716,6 +719,8 @@ Adicione uma linha para cada execução relevante.
 | 01/08/2026 | Fase 2.2 | Local | `npm run lint` e build de produção | Aprovado com 10 avisos conhecidos | 16 páginas estáticas; site key Turnstile presente no artefato | Codex |
 | 01/08/2026 | Fase 2.2 | Hostinger/Produção | Publicar frontend, limpar cache e testar o fluxo ponta a ponta | Aprovado | Turnstile concluído; interface exibiu `Dados enviados!`; registro confirmado no Supabase | Codex |
 | 03/08/2026 | Fase 2.2 | Supabase | Remover o dado sintético do teste de produção e consultar novamente | Aprovado | 1 registro removido; contagem final igual a 0 | Codex |
+| 03/08/2026 | Fase 2.3 | Local | Recriar banco, executar scripts SQL, lint, advisors e `deno check` | Aprovado com avisos compartilhados | Migrations completas; schema `neuropsiedu` sem erros; tipagem Deno válida | Codex |
+| 03/08/2026 | Fase 2.3 | Supabase | Corrigir drift, gerar tipos e publicar Edge Function tipada | Aprovado | Migration `20260803130532`; leitura anônima bloqueada; preflight HTTP 204 | Codex |
 
 ---
 
@@ -761,6 +766,7 @@ Use esta seção para decisões que afetem arquitetura, segurança ou operação
 |---|---|---|---|
 | 31/07/2026 | Fase 2.1 concluída | `database/version-schema-and-rls` | Schema de leads reproduzível, validado localmente e aplicado ao Supabase |
 | 03/08/2026 | Fase 2.2 concluída em produção | `database/version-schema-and-rls` | RLS, grants, Edge Function, frontend Hostinger e fluxo ponta a ponta validados; dado sintético removido |
+| 03/08/2026 | Fase 2.3 concluída | `database/version-schema-and-rls` | Tipos do banco versionados, Edge Function tipada e schema local/remoto alinhado |
 | 31/07/2026 | Fase 1.3 ativada em produção | `security/lead-form-protection` | Mensagens FANP/FAMAF, origens canônicas e eventos de conversão padronizados |
 | 31/07/2026 | Fase 1.2 implantada em produção | `security/lead-form-protection` | Turnstile ativo em FNP/FAMAF, Edge Function protegida e POST integrado aprovado |
 | 30/07/2026 | Auditoria técnica inicial concluída | — | Arquitetura, build, Supabase, segurança e deploy avaliados |

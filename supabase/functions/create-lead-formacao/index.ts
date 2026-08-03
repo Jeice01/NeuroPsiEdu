@@ -1,7 +1,9 @@
 import {
   createClient,
+  type PostgrestError,
   type SupabaseClient,
 } from "npm:@supabase/supabase-js@2";
+import type { Database } from "../_shared/database.types.ts";
 
 const PRODUCTION_ORIGINS = new Set([
   "https://neuropsiedu.com.br",
@@ -62,8 +64,15 @@ const validBrazilianDDDs = new Set([
 ]);
 
 type RateLimitScope = keyof typeof RATE_LIMITS;
-type SupabaseAdmin = SupabaseClient;
+type SupabaseAdmin = SupabaseClient<Database>;
 type Formation = (typeof FORMATIONS)[keyof typeof FORMATIONS];
+type WaitlistInsert =
+  Database["neuropsiedu"]["Tables"]["espera_pos"]["Insert"];
+type FormationLeadInsert =
+  Database["neuropsiedu"]["Tables"]["leads_formacoes"]["Insert"];
+type ApiSuccess = { success: true; message: string };
+type ApiError = { error: string };
+type ApiResponseBody = ApiSuccess | ApiError;
 
 function configuredSet(name: string) {
   return new Set(
@@ -109,7 +118,7 @@ function corsHeaders(origin: string) {
 
 function jsonResponse(
   origin: string,
-  body: unknown,
+  body: ApiResponseBody,
   status = 200,
   extraHeaders: Record<string, string> = {},
 ) {
@@ -121,6 +130,17 @@ function jsonResponse(
       ...extraHeaders,
     },
   });
+}
+
+function isUniqueViolation(error: PostgrestError) {
+  return error.code === "23505";
+}
+
+function requireFormationInsert(
+  value: FormationLeadInsert | null,
+): FormationLeadInsert {
+  if (!value) throw new Error("validated_formation_missing");
+  return value;
 }
 
 function logSecurity(
@@ -453,7 +473,7 @@ Deno.serve(async (req) => {
     );
   }
 
-  const supabaseAdmin = createClient(supabaseUrl, serviceRoleKey, {
+  const supabaseAdmin = createClient<Database>(supabaseUrl, serviceRoleKey, {
     auth: { persistSession: false, autoRefreshToken: false },
   });
 
@@ -572,49 +592,54 @@ Deno.serve(async (req) => {
     }
 
     const userAgent = req.headers.get("user-agent") || "";
+    const waitlistInsert: WaitlistInsert = {
+      nome: nome.slice(0, 180),
+      telefone: whatsapp,
+      email,
+      is_psicologo: body.is_psicologo === "não" ? "não" : "sim",
+      origem: "pos-graduacao",
+      consentimento_contato: consentimentoContato,
+      status_lead: "novo",
+    };
+    const formationInsert: FormationLeadInsert | null = formation
+      ? {
+        nome: nome.slice(0, 180),
+        whatsapp,
+        email,
+        perfil: limitText(body.perfil, 120),
+        crp_ou_instituicao: limitText(body.crp_ou_instituicao, 180),
+        cidade_estado: limitText(body.cidade_estado, 180),
+        interesse_principal: limitText(body.interesse_principal, 220),
+        mensagem: limitText(body.mensagem, 1200),
+        formacao_interesse: formation.name,
+        pagina_origem: formation.canonicalPage,
+        botao_origem: limitText(body.botao_origem, 180),
+        consentimento_contato: consentimentoContato,
+        status_lead: "novo",
+        utm_source: limitText(body.utm_source, 120),
+        utm_medium: limitText(body.utm_medium, 120),
+        utm_campaign: limitText(body.utm_campaign, 180),
+        utm_content: limitText(body.utm_content, 180),
+        utm_term: limitText(body.utm_term, 180),
+        user_agent: userAgent.slice(0, 500),
+        ip_hash: ipHash,
+      }
+      : null;
+
     const insertResult = isWaitlist
       ? await supabaseAdmin
         .schema("neuropsiedu")
         .from("espera_pos")
-        .insert({
-          nome: nome.slice(0, 180),
-          telefone: whatsapp,
-          email,
-          is_psicologo: body.is_psicologo === "não" ? "não" : "sim",
-          origem: "pos-graduacao",
-          consentimento_contato: consentimentoContato,
-          status_lead: "novo",
-        })
+        .insert(waitlistInsert)
       : await supabaseAdmin
         .schema("neuropsiedu")
         .from("leads_formacoes")
-        .insert({
-          nome: nome.slice(0, 180),
-          whatsapp,
-          email,
-          perfil: limitText(body.perfil, 120),
-          crp_ou_instituicao: limitText(body.crp_ou_instituicao, 180),
-          cidade_estado: limitText(body.cidade_estado, 180),
-          interesse_principal: limitText(body.interesse_principal, 220),
-          mensagem: limitText(body.mensagem, 1200),
-          formacao_interesse: formation!.name,
-          pagina_origem: formation!.canonicalPage,
-          botao_origem: limitText(body.botao_origem, 180),
-          consentimento_contato: consentimentoContato,
-          status_lead: "novo",
-          utm_source: limitText(body.utm_source, 120),
-          utm_medium: limitText(body.utm_medium, 120),
-          utm_campaign: limitText(body.utm_campaign, 180),
-          utm_content: limitText(body.utm_content, 180),
-          utm_term: limitText(body.utm_term, 180),
-          user_agent: userAgent.slice(0, 500),
-          ip_hash: ipHash,
-        });
+        .insert(requireFormationInsert(formationInsert));
 
     const { error } = insertResult;
 
     if (error) {
-      if (error.code === "23505") {
+      if (isUniqueViolation(error)) {
         logSecurity("lead_duplicate", requestId, {
           type: isWaitlist ? WAITLIST.type : "formacao",
         });
