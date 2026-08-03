@@ -1,0 +1,162 @@
+name: Deploy Supabase
+
+on:
+  workflow_dispatch:
+    inputs:
+      target:
+        description: Ambiente Supabase de destino
+        required: true
+        default: staging
+        type: choice
+        options:
+          - staging
+          - production
+      ref:
+        description: Commit, tag ou branch a publicar
+        required: true
+        default: main
+      deploy_database:
+        description: Aplicar migrations pendentes
+        required: true
+        default: true
+        type: boolean
+      deploy_function:
+        description: Publicar create-lead-formacao
+        required: true
+        default: true
+        type: boolean
+
+permissions:
+  contents: read
+
+concurrency:
+  group: supabase-${{ inputs.target }}
+  cancel-in-progress: false
+
+jobs:
+  validate:
+    name: validate-supabase
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: Checkout selected version
+        uses: actions/checkout@v6
+        with:
+          ref: ${{ inputs.ref }}
+
+      - name: Configure Supabase CLI
+        uses: supabase/setup-cli@v1
+        with:
+          version: 2.111.0
+
+      - name: Configure Deno
+        uses: denoland/setup-deno@v2
+        with:
+          deno-version: 2.5.6
+
+      - name: Start isolated database
+        run: supabase db start
+
+      - name: Lint migrated schema
+        run: >-
+          supabase db lint --local --schema neuropsiedu
+          --level error --fail-on error
+
+      - name: Typecheck Edge Function
+        run: deno check supabase/functions/create-lead-formacao/index.ts
+
+  deploy:
+    name: deploy-${{ inputs.target }}
+    needs: validate
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    environment:
+      name: supabase-${{ inputs.target }}
+      url: https://supabase.com/dashboard/project/${{ secrets.SUPABASE_PROJECT_REF }}
+    env:
+      SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
+      SUPABASE_PROJECT_REF: ${{ secrets.SUPABASE_PROJECT_REF }}
+      SUPABASE_DB_PASSWORD: ${{ secrets.SUPABASE_DB_PASSWORD }}
+
+    steps:
+      - name: Checkout validated version
+        uses: actions/checkout@v6
+        with:
+          ref: ${{ inputs.ref }}
+          fetch-depth: 0
+
+      - name: Record source commit
+        shell: bash
+        run: echo "SOURCE_SHA=$(git rev-parse HEAD)" >> "${GITHUB_ENV}"
+
+      - name: Configure Supabase CLI
+        uses: supabase/setup-cli@v1
+        with:
+          version: 2.111.0
+
+      - name: Validate deployment credentials
+        shell: bash
+        run: |
+          test -n "${SUPABASE_ACCESS_TOKEN}"
+          test -n "${SUPABASE_PROJECT_REF}"
+          if [[ "${{ inputs.deploy_database }}" == "true" ]]; then
+            test -n "${SUPABASE_DB_PASSWORD}"
+          fi
+
+      - name: Link database target
+        if: inputs.deploy_database
+        run: >-
+          supabase link --project-ref "${SUPABASE_PROJECT_REF}"
+          --password "${SUPABASE_DB_PASSWORD}"
+
+      - name: Preview pending migrations
+        if: inputs.deploy_database
+        run: supabase db push --linked --dry-run --password "${SUPABASE_DB_PASSWORD}"
+
+      - name: Apply pending migrations
+        if: inputs.deploy_database
+        run: supabase db push --linked --password "${SUPABASE_DB_PASSWORD}"
+
+      - name: Confirm migration history
+        if: inputs.deploy_database
+        run: supabase migration list --linked --password "${SUPABASE_DB_PASSWORD}"
+
+      - name: Deploy lead Edge Function
+        if: inputs.deploy_function
+        run: >-
+          supabase functions deploy create-lead-formacao
+          --project-ref "${SUPABASE_PROJECT_REF}" --use-api
+
+      - name: Confirm active function
+        if: inputs.deploy_function
+        shell: bash
+        run: |
+          supabase functions list --project-ref "${SUPABASE_PROJECT_REF}" \
+            --output json > functions.json
+          jq -e '.[] | select(.slug == "create-lead-formacao" and .status == "ACTIVE")' \
+            functions.json > /dev/null
+
+      - name: Smoke test deployed function
+        shell: bash
+        run: |
+          headers="$(mktemp)"
+          status="$(curl --silent --show-error --output /dev/null \
+            --dump-header "${headers}" --write-out '%{http_code}' \
+            --request OPTIONS \
+            --header 'Origin: https://neuropsiedu.com.br' \
+            "https://${SUPABASE_PROJECT_REF}.supabase.co/functions/v1/create-lead-formacao")"
+          test "${status}" = "204"
+          grep -qi '^access-control-allow-origin: https://neuropsiedu.com.br' "${headers}"
+
+      - name: Record deployment summary
+        shell: bash
+        run: |
+          {
+            echo "## Supabase deployment"
+            echo "- Environment: supabase-${{ inputs.target }}"
+            echo "- Source commit: ${SOURCE_SHA}"
+            echo "- Database requested: ${{ inputs.deploy_database }}"
+            echo "- Function requested: ${{ inputs.deploy_function }}"
+            echo "- Completed at: $(date -u +%Y-%m-%dT%H:%M:%SZ)"
+          } >> "${GITHUB_STEP_SUMMARY}"
