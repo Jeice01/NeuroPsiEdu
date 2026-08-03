@@ -33,3 +33,18 @@ test("administrative Supabase credentials are absent from public source", async 
   assert.doesNotMatch(workflow, /service[_-]?role/i);
   assert.doesNotMatch(workflow, /SUPABASE_SERVICE_ROLE_KEY/);
 });
+
+test("the Hostinger workflow deploys the approved artifact without embedded credentials", async () => {
+  const workflow = await readFile(
+    ".github/workflows/deploy-hostinger.yml",
+    "utf8",
+  );
+
+  assert.match(workflow, /workflow_run:/);
+  assert.match(workflow, /actions\/download-artifact@v7/);
+  assert.match(workflow, /HEAD:deploy/);
+  assert.match(workflow, /secrets\.HOSTINGER_DEPLOY_WEBHOOK/);
+  assert.match(workflow, /deploy\.json/);
+  assert.doesNotMatch(workflow, /service[_-]?role/i);
+  assert.doesNotMatch(workflow, /https:\/\/.*hostinger.*webhook/i);
+});
