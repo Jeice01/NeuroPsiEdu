@@ -454,14 +454,17 @@ Implementação e operação do workflow:
 
 **Branch sugerida:** `ci/hostinger-deploy`
 
-- [ ] Confirmar método suportado pela Hostinger.
-- [ ] Criar secrets de SFTP/FTP no GitHub.
-- [ ] Publicar somente o artefato aprovado.
-- [ ] Evitar exposição de credenciais nos logs.
-- [ ] Preservar versão anterior para rollback.
+- [x] Confirmar método suportado pela Hostinger.
+- [x] Criar secret do webhook de Git da Hostinger no GitHub.
+- [x] Publicar somente o artefato aprovado.
+- [x] Evitar exposição de credenciais nos logs.
+- [x] Preservar versão anterior para rollback.
 - [ ] Executar smoke test HTTP após o deploy.
-- [ ] Registrar commit e data da versão publicada.
-- [ ] Criar mecanismo de deploy manual emergencial.
+- [x] Registrar commit e data da versão publicada.
+- [x] Criar mecanismo de deploy manual emergencial.
+
+Arquitetura, operação e rollback:
+[`docs/HOSTINGER_DEPLOY_3_2.md`](docs/HOSTINGER_DEPLOY_3_2.md).
 
 ## 3.3 Deploy do Supabase
 
