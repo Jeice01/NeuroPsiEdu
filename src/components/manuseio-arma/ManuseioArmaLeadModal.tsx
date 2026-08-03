@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   AlertCircle,
@@ -10,6 +10,7 @@ import {
   ShieldCheck,
   X,
 } from "lucide-react";
+import { TurnstileWidget } from "@/components/forms/TurnstileWidget";
 
 declare global {
   interface Window {
@@ -160,6 +161,15 @@ export function ManuseioArmaLeadModal({
   const [fieldErrors, setFieldErrors] = useState<
     Partial<Record<keyof FormState, string>>
   >({});
+  const [honeypot, setHoneypot] = useState("");
+  const [turnstileToken, setTurnstileToken] = useState("");
+  const [turnstileResetKey, setTurnstileResetKey] = useState(0);
+  const [captchaError, setCaptchaError] = useState("");
+
+  const handleTurnstileToken = useCallback((token: string) => {
+    setTurnstileToken(token);
+    if (token) setCaptchaError("");
+  }, []);
 
   useEffect(() => {
     if (isOpen) {
@@ -169,6 +179,10 @@ export function ManuseioArmaLeadModal({
       setSuccessMessage("");
       setApiError("");
       setFieldErrors({});
+      setHoneypot("");
+      setTurnstileToken("");
+      setTurnstileResetKey((value) => value + 1);
+      setCaptchaError("");
     }
   }, [isOpen]);
 
@@ -232,8 +246,11 @@ export function ManuseioArmaLeadModal({
     }
 
     setFieldErrors(errors);
+    setCaptchaError(
+      turnstileToken ? "" : "Conclua a verificação de segurança.",
+    );
 
-    return Object.keys(errors).length === 0;
+    return Object.keys(errors).length === 0 && Boolean(turnstileToken);
   }
 
   async function handleSubmit(event: React.FormEvent) {
@@ -255,10 +272,11 @@ export function ManuseioArmaLeadModal({
       mensagem: form.mensagem.trim() || null,
       formacao_interesse:
         "Formação em Avaliação Psicológica para Manuseio de Arma de Fogo",
-      pagina_origem:
-        "https://neuropsiedu.com.br/formacao-manuseio-arma",
+      pagina_origem: "https://neuropsiedu.com.br/famaf",
       botao_origem: buttonOrigin,
       consentimento_contato: true,
+      turnstile_token: turnstileToken,
+      website: honeypot,
       ...getUtms(),
     };
 
@@ -281,6 +299,10 @@ export function ManuseioArmaLeadModal({
         );
       }
 
+      if (!data.success) {
+        throw new Error("A resposta do servidor não confirmou o envio.");
+      }
+
       setSuccessMessage(
         data.message ||
           "Recebemos seus dados! Nossa equipe entrará em contato pelo WhatsApp com todas as informações da Formação em Avaliação Psicológica para Manuseio de Arma de Fogo."
@@ -292,23 +314,16 @@ export function ManuseioArmaLeadModal({
         window.dataLayer.push({
           event: "lead_formacao",
           formacao: "MANUSEIO_ARMA",
-          pagina: "/formacao-manuseio-arma",
+          pagina: "/famaf",
           perfil: form.perfil || "nao_informado",
+          interesse_principal: form.interesse_principal || "nao_informado",
           botao_origem: buttonOrigin,
         });
       }
       setSuccess(true);
-
-      if (typeof window !== "undefined") {
-        window.dataLayer = window.dataLayer || [];
-        window.dataLayer.push({
-          event: "lead_formacao_manuseio_arma",
-          formacao_interesse:
-            "Formação em Avaliação Psicológica para Manuseio de Arma de Fogo",
-          botao_origem: buttonOrigin,
-        });
-      }
     } catch (error: unknown) {
+      setTurnstileToken("");
+      setTurnstileResetKey((value) => value + 1);
       setApiError(
         error instanceof Error
           ? error.message
@@ -402,8 +417,29 @@ export function ManuseioArmaLeadModal({
                 </motion.div>
               ) : (
                 <form onSubmit={handleSubmit} noValidate className="space-y-5">
+                  <div
+                    aria-hidden="true"
+                    className="absolute left-[-10000px] top-auto h-px w-px overflow-hidden"
+                  >
+                    <label htmlFor="famaf-website">
+                      Não preencha este campo
+                    </label>
+                    <input
+                      id="famaf-website"
+                      name="website"
+                      type="text"
+                      tabIndex={-1}
+                      autoComplete="off"
+                      value={honeypot}
+                      onChange={(event) => setHoneypot(event.target.value)}
+                    />
+                  </div>
                   {apiError && (
-                    <div className="flex items-start gap-3 p-4 rounded-xl bg-red-500/10 border border-red-500/20 text-red-400 text-sm">
+                    <div
+                      role="alert"
+                      aria-live="assertive"
+                      className="flex items-start gap-3 p-4 rounded-xl bg-red-500/10 border border-red-500/20 text-red-400 text-sm"
+                    >
                       <AlertCircle className="w-5 h-5 flex-shrink-0 mt-0.5" />
                       <p>{apiError}</p>
                     </div>
@@ -557,6 +593,18 @@ export function ManuseioArmaLeadModal({
                   </div>
 
                   <div>
+                    <TurnstileWidget
+                      key={turnstileResetKey}
+                      onTokenChange={handleTurnstileToken}
+                    />
+                    {captchaError && (
+                      <p className="mt-2 text-xs text-red-400">
+                        {captchaError}
+                      </p>
+                    )}
+                  </div>
+
+                  <div>
                     <label className="flex items-start gap-3 text-sm text-slate-400">
                       <input
                         type="checkbox"
@@ -580,7 +628,7 @@ export function ManuseioArmaLeadModal({
 
                   <button
                     type="submit"
-                    disabled={loading}
+                    disabled={loading || !turnstileToken}
                     className="group w-full rounded-xl bg-gradient-to-r from-neuro-orange to-orange-600 px-8 py-4 text-base font-bold text-white shadow-[0_0_30px_rgba(242,140,40,0.3)] transition-all duration-300 hover:from-orange-500 hover:to-orange-700 disabled:cursor-not-allowed disabled:opacity-70 flex items-center justify-center gap-3"
                   >
                     {loading ? (

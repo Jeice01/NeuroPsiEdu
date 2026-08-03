@@ -1,9 +1,12 @@
 "use client";
 
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { GraduationCap, Calendar, Award, ArrowRight, Clock, CheckCircle2, Activity, Network, X, User, Mail, Phone } from "lucide-react";
-import { supabase } from "@/lib/supabase";
+import { GraduationCap, Calendar, Award, ArrowRight, Clock, CheckCircle2, Activity, Network, X, User, Mail, Phone, AlertCircle, Loader2, ShieldCheck } from "lucide-react";
+import { TurnstileWidget } from "@/components/forms/TurnstileWidget";
+
+const EDGE_FN_URL =
+  "https://avfzuudrjnglqrkyxwkz.supabase.co/functions/v1/create-lead-formacao";
 
 export function CoursesSection() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -14,36 +17,97 @@ export function CoursesSection() {
     nome: "",
     telefone: "",
     email: "",
-    isPsicologo: "sim"
+    isPsicologo: "sim",
+    consentimentoContato: false,
   });
+  const [loading, setLoading] = useState(false);
+  const [apiError, setApiError] = useState("");
+  const [honeypot, setHoneypot] = useState("");
+  const [turnstileToken, setTurnstileToken] = useState("");
+  const [turnstileResetKey, setTurnstileResetKey] = useState(0);
+  const [captchaError, setCaptchaError] = useState("");
+
+  const handleTurnstileToken = useCallback((token: string) => {
+    setTurnstileToken(token);
+    if (token) setCaptchaError("");
+  }, []);
+
+  const openWaitlistModal = () => {
+    setFormStep(1);
+    setApiError("");
+    setCaptchaError("");
+    setTurnstileToken("");
+    setTurnstileResetKey((value) => value + 1);
+    setIsModalOpen(true);
+  };
 
   const handleSubmit = async (e: React.SyntheticEvent) => {
     e.preventDefault();
-    
-    try {
-      const { error } = await supabase
-        .from('espera_pos')
-        .insert([
-          { 
-            nome: formData.nome, 
-            email: formData.email, 
-            telefone: formData.telefone, 
-            is_psicologo: formData.isPsicologo,
-            origem: 'pos-graduacao'
-          }
-        ]);
 
-      if (error) throw error;
+    if (!formData.consentimentoContato) {
+      setApiError("É necessário autorizar o contato para prosseguir.");
+      return;
+    }
+    if (!turnstileToken) {
+      setCaptchaError("Conclua a verificação de segurança.");
+      return;
+    }
+
+    setLoading(true);
+    setApiError("");
+
+    try {
+      const response = await fetch(EDGE_FN_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          lead_type: "espera_pos",
+          nome: formData.nome.trim().replace(/\s+/g, " "),
+          whatsapp: formData.telefone.replace(/\D/g, ""),
+          email: formData.email.trim().toLowerCase(),
+          is_psicologo: formData.isPsicologo,
+          consentimento_contato: true,
+          turnstile_token: turnstileToken,
+          website: honeypot,
+        }),
+      });
+
+      const data = await response.json().catch(() => ({})) as {
+        success?: boolean;
+        error?: string;
+      };
+
+      if (!response.ok || !data.success) {
+        throw new Error(
+          data.error || "Não foi possível entrar na lista de espera.",
+        );
+      }
 
       setFormStep(2);
+
+      window.dataLayer = window.dataLayer || [];
+      window.dataLayer.push({
+        event: "lead_formacao",
+        formacao: "POS_GRADUACAO",
+        pagina: "/",
+        perfil: formData.isPsicologo,
+        botao_origem: "lista_espera_home",
+      });
       
       setTimeout(() => {
         const msg = `Olá! Meu nome é ${formData.nome}. Sou ${formData.isPsicologo === 'sim' ? 'Psicólogo(a)' : 'estudante/outro'}. Gostaria de saber mais sobre a Pós-Graduação.`;
         window.open(`https://wa.me/5561982088284?text=${encodeURIComponent(msg)}`, '_blank');
       }, 2000);
-    } catch (error) {
-      console.error("Error saving lead:", error);
-      alert("Houve um erro ao salvar seus dados. Por favor, tente novamente.");
+    } catch (error: unknown) {
+      setTurnstileToken("");
+      setTurnstileResetKey((value) => value + 1);
+      setApiError(
+        error instanceof Error
+          ? error.message
+          : "Não foi possível entrar na lista de espera.",
+      );
+    } finally {
+      setLoading(false);
     }
   };
   const moduleData = [
@@ -358,7 +422,7 @@ export function CoursesSection() {
             </div>
 
             <button
-              onClick={() => { setFormStep(1); setIsModalOpen(true); }}
+              onClick={openWaitlistModal}
               className="group flex items-center gap-3 text-neuro-orange font-black text-sm uppercase tracking-widest transition-all bg-neuro-orange/5 px-8 py-4 rounded-2xl border border-neuro-orange/10 hover:bg-neuro-orange hover:text-white duration-500"
             >
               Entrar na Lista de Espera
@@ -430,6 +494,18 @@ export function CoursesSection() {
               <div className="p-5 xs:p-8">
                 {formStep === 1 ? (
                   <form onSubmit={handleSubmit} className="space-y-5">
+                    <div className="absolute left-[-9999px]" aria-hidden="true">
+                      <label htmlFor="waitlist-website">Website</label>
+                      <input
+                        id="waitlist-website"
+                        name="website"
+                        type="text"
+                        tabIndex={-1}
+                        autoComplete="off"
+                        value={honeypot}
+                        onChange={(event) => setHoneypot(event.target.value)}
+                      />
+                    </div>
                     <div>
                       <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2 px-1">Nome Completo</label>
                       <div className="relative">
@@ -515,12 +591,57 @@ export function CoursesSection() {
                       </p>
                     </div>
 
+                    <TurnstileWidget
+                      key={turnstileResetKey}
+                      onTokenChange={handleTurnstileToken}
+                    />
+                    {captchaError && (
+                      <p role="alert" className="text-sm text-red-600">
+                        {captchaError}
+                      </p>
+                    )}
+
+                    <label className="flex items-start gap-3 text-sm text-slate-600">
+                      <input
+                        required
+                        type="checkbox"
+                        checked={formData.consentimentoContato}
+                        onChange={(event) => {
+                          setFormData({
+                            ...formData,
+                            consentimentoContato: event.target.checked,
+                          });
+                          setApiError("");
+                        }}
+                        className="mt-1 h-4 w-4 accent-neuro-orange"
+                      />
+                      <span>
+                        Autorizo a NeuroPsiEdu a entrar em contato sobre a
+                        Pós-Graduação.
+                      </span>
+                    </label>
+
+                    {apiError && (
+                      <div
+                        role="alert"
+                        className="flex items-start gap-2 rounded-xl bg-red-50 p-3 text-sm text-red-700"
+                      >
+                        <AlertCircle className="mt-0.5 h-4 w-4 flex-shrink-0" />
+                        <span>{apiError}</span>
+                      </div>
+                    )}
+
                     <button
                       type="submit"
+                      disabled={loading || !turnstileToken}
                       className="w-full bg-neuro-orange text-white py-6 rounded-2xl font-black text-sm uppercase tracking-[0.2em] shadow-xl shadow-neuro-orange/20 hover:bg-neuro-orange-light hover:-translate-y-1 transition-all flex items-center justify-center gap-3 mt-4"
                     >
-                      Enviar e Continuar
-                      <ArrowRight className="w-5 h-5" />
+                      {loading ? (
+                        <Loader2 className="w-5 h-5 animate-spin" />
+                      ) : (
+                        <ShieldCheck className="w-5 h-5" />
+                      )}
+                      {loading ? "Enviando..." : "Enviar e Continuar"}
                     </button>
                   </form>
                 ) : (
