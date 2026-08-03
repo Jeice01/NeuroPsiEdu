@@ -57,6 +57,11 @@ sejam expostas automaticamente.
 - Migration aplicada no projeto remoto e Edge Function publicada.
 - `npm run lint`: aprovado com 10 avisos preexistentes.
 - `npm run build`: aprovado; 16 páginas estáticas.
+- Frontend publicado na Hostinger e cache de produção limpo.
+- Fluxo ponta a ponta em produção aprovado com Turnstile e resposta de sucesso da
+  Edge Function.
+- Registro sintético confirmado no Supabase e removido após o teste; contagem
+  final igual a zero.
 
 ## Alertas remotos fora do schema NeuroPsiEdu
 
@@ -74,8 +79,16 @@ deve ser editada. Em incidente, desative temporariamente a Edge Function ou o
 formulário e investigue antes de restaurar privilégios públicos. Nunca conceda
 leitura de leads a `anon` ou `authenticated`.
 
-## Pendência de publicação
+## Publicação e teste em produção
 
-O artefato do frontend foi recompilado com a site key pública de produção. O
-upload à Hostinger e o teste ponta a ponta em produção permanecem pendentes até
-o Chrome permitir acesso a arquivos locais para a extensão do ChatGPT.
+O artefato foi recompilado com a site key pública de produção do Turnstile,
+enviado à Hostinger, extraído em `public_html` com sobrescrita e publicado após
+a limpeza do cache. O formulário atualizado foi validado no domínio de produção
+com honeypot, consentimento obrigatório e Turnstile ativo.
+
+O envio ponta a ponta exibiu a confirmação `Dados enviados!` e criou somente o
+registro sintético identificado pelo e-mail
+`fase-2-2-prod-20260801-2131@example.test`. A presença de um registro foi
+confirmada diretamente no projeto Supabase e, após a validação, o registro foi
+excluído. Uma consulta independente confirmou contagem final igual a zero em
+03/08/2026.

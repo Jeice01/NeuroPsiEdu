@@ -714,6 +714,8 @@ Adicione uma linha para cada execução relevante.
 | 01/08/2026 | Fase 2.2 | Local | Integração da lista de espera e bloqueio da Data API anônima | Aprovado | Edge HTTP 200; `SELECT`/`INSERT` anônimos HTTP 401; dados sintéticos removidos | Codex |
 | 01/08/2026 | Fase 2.2 | Supabase | Aplicar migration, publicar Edge Function e validar privilégios | Aprovado com alertas compartilhados | Migration `20260801134914`; lint sem erros | Codex |
 | 01/08/2026 | Fase 2.2 | Local | `npm run lint` e build de produção | Aprovado com 10 avisos conhecidos | 16 páginas estáticas; site key Turnstile presente no artefato | Codex |
+| 01/08/2026 | Fase 2.2 | Hostinger/Produção | Publicar frontend, limpar cache e testar o fluxo ponta a ponta | Aprovado | Turnstile concluído; interface exibiu `Dados enviados!`; registro confirmado no Supabase | Codex |
+| 03/08/2026 | Fase 2.2 | Supabase | Remover o dado sintético do teste de produção e consultar novamente | Aprovado | 1 registro removido; contagem final igual a 0 | Codex |
 
 ---
 
@@ -747,9 +749,9 @@ Use esta seção para decisões que afetem arquitetura, segurança ou operação
 | 30/07/2026 | Deploy Hostinger aparentemente manual | Erros de publicação e rollback difícil | Executar Fase 3 | — | Aberto |
 | 30/07/2026 | Cinco vulnerabilidades altas no npm | Risco de segurança e manutenção | Executar Fase 1.1 | — | Aberto |
 | 30/07/2026 | Chave pública `anon` de projeto antigo presente em bundles do histórico | Projeto histórico permanece identificável e acessível conforme RLS | Confirmar desativação ou revisar RLS do project ref `lgmfuswfvlnagthmrhjw` | — | Aberto |
-| 31/07/2026 | Formulário da lista de espera usa insert direto em `public.espera_pos` | Fluxo incompatível com o modelo seguro | Frontend migrado para a Edge Function; falta publicar o artefato na Hostinger | Codex | Em validação |
+| 31/07/2026 | Formulário da lista de espera usa insert direto em `public.espera_pos` | Fluxo incompatível com o modelo seguro | Frontend migrado para a Edge Function, publicado e aprovado em produção | Codex | Resolvido |
 | 01/08/2026 | Advisor remoto aponta itens do aplicativo compartilhado em `public` | Revogação ampla pode interromper o ProjectOrbis | Auditar bucket `avatars`, funções `security definer` e proteção de senhas em fase própria | — | Aberto e documentado |
-| 01/08/2026 | Chrome sem permissão de acesso a arquivos locais | Upload e teste de produção do frontend da Fase 2.2 não puderam ser concluídos | Habilitar “Allow access to file URLs” na extensão ChatGPT Chrome | Usuário | Bloqueado |
+| 01/08/2026 | Chrome sem permissão de acesso a arquivos locais | Upload e teste de produção do frontend da Fase 2.2 não puderam ser concluídos | Extensão reinstalada, permissão ativada e upload concluído | Usuário/Codex | Resolvido |
 
 ---
 
@@ -758,7 +760,7 @@ Use esta seção para decisões que afetem arquitetura, segurança ou operação
 | Data | Marco | Commit/PR | Observações |
 |---|---|---|---|
 | 31/07/2026 | Fase 2.1 concluída | `database/version-schema-and-rls` | Schema de leads reproduzível, validado localmente e aplicado ao Supabase |
-| 01/08/2026 | Segurança de banco da Fase 2.2 aplicada | `database/version-schema-and-rls` | RLS forçado, grants mínimos e Edge Function remota validados; frontend aguarda upload Hostinger |
+| 03/08/2026 | Fase 2.2 concluída em produção | `database/version-schema-and-rls` | RLS, grants, Edge Function, frontend Hostinger e fluxo ponta a ponta validados; dado sintético removido |
 | 31/07/2026 | Fase 1.3 ativada em produção | `security/lead-form-protection` | Mensagens FANP/FAMAF, origens canônicas e eventos de conversão padronizados |
 | 31/07/2026 | Fase 1.2 implantada em produção | `security/lead-form-protection` | Turnstile ativo em FNP/FAMAF, Edge Function protegida e POST integrado aprovado |
 | 30/07/2026 | Auditoria técnica inicial concluída | — | Arquitetura, build, Supabase, segurança e deploy avaliados |
