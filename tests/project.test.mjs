@@ -50,3 +50,18 @@ test("the Hostinger workflow deploys the approved artifact without embedded cred
   assert.doesNotMatch(workflow, /service[_-]?role/i);
   assert.doesNotMatch(workflow, /https:\/\/.*hostinger.*webhook/i);
 });
+
+test("the Supabase workflow gates production and never exposes administrative API keys", async () => {
+  const workflow = await readFile(
+    ".github/workflows/deploy-supabase.yml",
+    "utf8",
+  );
+
+  assert.match(workflow, /workflow_dispatch:/);
+  assert.match(workflow, /name: supabase-\$\{\{ inputs\.target \}\}/);
+  assert.match(workflow, /supabase db push --linked --dry-run/);
+  assert.match(workflow, /functions deploy create-lead-formacao/);
+  assert.match(workflow, /Smoke test deployed function/);
+  assert.doesNotMatch(workflow, /SUPABASE_SERVICE_ROLE_KEY/);
+  assert.doesNotMatch(workflow, /--prune/);
+});

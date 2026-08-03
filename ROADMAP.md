@@ -459,7 +459,7 @@ Implementação e operação do workflow:
 - [x] Publicar somente o artefato aprovado.
 - [x] Evitar exposição de credenciais nos logs.
 - [x] Preservar versão anterior para rollback.
-- [ ] Executar smoke test HTTP após o deploy.
+- [x] Executar smoke test HTTP após o deploy.
 - [x] Registrar commit e data da versão publicada.
 - [x] Criar mecanismo de deploy manual emergencial.
 
@@ -469,11 +469,14 @@ Arquitetura, operação e rollback:
 ## 3.3 Deploy do Supabase
 
 - [ ] Criar ambiente de staging.
-- [ ] Validar migrations antes da produção.
-- [ ] Criar workflow de deploy da Edge Function.
+- [x] Validar migrations antes da produção.
+- [x] Criar workflow de deploy da Edge Function.
 - [ ] Exigir aprovação para alteração de banco em produção.
-- [ ] Validar a função após a publicação.
-- [ ] Documentar rollback de função e banco.
+- [x] Validar a função após a publicação.
+- [x] Documentar rollback de função e banco.
+
+Pipeline, promoção e rollback:
+[`docs/SUPABASE_DEPLOY_3_3.md`](docs/SUPABASE_DEPLOY_3_3.md).
 
 ### Critérios de aceite da fase
 
