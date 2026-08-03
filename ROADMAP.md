@@ -444,12 +444,11 @@ Geração, integração dos tipos, correção de drift e evidências:
 - [x] Executar build de produção.
 - [x] Executar auditoria de dependências.
 - [x] Armazenar o diretório `out` como artefato.
-- [ ] Configurar proteção da branch `main`.
-- [ ] Exigir aprovação e checks verdes para merge.
+- [x] Configurar proteção da branch `main`.
+- [x] Exigir aprovação e checks verdes para merge.
 
 Implementação e operação do workflow:
-[`docs/CI_3_1.md`](docs/CI_3_1.md). A proteção da `main` está bloqueada pelo
-plano atual do GitHub para este repositório privado.
+[`docs/CI_3_1.md`](docs/CI_3_1.md).
 
 ## 3.2 Deploy do frontend
 
@@ -727,6 +726,7 @@ Adicione uma linha para cada execução relevante.
 | 03/08/2026 | Fase 2.3 | Supabase | Corrigir drift, gerar tipos e publicar Edge Function tipada | Aprovado | Migration `20260803130532`; leitura anônima bloqueada; preflight HTTP 204 | Codex |
 | 03/08/2026 | Fase 3.1 | Local | Executar `npm ci`, lint, typecheck, testes, audit e build | Aprovado com 10 avisos conhecidos | 3 testes; 0 vulnerabilidades; 16 páginas estáticas | Codex |
 | 03/08/2026 | Fase 3.1 | GitHub Actions | Executar `quality-gates` no PR #1 | Aprovado em 1m13s | Run `30818771680`; job `91703055444` | Codex |
+| 03/08/2026 | Fase 3.1 | GitHub | Proteger a `main` com aprovação e check obrigatório | Aprovado | `quality-gates`, 1 aprovação, branch atualizada e conversas resolvidas | Codex |
 
 ---
 
@@ -763,7 +763,7 @@ Use esta seção para decisões que afetem arquitetura, segurança ou operação
 | 31/07/2026 | Formulário da lista de espera usa insert direto em `public.espera_pos` | Fluxo incompatível com o modelo seguro | Frontend migrado para a Edge Function, publicado e aprovado em produção | Codex | Resolvido |
 | 01/08/2026 | Advisor remoto aponta itens do aplicativo compartilhado em `public` | Revogação ampla pode interromper o ProjectOrbis | Auditar bucket `avatars`, funções `security definer` e proteção de senhas em fase própria | — | Aberto e documentado |
 | 01/08/2026 | Chrome sem permissão de acesso a arquivos locais | Upload e teste de produção do frontend da Fase 2.2 não puderam ser concluídos | Extensão reinstalada, permissão ativada e upload concluído | Usuário/Codex | Resolvido |
-| 03/08/2026 | Proteção de branch indisponível no repositório privado no plano atual | Não é possível exigir aprovação e `quality-gates` antes do merge | Fazer upgrade para GitHub Pro ou tornar o repositório público; depois aplicar a regra da `main` | Usuário | Bloqueado externamente |
+| 03/08/2026 | Proteção de branch indisponível no repositório privado no plano anterior | Não era possível exigir aprovação e `quality-gates` antes do merge | Repositório tornado público e proteção da `main` aplicada | Usuário/Codex | Resolvido |
 
 ---
 
@@ -774,7 +774,7 @@ Use esta seção para decisões que afetem arquitetura, segurança ou operação
 | 31/07/2026 | Fase 2.1 concluída | `database/version-schema-and-rls` | Schema de leads reproduzível, validado localmente e aplicado ao Supabase |
 | 03/08/2026 | Fase 2.2 concluída em produção | `database/version-schema-and-rls` | RLS, grants, Edge Function, frontend Hostinger e fluxo ponta a ponta validados; dado sintético removido |
 | 03/08/2026 | Fase 2.3 concluída | `database/version-schema-and-rls` | Tipos do banco versionados, Edge Function tipada e schema local/remoto alinhado |
-| 03/08/2026 | CI da Fase 3.1 validada | PR `#1` | `quality-gates` aprovado; proteção obrigatória da `main` aguarda liberação do recurso no GitHub |
+| 03/08/2026 | Fase 3.1 concluída | PR `#1` | `quality-gates` aprovado e proteção obrigatória da `main` configurada |
 | 31/07/2026 | Fase 1.3 ativada em produção | `security/lead-form-protection` | Mensagens FANP/FAMAF, origens canônicas e eventos de conversão padronizados |
 | 31/07/2026 | Fase 1.2 implantada em produção | `security/lead-form-protection` | Turnstile ativo em FNP/FAMAF, Edge Function protegida e POST integrado aprovado |
 | 30/07/2026 | Auditoria técnica inicial concluída | — | Arquitetura, build, Supabase, segurança e deploy avaliados |
