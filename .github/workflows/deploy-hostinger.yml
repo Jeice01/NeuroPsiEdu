@@ -122,8 +122,24 @@ jobs:
           HOSTINGER_WEBHOOK: ${{ secrets.HOSTINGER_DEPLOY_WEBHOOK }}
         run: |
           test -n "${HOSTINGER_WEBHOOK}"
+          jq -n \
+            --arg after "${SOURCE_SHA}" \
+            --arg ref "refs/heads/deploy" \
+            --arg repository "${GITHUB_REPOSITORY}" \
+            '{
+              after: $after,
+              ref: $ref,
+              repository: {
+                full_name: $repository,
+                clone_url: ("https://github.com/" + $repository + ".git"),
+                ssh_url: ("git@github.com:" + $repository + ".git")
+              }
+            }' > hostinger-push.json
           curl --fail --silent --show-error \
             --retry 3 --retry-all-errors --max-time 30 \
+            --header "Content-Type: application/json" \
+            --header "X-GitHub-Event: push" \
+            --data-binary @hostinger-push.json \
             --output /dev/null --request POST "${HOSTINGER_WEBHOOK}"
 
       - name: Wait for published version
