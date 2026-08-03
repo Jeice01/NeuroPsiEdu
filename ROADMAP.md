@@ -726,6 +726,7 @@ Adicione uma linha para cada execução relevante.
 | 03/08/2026 | Fase 2.3 | Local | Recriar banco, executar scripts SQL, lint, advisors e `deno check` | Aprovado com avisos compartilhados | Migrations completas; schema `neuropsiedu` sem erros; tipagem Deno válida | Codex |
 | 03/08/2026 | Fase 2.3 | Supabase | Corrigir drift, gerar tipos e publicar Edge Function tipada | Aprovado | Migration `20260803130532`; leitura anônima bloqueada; preflight HTTP 204 | Codex |
 | 03/08/2026 | Fase 3.1 | Local | Executar `npm ci`, lint, typecheck, testes, audit e build | Aprovado com 10 avisos conhecidos | 3 testes; 0 vulnerabilidades; 16 páginas estáticas | Codex |
+| 03/08/2026 | Fase 3.1 | GitHub Actions | Executar `quality-gates` no PR #1 | Aprovado em 1m13s | Run `30818771680`; job `91703055444` | Codex |
 
 ---
 
@@ -773,6 +774,7 @@ Use esta seção para decisões que afetem arquitetura, segurança ou operação
 | 31/07/2026 | Fase 2.1 concluída | `database/version-schema-and-rls` | Schema de leads reproduzível, validado localmente e aplicado ao Supabase |
 | 03/08/2026 | Fase 2.2 concluída em produção | `database/version-schema-and-rls` | RLS, grants, Edge Function, frontend Hostinger e fluxo ponta a ponta validados; dado sintético removido |
 | 03/08/2026 | Fase 2.3 concluída | `database/version-schema-and-rls` | Tipos do banco versionados, Edge Function tipada e schema local/remoto alinhado |
+| 03/08/2026 | CI da Fase 3.1 validada | PR `#1` | `quality-gates` aprovado; proteção obrigatória da `main` aguarda liberação do recurso no GitHub |
 | 31/07/2026 | Fase 1.3 ativada em produção | `security/lead-form-protection` | Mensagens FANP/FAMAF, origens canônicas e eventos de conversão padronizados |
 | 31/07/2026 | Fase 1.2 implantada em produção | `security/lead-form-protection` | Turnstile ativo em FNP/FAMAF, Edge Function protegida e POST integrado aprovado |
 | 30/07/2026 | Auditoria técnica inicial concluída | — | Arquitetura, build, Supabase, segurança e deploy avaliados |
