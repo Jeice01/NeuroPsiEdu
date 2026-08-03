@@ -64,7 +64,9 @@ jobs:
           --level error --fail-on error
 
       - name: Typecheck Edge Function
-        run: deno check supabase/functions/create-lead-formacao/index.ts
+        run: >-
+          deno check --node-modules-dir=auto
+          supabase/functions/create-lead-formacao/index.ts
 
   deploy:
     name: deploy-${{ inputs.target }}
