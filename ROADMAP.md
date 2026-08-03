@@ -445,7 +445,7 @@ Geração, integração dos tipos, correção de drift e evidências:
 - [x] Executar auditoria de dependências.
 - [x] Armazenar o diretório `out` como artefato.
 - [x] Configurar proteção da branch `main`.
-- [x] Exigir aprovação e checks verdes para merge.
+- [x] Exigir pull request e checks verdes para merge.
 
 Implementação e operação do workflow:
 [`docs/CI_3_1.md`](docs/CI_3_1.md).
@@ -726,7 +726,7 @@ Adicione uma linha para cada execução relevante.
 | 03/08/2026 | Fase 2.3 | Supabase | Corrigir drift, gerar tipos e publicar Edge Function tipada | Aprovado | Migration `20260803130532`; leitura anônima bloqueada; preflight HTTP 204 | Codex |
 | 03/08/2026 | Fase 3.1 | Local | Executar `npm ci`, lint, typecheck, testes, audit e build | Aprovado com 10 avisos conhecidos | 3 testes; 0 vulnerabilidades; 16 páginas estáticas | Codex |
 | 03/08/2026 | Fase 3.1 | GitHub Actions | Executar `quality-gates` no PR #1 | Aprovado em 1m13s | Run `30818771680`; job `91703055444` | Codex |
-| 03/08/2026 | Fase 3.1 | GitHub | Proteger a `main` com aprovação e check obrigatório | Aprovado | `quality-gates`, 1 aprovação, branch atualizada e conversas resolvidas | Codex |
+| 03/08/2026 | Fase 3.1 | GitHub | Proteger a `main` para o fluxo individual | Aprovado | `quality-gates`, PR obrigatório, 0 aprovações, branch atualizada e conversas resolvidas | Codex |
 
 ---
 
