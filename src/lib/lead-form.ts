@@ -7,7 +7,7 @@ export const FORMATIONS = {
   },
   famaf: {
     name: "Formação em Avaliação Psicológica para Manuseio de Arma de Fogo",
-    page: "https://neuropsiedu.com.br/famaf",
+    page: "https://neuropsiedu.com.br/formacao-manuseio-arma/",
     successMessage:
       "Recebemos seus dados! Nossa equipe entrará em contato pelo WhatsApp com todas as informações da Formação em Avaliação Psicológica para Manuseio de Arma de Fogo.",
   },

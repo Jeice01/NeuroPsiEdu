@@ -4,8 +4,46 @@ import { blogPosts } from "@/data/blog";
 import { notFound } from "next/navigation";
 import { Calendar, User, ArrowLeft } from "lucide-react";
 import Link from "next/link";
+import type { Metadata } from "next";
+import { absoluteUrl, SITE_NAME } from "@/lib/seo";
 
-export default async function BlogPostPage({ params }: { params: Promise<{ slug: string }> }) {
+type BlogPostProps = { params: Promise<{ slug: string }> };
+
+export async function generateMetadata({ params }: BlogPostProps): Promise<Metadata> {
+  const { slug } = await params;
+  const post = blogPosts.find((candidate) => candidate.slug === slug);
+
+  if (!post) {
+    return { title: "Artigo não encontrado", robots: { index: false, follow: false } };
+  }
+
+  const url = absoluteUrl(`/blog/${post.slug}/`);
+  const image = absoluteUrl(post.image);
+
+  return {
+    title: post.title,
+    description: post.summary,
+    alternates: { canonical: url },
+    openGraph: {
+      title: post.title,
+      description: post.summary,
+      url,
+      siteName: SITE_NAME,
+      locale: "pt_BR",
+      type: "article",
+      authors: [post.author],
+      images: [{ url: image, alt: post.title }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: post.title,
+      description: post.summary,
+      images: [image],
+    },
+  };
+}
+
+export default async function BlogPostPage({ params }: BlogPostProps) {
   const { slug } = await params;
   const post = blogPosts.find((p) => p.slug === slug);
 

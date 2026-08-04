@@ -3,6 +3,14 @@ import { Footer } from "@/components/layout/Footer";
 import Link from "next/link";
 import { blogPosts } from "@/data/blog";
 import { Calendar, User, ArrowRight } from "lucide-react";
+import { createPageMetadata } from "@/lib/seo";
+
+export const metadata = createPageMetadata({
+  title: "Blog de Neuropsicologia e Saúde Mental",
+  description:
+    "Artigos sobre TDAH, avaliação neuropsicológica, aprendizagem e saúde mental produzidos pela NeuroPsiEdu.",
+  path: "/blog/",
+});
 
 export default function BlogPage() {
   return (
