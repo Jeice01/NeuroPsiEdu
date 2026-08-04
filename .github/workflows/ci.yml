@@ -75,12 +75,15 @@ jobs:
 
       - name: Verify static export
         shell: bash
-        run: test -f out/index.html
+        run: |
+          test -f out/index.html
+          test -f out/.htaccess
 
       - name: Upload static export
         uses: actions/upload-artifact@v7
         with:
           name: neuropsiedu-static-${{ github.sha }}
           path: out
+          include-hidden-files: true
           if-no-files-found: error
           retention-days: 7
