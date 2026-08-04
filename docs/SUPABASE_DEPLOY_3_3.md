@@ -18,10 +18,25 @@ aguardou aprovação do responsável pelo ambiente `supabase-production` e concl
 smoke test. Os seletores de deploy de banco e função permaneceram desligados, então
 essa verificação não alterou produção.
 
-O projeto de staging não pôde ser criado porque a organização gratuita já possui
-dois projetos ativos, que é o limite atual do plano. A conclusão de staging exige
-upgrade da organização ou pausa/remoção deliberada de outro projeto. O projeto
-`orbis-terapia` não será alterado automaticamente.
+Em 2026-08-04, após autorização explícita do responsável, o projeto
+`orbis-terapia` (`xibcusanlbvclbqcwvev`) foi pausado e ficou `INACTIVE`. O projeto
+de produção `projetoorbis` permaneceu `ACTIVE_HEALTHY`. A vaga liberada no plano
+gratuito foi usada para criar o projeto `NeuroPsiEdu Staging`
+(`heriktuywhaqjodrqyoq`) na região de São Paulo. O identificador e a senha do banco
+foram armazenados como secrets do ambiente GitHub `supabase-staging`.
+
+A execução de staging
+[`30869249013`](https://github.com/Jeice01/NeuroPsiEdu/actions/runs/30869249013)
+validou o banco isolado, lint e tipos, aplicou as nove migrations, publicou a Edge
+Function e aprovou o smoke test. O rollback da função para o commit estável
+`440b54f5ae0128dd50745da9bcbde0d6b0bb377d` foi testado pela execução
+[`30869469959`](https://github.com/Jeice01/NeuroPsiEdu/actions/runs/30869469959).
+A versão atual de `main` foi restaurada e validada pela execução
+[`30869597887`](https://github.com/Jeice01/NeuroPsiEdu/actions/runs/30869597887).
+
+As execuções concluíram verdes. O único aviso foi a descontinuação do Node.js 20
+declarado por `supabase/setup-cli@v1`; o GitHub Actions executou essa action em
+Node.js 24 sem bloquear o pipeline.
 
 ## Pipeline
 
@@ -52,6 +67,11 @@ Supabase.
 
 O token `NeuroPsiEdu GitHub Actions` foi criado com expiração em 2026-09-02. Ele
 deve ser rotacionado antes dessa data nos dois ambientes GitHub.
+
+O ambiente `supabase-staging` possui os três secrets obrigatórios. No ambiente
+`supabase-production`, o secret `SUPABASE_DB_PASSWORD` ainda deve ser cadastrado
+antes do primeiro deploy de migrations em produção; não houve redefinição automática
+da senha do banco de produção.
 
 ## Ordem de promoção
 
