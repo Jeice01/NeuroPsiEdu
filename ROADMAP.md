@@ -548,18 +548,18 @@ Pipeline, promoção e rollback:
 
 **Branch sugerida:** `seo/canonical-metadata-sitemap`
 
-- [ ] Escolher URL canônica da formação FAMAF.
-- [ ] Redirecionar `/famaf`.
-- [ ] Redirecionar `/formacao-manuseio`.
-- [ ] Preservar UTMs nos redirecionamentos.
-- [ ] Definir `metadataBase`.
-- [ ] Definir canonical por página.
-- [ ] Criar metadados por artigo.
-- [ ] Criar Open Graph absoluto.
-- [ ] Criar Twitter cards.
-- [ ] Criar sitemap.
-- [ ] Criar robots.
-- [ ] Revisar dados estruturados.
+- [x] Escolher URL canônica da formação FAMAF.
+- [x] Redirecionar `/famaf`.
+- [x] Redirecionar `/formacao-manuseio`.
+- [x] Preservar UTMs nos redirecionamentos.
+- [x] Definir `metadataBase`.
+- [x] Definir canonical por página.
+- [x] Criar metadados por artigo.
+- [x] Criar Open Graph absoluto.
+- [x] Criar Twitter cards.
+- [x] Criar sitemap.
+- [x] Criar robots.
+- [x] Revisar dados estruturados.
 
 ## 5.2 Performance
 
@@ -736,6 +736,7 @@ Adicione uma linha para cada execução relevante.
 | 04/08/2026 | Fase 4.1 | Local | Testes unitários, typecheck, lint e build estático | Aprovado com 10 avisos conhecidos | 12 testes aprovados; 16 páginas estáticas | Codex |
 | 04/08/2026 | Fase 4.2 | Local | Typecheck e testes isolados da Edge Function | Aprovado | 10 cenários Deno; nenhum serviço externo ou dado real | Codex |
 | 04/08/2026 | Fase 4.3 | Local | Playwright Chromium: navegação e formulários | Aprovado | 7 cenários E2E; API de leads e Turnstile simulados, sem dados reais | Codex |
+| 04/08/2026 | Fase 5.1 | Local | Build e inspeção automatizada do artefato SEO | Aprovado | Canonicals, redirects, sitemap, robots, social cards e JSON-LD verificados em `out` | Codex |
 
 ---
 

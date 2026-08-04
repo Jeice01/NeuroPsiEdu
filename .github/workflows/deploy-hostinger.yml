@@ -160,8 +160,15 @@ jobs:
       - name: Production HTTP smoke test
         shell: bash
         run: |
-          for route in / /fnp/ /famaf/ /blog/; do
+          for route in / /fnp/ /formacao-manuseio-arma/ /blog/ /sitemap.xml /robots.txt; do
             curl --fail --silent --show-error \
               --retry 2 --max-time 20 --output /dev/null \
               "https://neuropsiedu.com.br${route}?deploy=${GITHUB_RUN_ID}"
           done
+
+          REDIRECT_LOCATION="$(curl --silent --show-error --head \
+            --max-time 20 \
+            'https://neuropsiedu.com.br/famaf/?utm_source=deploy-test' \
+            | tr -d '\r' | awk 'tolower($1) == "location:" {print $2}')"
+          test "${REDIRECT_LOCATION}" = "/formacao-manuseio-arma/?utm_source=deploy-test" || \
+            test "${REDIRECT_LOCATION}" = "https://neuropsiedu.com.br/formacao-manuseio-arma/?utm_source=deploy-test"

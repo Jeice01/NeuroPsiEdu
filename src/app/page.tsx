@@ -4,6 +4,14 @@ import { AboutSection } from "@/components/sections/AboutSection";
 import { ServicesSection } from "@/components/sections/ServicesSection";
 import { CoursesSection } from "@/components/sections/CoursesSection";
 import { Footer } from "@/components/layout/Footer";
+import { createPageMetadata } from "@/lib/seo";
+
+export const metadata = createPageMetadata({
+  title: "Avaliação Neuropsicológica e Formação Profissional | NeuroPsiEdu",
+  description:
+    "Avaliação neuropsicológica para crianças, adultos e idosos, além de formações práticas para psicólogos.",
+  path: "/",
+});
 
 export default function Home() {
   return (

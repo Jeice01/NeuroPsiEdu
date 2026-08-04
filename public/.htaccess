@@ -1,0 +1,5 @@
+RewriteEngine On
+
+# Consolida as URLs legadas da formação FAMAF. O Apache preserva a query string
+# original por padrão, inclusive parâmetros utm_* e identificadores de campanha.
+RewriteRule ^(?:famaf|formacao-manuseio)/?$ /formacao-manuseio-arma/ [R=301,L,NE]

@@ -241,7 +241,7 @@ export function ManuseioArmaLeadModal({
         window.dataLayer.push({
           event: "lead_formacao",
           formacao: "MANUSEIO_ARMA",
-          pagina: "/famaf",
+          pagina: "/formacao-manuseio-arma/",
           perfil: form.perfil || "nao_informado",
           interesse_principal: form.interesse_principal || "nao_informado",
           botao_origem: buttonOrigin,
