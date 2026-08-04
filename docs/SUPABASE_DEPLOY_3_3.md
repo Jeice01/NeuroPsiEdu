@@ -68,10 +68,9 @@ Supabase.
 O token `NeuroPsiEdu GitHub Actions` foi criado com expiração em 2026-09-02. Ele
 deve ser rotacionado antes dessa data nos dois ambientes GitHub.
 
-O ambiente `supabase-staging` possui os três secrets obrigatórios. No ambiente
-`supabase-production`, o secret `SUPABASE_DB_PASSWORD` ainda deve ser cadastrado
-antes do primeiro deploy de migrations em produção; não houve redefinição automática
-da senha do banco de produção.
+Os ambientes `supabase-staging` e `supabase-production` possuem os três secrets
+obrigatórios. O secret `SUPABASE_DB_PASSWORD` de produção foi cadastrado em
+2026-08-04, sem redefinição da senha do banco.
 
 ## Ordem de promoção
 
