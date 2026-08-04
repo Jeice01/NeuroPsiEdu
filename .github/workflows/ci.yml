@@ -36,6 +36,11 @@ jobs:
           node-version: 24.18.1
           cache: npm
 
+      - name: Configure Deno
+        uses: denoland/setup-deno@v2
+        with:
+          deno-version: 2.5.6
+
       - name: Install dependencies
         run: npm ci
 
@@ -47,6 +52,11 @@ jobs:
 
       - name: Automated tests
         run: npm test
+
+      - name: Edge Function tests
+        run: >-
+          deno test --allow-env --node-modules-dir=auto
+          supabase/functions/create-lead-formacao/index_test.ts
 
       - name: Dependency audit
         run: npm run audit:ci
