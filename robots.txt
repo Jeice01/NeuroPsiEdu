@@ -1,0 +1,5 @@
+User-Agent: *
+Allow: /
+
+Host: https://neuropsiedu.com.br/
+Sitemap: https://neuropsiedu.com.br/sitemap.xml
