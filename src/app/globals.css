@@ -1,7 +1,22 @@
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Outfit:wght@400;500;600;700;800;900&display=swap");
 @import "tailwindcss";
 @source not "../../out";
 @source not "../../old_html";
+
+@font-face {
+  font-family: "Inter";
+  src: url("/fonts/inter-latin.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 400 900;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Outfit";
+  src: url("/fonts/outfit-latin.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 400 900;
+  font-display: swap;
+}
 
 @theme inline {
   --breakpoint-xs: 380px;
@@ -48,6 +63,11 @@ body {
   scroll-padding-top: 80px; /* Alinha o scroll com a navbar fixa */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.defer-render {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 800px;
 }
 
 /* Custom Premium Scrollbar */

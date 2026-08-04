@@ -29,7 +29,7 @@ export function ServicesSection() {
   ];
 
   return (
-    <section id="atendimento" className="py-12 xs:py-16 sm:py-20 md:py-24 bg-[#f8fafc] relative overflow-hidden">
+    <section id="atendimento" className="defer-render py-12 xs:py-16 sm:py-20 md:py-24 bg-[#f8fafc] relative overflow-hidden">
       {/* Visual Background Elements */}
       <div className="absolute top-1/2 left-0 -translate-y-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-neuro-cyan/5 rounded-full blur-[100px] pointer-events-none" />
       

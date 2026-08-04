@@ -73,6 +73,9 @@ jobs:
       - name: Verify SEO artifact
         run: npm run test:seo
 
+      - name: Verify performance budgets
+        run: npm run test:performance
+
       - name: Verify static export
         shell: bash
         run: |

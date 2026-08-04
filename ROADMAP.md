@@ -565,14 +565,14 @@ Pipeline, promoção e rollback:
 
 **Branch sugerida:** `perf/image-optimization`
 
-- [ ] Otimizar favicon.
-- [ ] Converter imagens pesadas para WebP/AVIF.
-- [ ] Criar dimensões responsivas.
-- [ ] Definir largura e altura das imagens.
-- [ ] Aplicar lazy loading quando apropriado.
-- [ ] Revisar fontes externas.
-- [ ] Reduzir JavaScript cliente.
-- [ ] Medir bundle antes e depois.
+- [x] Otimizar favicon.
+- [x] Converter imagens pesadas para WebP/AVIF.
+- [x] Criar dimensões responsivas.
+- [x] Definir largura e altura das imagens.
+- [x] Aplicar lazy loading quando apropriado.
+- [x] Revisar fontes externas.
+- [x] Reduzir JavaScript cliente.
+- [x] Medir bundle antes e depois.
 - [ ] Executar Lighthouse antes e depois.
 
 ## 5.3 Acessibilidade
@@ -590,8 +590,8 @@ Pipeline, promoção e rollback:
 
 ### Metas iniciais
 
-- [ ] Reduzir `public` para menos de 5 MB.
-- [ ] Reduzir o favicon para menos de 100 KB.
+- [x] Reduzir `public` para menos de 5 MB.
+- [x] Reduzir o favicon para menos de 100 KB.
 - [ ] Não possuir URLs duplicadas indexáveis.
 - [ ] Não possuir problema crítico no axe.
 - [ ] Melhorar as métricas Lighthouse em relação à linha de base.

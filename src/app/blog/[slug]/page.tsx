@@ -69,7 +69,18 @@ export default async function BlogPostPage({ params }: BlogPostProps) {
             {post.title}
           </h1>
           <div className="w-full aspect-[21/9] rounded-3xl overflow-hidden shadow-2xl mb-16">
-            <img src={post.image} alt={post.title} className="w-full h-full object-cover" />
+            <img
+              src={post.image}
+              srcSet={post.imageSrcSet}
+              sizes="(max-width: 896px) 100vw, 896px"
+              width={1440}
+              height={960}
+              loading="eager"
+              fetchPriority="high"
+              decoding="async"
+              alt={post.title}
+              className="w-full h-full object-cover"
+            />
           </div>
         </header>
 

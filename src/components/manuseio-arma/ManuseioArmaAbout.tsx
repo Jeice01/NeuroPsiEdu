@@ -41,7 +41,13 @@ export function ManuseioArmaAbout() {
 
             <div className="relative overflow-hidden rounded-[2rem] border border-orange-500/20 bg-slate-900 shadow-2xl ring-1 ring-orange-400/10">
               <img
-                src="/images/foto-marilia-jaleco.jpeg"
+                src="/images/marilia-800.webp"
+                srcSet="/images/marilia-480.webp 480w, /images/marilia-800.webp 800w, /images/marilia-1120.webp 1120w"
+                sizes="(max-width: 1023px) 500px, 42vw"
+                width={1120}
+                height={1402}
+                loading="lazy"
+                decoding="async"
                 alt="Marília Karine dos Santos, neuropsicóloga"
                 className="h-[560px] w-full object-cover object-center"
               />

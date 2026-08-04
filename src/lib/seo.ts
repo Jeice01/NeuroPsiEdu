@@ -4,7 +4,7 @@ export const SITE_NAME = "NeuroPsiEdu";
 export const SITE_URL = "https://neuropsiedu.com.br";
 export const DEFAULT_DESCRIPTION =
   "Avaliação neuropsicológica especializada e formação profissional em Neuropsicologia, presencial e online.";
-export const DEFAULT_SOCIAL_IMAGE = "/images/logo-vertical.png";
+export const DEFAULT_SOCIAL_IMAGE = "/images/logo-vertical-600.webp";
 export const FAMAF_CANONICAL_PATH = "/formacao-manuseio-arma/";
 
 export function absoluteUrl(path: string): string {

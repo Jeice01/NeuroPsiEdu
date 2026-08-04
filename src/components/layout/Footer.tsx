@@ -21,10 +21,12 @@ export function Footer() {
           {/* Brand Column */}
           <div className="space-y-6">
             <img
-              src="/images/logo-vertical.png"
+              src="/images/logo-vertical-300.webp"
+              srcSet="/images/logo-vertical-300.webp 300w, /images/logo-vertical-600.webp 600w"
+              sizes="160px"
               alt="NeuroPsiEdu"
               width={160}
-              height={80}
+              height={32}
               className="opacity-90 brightness-0 invert"
             />
             <p className="text-blue-100/70 text-sm leading-relaxed max-w-xs">

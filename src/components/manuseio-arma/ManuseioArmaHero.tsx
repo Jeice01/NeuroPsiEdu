@@ -141,7 +141,13 @@ export function ManuseioArmaHero() {
 
               <div className="relative rounded-[2rem] overflow-hidden border border-orange-500/20 ring-1 ring-orange-400/10 bg-slate-900 shadow-2xl">
                 <img
-                  src="/images/foto-marilia-jaleco.jpeg"
+                  src="/images/marilia-800.webp"
+                  srcSet="/images/marilia-480.webp 480w, /images/marilia-800.webp 800w, /images/marilia-1120.webp 1120w"
+                  sizes="(max-width: 1023px) 520px, 42vw"
+                  width={1120}
+                  height={1402}
+                  loading="eager"
+                  fetchPriority="high"
                   alt="Marília Karine dos Santos, neuropsicóloga e responsável pela formação"
                   className="w-full h-[560px] object-cover object-center"
                 />

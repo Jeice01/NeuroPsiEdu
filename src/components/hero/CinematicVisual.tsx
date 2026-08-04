@@ -27,7 +27,13 @@ export function CinematicVisual() {
             }}
           >
             <img
-              src="/images/brain-3d.png"
+              src="/images/brain-640.webp"
+              srcSet="/images/brain-320.webp 320w, /images/brain-640.webp 640w, /images/brain-960.webp 960w"
+              sizes="(max-width: 379px) 160px, 200px"
+              width={960}
+              height={960}
+              loading="eager"
+              fetchPriority="high"
               alt="Neuropsicologia 3D"
               className="absolute inset-0 w-full h-full object-contain animate-float mix-blend-multiply"
             />
@@ -129,7 +135,13 @@ export function CinematicVisual() {
             }}
           >
             <img
-              src="/images/brain-3d.png"
+              src="/images/brain-640.webp"
+              srcSet="/images/brain-320.webp 320w, /images/brain-640.webp 640w, /images/brain-960.webp 960w"
+              sizes="(max-width: 1024px) 340px, 380px"
+              width={960}
+              height={960}
+              loading="eager"
+              fetchPriority="high"
               alt="Neuropsicologia 3D"
               className="absolute inset-0 w-full h-full object-contain animate-float mix-blend-multiply"
             />
