@@ -44,6 +44,9 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Install Playwright Chromium
+        run: npx playwright install --with-deps chromium
+
       - name: Lint
         run: npm run lint
 
@@ -57,6 +60,9 @@ jobs:
         run: >-
           deno test --allow-env --node-modules-dir=auto
           supabase/functions/create-lead-formacao/index_test.ts
+
+      - name: End-to-end tests
+        run: npm run test:e2e
 
       - name: Dependency audit
         run: npm run audit:ci

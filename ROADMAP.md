@@ -520,23 +520,23 @@ Pipeline, promoção e rollback:
 
 ## 4.3 Testes end-to-end
 
-- [ ] Carregamento da home.
-- [ ] Navegação do blog.
-- [ ] Renderização de todos os artigos.
-- [ ] Abertura e fechamento dos modais.
-- [ ] Envio de lead FANP.
-- [ ] Envio de lead FAMAF.
-- [ ] Navegação por teclado.
-- [ ] Menu mobile.
-- [ ] Página 404.
-- [ ] Links externos principais.
+- [x] Carregamento da home.
+- [x] Navegação do blog.
+- [x] Renderização de todos os artigos.
+- [x] Abertura e fechamento dos modais.
+- [x] Envio de lead FANP.
+- [x] Envio de lead FAMAF.
+- [x] Navegação por teclado.
+- [x] Menu mobile.
+- [x] Página 404.
+- [x] Links externos principais.
 
 ### Critérios de aceite da fase
 
-- [ ] Testes são executados na CI.
-- [ ] Falha de teste bloqueia o merge.
-- [ ] Dados de teste são identificáveis e removíveis.
-- [ ] Fluxos críticos possuem cobertura automatizada.
+- [x] Testes são executados na CI.
+- [x] Falha de teste bloqueia o merge.
+- [x] Dados de teste são identificáveis e removíveis.
+- [x] Fluxos críticos possuem cobertura automatizada.
 
 ---
 
@@ -735,6 +735,7 @@ Adicione uma linha para cada execução relevante.
 | 03/08/2026 | Fase 3.1 | GitHub | Proteger a `main` para o fluxo individual | Aprovado | `quality-gates`, PR obrigatório, 0 aprovações, branch atualizada e conversas resolvidas | Codex |
 | 04/08/2026 | Fase 4.1 | Local | Testes unitários, typecheck, lint e build estático | Aprovado com 10 avisos conhecidos | 12 testes aprovados; 16 páginas estáticas | Codex |
 | 04/08/2026 | Fase 4.2 | Local | Typecheck e testes isolados da Edge Function | Aprovado | 10 cenários Deno; nenhum serviço externo ou dado real | Codex |
+| 04/08/2026 | Fase 4.3 | Local | Playwright Chromium: navegação e formulários | Aprovado | 7 cenários E2E; API de leads e Turnstile simulados, sem dados reais | Codex |
 
 ---
 

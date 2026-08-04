@@ -87,6 +87,7 @@ export function Navbar() {
 
         {/* Mobile Menu Toggle */}
         <button
+          aria-label={mobileMenuOpen ? "Fechar menu" : "Abrir menu"}
           className="lg:hidden text-slate-600 dark:text-slate-300 cursor-pointer"
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
         >
@@ -122,6 +123,7 @@ export function Navbar() {
                   className="h-[30px] w-auto object-contain" 
                 />
                 <button 
+                  aria-label="Fechar menu"
                   onClick={() => setMobileMenuOpen(false)} 
                   className="text-slate-600 hover:text-neuro-orange transition-colors cursor-pointer"
                 >
