@@ -11,6 +11,18 @@ import {
   X,
 } from "lucide-react";
 import { TurnstileWidget } from "@/components/forms/TurnstileWidget";
+import {
+  FORMATIONS,
+  captureUtms,
+  formatWhatsapp,
+  normalizeEmail,
+  normalizeText,
+  onlyDigits,
+  parseLeadResponse,
+  validateBrazilianWhatsapp,
+  validateEmail,
+  validateFullName,
+} from "@/lib/lead-form";
 
 declare global {
   interface Window {
@@ -67,85 +79,9 @@ const INITIAL_FORM: FormState = {
   consentimento_contato: false,
 };
 
-const VALID_DDDS = new Set([
-  "11","12","13","14","15","16","17","18","19",
-  "21","22","24","27","28",
-  "31","32","33","34","35","37","38",
-  "41","42","43","44","45","46","47","48","49",
-  "51","53","54","55",
-  "61","62","63","64","65","66","67","68","69",
-  "71","73","74","75","77","79",
-  "81","82","83","84","85","86","87","88","89",
-  "91","92","93","94","95","96","97","98","99",
-]);
-
-const BLOCKED_NUMBERS = new Set([
-  "99999999999",
-  "11111111111",
-  "00000000000",
-  "61999999999",
-  "11999999999",
-  "21999999999",
-  "61900000000",
-  "11900000000",
-]);
-
-function onlyDigits(value: string) {
-  return value.replace(/\D/g, "");
-}
-
-function hasAllSameDigits(value: string): boolean {
-  return /^(\d)\1+$/.test(value);
-}
-
-function validateFullName(value: string): boolean {
-  const normalized = value.trim().replace(/\s+/g, " ");
-  const parts = normalized.split(" ");
-
-  if (normalized.length < 6) return false;
-  if (parts.length < 2) return false;
-
-  return parts.every((part) => part.length >= 2);
-}
-
-function validateBrazilianWhatsapp(value: string): boolean {
-  const digits = onlyDigits(value);
-
-  if (digits.length !== 11) return false;
-
-  const ddd = digits.slice(0, 2);
-  const mobileNumber = digits.slice(2);
-
-  if (!VALID_DDDS.has(ddd)) return false;
-  if (digits[2] !== "9") return false;
-  if (hasAllSameDigits(digits)) return false;
-  if (hasAllSameDigits(mobileNumber)) return false;
-  if (BLOCKED_NUMBERS.has(digits)) return false;
-
-  return true;
-}
-
-function formatWhatsapp(value: string): string {
-  const digits = onlyDigits(value).slice(0, 11);
-
-  if (digits.length <= 2) return digits;
-  if (digits.length <= 7) return `(${digits.slice(0, 2)}) ${digits.slice(2)}`;
-
-  return `(${digits.slice(0, 2)}) ${digits.slice(2, 7)}-${digits.slice(7)}`;
-}
-
 function getUtms() {
   if (typeof window === "undefined") return {};
-
-  const params = new URLSearchParams(window.location.search);
-
-  return {
-    utm_source: params.get("utm_source") ?? "",
-    utm_medium: params.get("utm_medium") ?? "",
-    utm_campaign: params.get("utm_campaign") ?? "",
-    utm_content: params.get("utm_content") ?? "",
-    utm_term: params.get("utm_term") ?? "",
-  };
+  return captureUtms(window.location.search);
 }
 
 export function ManuseioArmaLeadModal({
@@ -234,8 +170,7 @@ export function ManuseioArmaLeadModal({
     }
 
     if (
-      !form.email.trim() ||
-      !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email.trim())
+      !validateEmail(form.email)
     ) {
       errors.email = "Informe um e-mail válido.";
     }
@@ -262,17 +197,16 @@ export function ManuseioArmaLeadModal({
     setApiError("");
 
     const payload = {
-      nome: form.nome.trim().replace(/\s+/g, " "),
+      nome: normalizeText(form.nome),
       whatsapp: onlyDigits(form.whatsapp),
-      email: form.email.trim(),
+      email: normalizeEmail(form.email),
       perfil: form.perfil || null,
       crp_ou_instituicao: form.crp_ou_instituicao.trim() || null,
       cidade_estado: form.cidade_estado.trim() || null,
       interesse_principal: form.interesse_principal || null,
       mensagem: form.mensagem.trim() || null,
-      formacao_interesse:
-        "Formação em Avaliação Psicológica para Manuseio de Arma de Fogo",
-      pagina_origem: "https://neuropsiedu.com.br/famaf",
+      formacao_interesse: FORMATIONS.famaf.name,
+      pagina_origem: FORMATIONS.famaf.page,
       botao_origem: buttonOrigin,
       consentimento_contato: true,
       turnstile_token: turnstileToken,
@@ -293,20 +227,13 @@ export function ManuseioArmaLeadModal({
         error?: string;
       };
 
-      if (!response.ok) {
-        throw new Error(
-          data.error || "Não foi possível enviar. Por favor, tente novamente."
-        );
-      }
-
-      if (!data.success) {
-        throw new Error("A resposta do servidor não confirmou o envio.");
-      }
-
-      setSuccessMessage(
-        data.message ||
-          "Recebemos seus dados! Nossa equipe entrará em contato pelo WhatsApp com todas as informações da Formação em Avaliação Psicológica para Manuseio de Arma de Fogo."
+      const result = parseLeadResponse(
+        response.ok,
+        data,
+        FORMATIONS.famaf.successMessage,
       );
+      if (!result.ok) throw new Error(result.message);
+      setSuccessMessage(result.message);
       // GTM / Google Ads
       if (typeof window !== "undefined") {
         window.dataLayer = window.dataLayer || [];

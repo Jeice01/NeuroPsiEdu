@@ -496,14 +496,14 @@ Pipeline, promoção e rollback:
 
 ## 4.1 Testes unitários
 
-- [ ] Validação de nome.
-- [ ] Validação e normalização de e-mail.
-- [ ] Validação de WhatsApp e DDD.
-- [ ] Limites de texto.
-- [ ] Captura de UTMs.
-- [ ] Mapeamento de formação.
-- [ ] Mensagens de sucesso por formação.
-- [ ] Tratamento de erros.
+- [x] Validação de nome.
+- [x] Validação e normalização de e-mail.
+- [x] Validação de WhatsApp e DDD.
+- [x] Limites de texto.
+- [x] Captura de UTMs.
+- [x] Mapeamento de formação.
+- [x] Mensagens de sucesso por formação.
+- [x] Tratamento de erros.
 
 ## 4.2 Testes da Edge Function
 
@@ -733,6 +733,7 @@ Adicione uma linha para cada execução relevante.
 | 03/08/2026 | Fase 3.1 | Local | Executar `npm ci`, lint, typecheck, testes, audit e build | Aprovado com 10 avisos conhecidos | 3 testes; 0 vulnerabilidades; 16 páginas estáticas | Codex |
 | 03/08/2026 | Fase 3.1 | GitHub Actions | Executar `quality-gates` no PR #1 | Aprovado em 1m13s | Run `30818771680`; job `91703055444` | Codex |
 | 03/08/2026 | Fase 3.1 | GitHub | Proteger a `main` para o fluxo individual | Aprovado | `quality-gates`, PR obrigatório, 0 aprovações, branch atualizada e conversas resolvidas | Codex |
+| 04/08/2026 | Fase 4.1 | Local | Testes unitários, typecheck, lint e build estático | Aprovado com 10 avisos conhecidos | 12 testes aprovados; 16 páginas estáticas | Codex |
 
 ---
 
