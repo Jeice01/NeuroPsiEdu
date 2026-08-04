@@ -33,7 +33,13 @@ export function FnpAbout() {
               
               {/* Picture */}
               <img
-                src="/images/foto-marilia-jaleco.jpeg"
+                src="/images/marilia-800.webp"
+                srcSet="/images/marilia-480.webp 480w, /images/marilia-800.webp 800w, /images/marilia-1120.webp 1120w"
+                sizes="(max-width: 1023px) 380px, 32vw"
+                width={1120}
+                height={1402}
+                loading="lazy"
+                decoding="async"
                 alt="Marília - Fundadora da NeuroPsiEdu"
                 className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
               />

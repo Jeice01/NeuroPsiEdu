@@ -1,14 +1,12 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { motion, useAnimation, AnimatePresence } from "framer-motion";
 import { Menu, X, User, CalendarHeart } from "lucide-react";
 import Link from "next/link";
 
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const navControls = useAnimation();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -18,14 +16,8 @@ export function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  useEffect(() => {
-    navControls.set({ y: -100 });
-    navControls.start({ y: 0, transition: { duration: 0.5, ease: "easeOut" } });
-  }, [navControls]);
-
   return (
-    <motion.header
-      animate={navControls}
+    <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         scrolled
           ? "bg-white/90 backdrop-blur-md border-b border-slate-200 shadow-sm py-4"
@@ -37,7 +29,11 @@ export function Navbar() {
         <Link href="/" className="flex items-center group">
           <div className="relative transition-transform group-hover:scale-[1.02]">
             <img 
-              src="/images/logo-vertical.png" 
+              src="/images/logo-vertical-300.webp"
+              srcSet="/images/logo-vertical-300.webp 300w, /images/logo-vertical-600.webp 600w"
+              sizes="(max-width: 768px) 170px, 240px"
+              width={600}
+              height={120}
               alt="NeuroPsiEdu Logo" 
               className="h-[34px] md:h-[40px] lg:h-[48px] w-auto object-contain"
             />
@@ -96,29 +92,25 @@ export function Navbar() {
       </div>
 
       {/* Mobile Drawer Menu */}
-      <AnimatePresence>
-        {mobileMenuOpen && (
+      {mobileMenuOpen && (
           <>
             {/* Backdrop */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 0.5 }}
-              exit={{ opacity: 0 }}
+            <div
               onClick={() => setMobileMenuOpen(false)}
               className="lg:hidden fixed inset-0 bg-[#0a1e30] z-40"
             />
             {/* Drawer */}
-            <motion.div
-              initial={{ x: "100%" }}
-              animate={{ x: 0 }}
-              exit={{ x: "100%" }}
-              transition={{ type: "tween", duration: 0.3, ease: "easeInOut" }}
+            <div
               className="lg:hidden fixed top-0 right-0 bottom-0 w-[280px] xs:w-[320px] bg-white z-50 shadow-2xl p-6 flex flex-col gap-6"
             >
               {/* Header with close button */}
               <div className="flex items-center justify-between border-b border-slate-100 pb-4">
                 <img 
-                  src="/images/logo-vertical.png" 
+                  src="/images/logo-vertical-300.webp"
+                  srcSet="/images/logo-vertical-300.webp 300w, /images/logo-vertical-600.webp 600w"
+                  sizes="150px"
+                  width={600}
+                  height={120}
                   alt="NeuroPsiEdu Logo" 
                   className="h-[30px] w-auto object-contain" 
                 />
@@ -165,10 +157,9 @@ export function Navbar() {
                   Agendar Avaliação
                 </a>
               </div>
-            </motion.div>
+            </div>
           </>
-        )}
-      </AnimatePresence>
-    </motion.header>
+      )}
+    </header>
   );
 }

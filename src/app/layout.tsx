@@ -60,6 +60,20 @@ export default function RootLayout({
   return (
     <html lang="pt-BR" className="scroll-smooth">
       <head>
+        <link
+          rel="preload"
+          href="/fonts/inter-latin.woff2"
+          as="font"
+          type="font/woff2"
+          crossOrigin="anonymous"
+        />
+        <link
+          rel="preload"
+          href="/fonts/outfit-latin.woff2"
+          as="font"
+          type="font/woff2"
+          crossOrigin="anonymous"
+        />
         {/* Cookiebot — deve ser o primeiro script do <head> */}
         <Script
           id="Cookiebot"
@@ -83,8 +97,8 @@ export default function RootLayout({
                   "name": "NeuroPsiEdu",
                   "description": "Avaliação neuropsicológica especializada infantil, adulto e idoso.",
                   "url": "https://neuropsiedu.com.br",
-                  "logo": "https://neuropsiedu.com.br/images/logo-vertical.png",
-                  "image": "https://neuropsiedu.com.br/images/logo-vertical.png",
+                  "logo": "https://neuropsiedu.com.br/images/logo-vertical-600.webp",
+                  "image": "https://neuropsiedu.com.br/images/logo-vertical-600.webp",
                   "email": "contato@neuropsiedu.com.br",
                   "telephone": "+55-61-98208-8284",
                   "sameAs": ["https://www.instagram.com/academiadaneuropsicologia"],
@@ -116,7 +130,7 @@ export default function RootLayout({
         {/* Google Tag Manager */}
         <Script
           id="gtm-head"
-          strategy="afterInteractive"
+              strategy="lazyOnload"
           dangerouslySetInnerHTML={{
             __html: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
 new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],

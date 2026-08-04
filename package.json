@@ -17,6 +17,7 @@
     "test:e2e": "playwright test",
     "test:e2e:report": "playwright show-report",
     "test:seo": "node scripts/verify-seo.mjs",
+    "test:performance": "node scripts/verify-performance.mjs",
     "audit:ci": "npm audit --audit-level=high"
   },
   "dependencies": {

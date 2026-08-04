@@ -28,11 +28,18 @@ export default function BlogPage() {
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-          {blogPosts.map((post) => (
+          {blogPosts.map((post, index) => (
             <Link href={`/blog/${post.slug}`} key={post.slug} className="group flex flex-col bg-white rounded-3xl overflow-hidden border border-slate-100 shadow-[0_15px_40px_-10px_rgba(0,0,0,0.02)] hover:shadow-[0_25px_60px_-15px_rgba(28,69,104,0.1)] transition-all duration-500 hover:-translate-y-2">
               <div className="relative h-60 w-full overflow-hidden bg-slate-50">
                 <img 
                   src={post.image} 
+                  srcSet={post.imageSrcSet}
+                  sizes="(max-width: 767px) 100vw, (max-width: 1023px) 50vw, 33vw"
+                  width={1440}
+                  height={960}
+                  loading={index === 0 ? "eager" : "lazy"}
+                  fetchPriority={index === 0 ? "high" : "auto"}
+                  decoding="async"
                   alt={post.title} 
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                 />

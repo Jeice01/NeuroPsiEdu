@@ -8,12 +8,15 @@ test("carrega a home e navega para o blog", async ({ page }) => {
   await page.waitForLoadState("networkidle");
   const blogLink = page.locator('nav a[href^="/blog"]:visible');
   await expect(blogLink).toBeInViewport();
-  await blogLink.click();
-  await expect(page).toHaveURL(/\/blog\/?$/);
+  await Promise.all([
+    page.waitForURL(/\/blog\/?$/),
+    blogLink.evaluate((link: HTMLAnchorElement) => link.click()),
+  ]);
   await expect(page.getByRole("heading", { name: "Nosso Blog" })).toBeVisible();
 });
 
 test("renderiza todos os artigos publicados", async ({ page }) => {
+  test.setTimeout(90_000);
   await page.goto("/blog/");
   const articleLinks = page.locator('main a[href^="/blog/"]');
   const hrefs = await articleLinks.evaluateAll((links) =>

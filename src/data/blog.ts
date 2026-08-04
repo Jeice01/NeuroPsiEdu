@@ -3,6 +3,7 @@ export interface BlogPost {
   title: string;
   summary: string;
   image: string;
+  imageSrcSet: string;
   content: string[];
   date: string;
   author: string;
@@ -13,7 +14,8 @@ export const blogPosts: BlogPost[] = [
     "slug": "bem-vindos-por-que-falar-sobre-tdah",
     "title": "Bem-vindos! Por que falar sobre TDAH?",
     "summary": "Este blog foi pensado para pais, familiares, professores, ou qualquer outra pessoa que queira saber sobre como lidar com crianças, adolescentes e adul...",
-    "image": "/images/blog/Texto 1.png",
+    "image": "/images/blog/texto-1-960.webp",
+    "imageSrcSet": "/images/blog/texto-1-480.webp 480w, /images/blog/texto-1-960.webp 960w, /images/blog/texto-1-1440.webp 1440w",
     "content": [
       "Este blog foi pensado para pais, familiares, professores, ou qualquer outra pessoa que queira saber sobre como lidar com crianças, adolescentes e adultos que apresentam muitas dificuldades de manter a atenção por muito tempo. Segundo Paullo Matos, um cientista e estudioso no assunto, é comum que se diga que eles \"vivem no mundo da lua\", isto é, quando conversam com alguém, quando estão estudando ou lendo, trabalhando, parecem estar longe, pensam ou divagam em um monte de outras coisas...",
       "Você conhece uma pessoa que é inquieta? Não consegue ficar parada ou quietinha, por muito tempo? Detesta fazer coisas monótonas e repetitivas? Pessoas que são impulsivas no seu dia-a-dia? Que fica sempre mudando os seus interesses e planejamento? Tem dificuldades em levar as coisas até o fim, em terminar o que começou? É desorganizada e esquece muito facilmente as coisas?",
@@ -33,7 +35,8 @@ export const blogPosts: BlogPost[] = [
     "slug": "o-tdah-e-real",
     "title": "O TDAH é real? Por que existe tanta dificuldade em aceitar o transtorno?",
     "summary": "Um exemplo prático na minha clínica.",
-    "image": "/images/blog/Texto 2.png",
+    "image": "/images/blog/texto-2-960.webp",
+    "imageSrcSet": "/images/blog/texto-2-480.webp 480w, /images/blog/texto-2-960.webp 960w, /images/blog/texto-2-1440.webp 1440w",
     "content": [
       "Um exemplo prático na minha clínica.",
       "Estava eu em mais um dia de trabalho na clínica e chega uma criança de 11 anos encaminhada pela sua mãe devido a queixas relacionadas ao comportamento de Hiperatividade e Desatenção. Ela trouxe um relatório médico indicando que seu filho tinha o diagnóstico de Transtorno de Déficit de Atenção e Hiperatividade com predominância de comportamentos Hiperativos/Impulsivos. Seguimos ao atendimento como sempre, falamos com a mãe e logo na próxima sessão recebemos a criança para atendimento. Após a sessão concluímos que aquela criança e a família necessitavam de um trabalho voltado para desenvolver um melhor manejo dos sintomas do TDAH nessa criança. Propusemos algumas recomendações e métodos para cuidar adequadamente da criança e, recomendamos, principalmente para a escola, manejos importantes para o cuidado e apoio ao aprendizado. Foi aí que tivemos uma surpresa, ou melhor, uma desagradável resposta da equipe escolar. Eles disseram que se negariam colocar em prática as recomendações por que não acreditavam que aquela criança precisasse de tratamento diferenciado, pois a criança era igual a todos de sua sala de aula e não deveria passar por situações vexatórias que sugerissem que ela era menos capaz por ter um tratamento diferente. A escola não acredita que o diagnóstico existe.",
@@ -70,7 +73,8 @@ export const blogPosts: BlogPost[] = [
     "slug": "os-tres-tipos-de-tdah",
     "title": "Os três tipos de TDAH: desatento, hiperativo/impulsivo e combinado",
     "summary": "De acordo com o Manual Diagnóstico e Estatístico de Transtornos Mentais, 2013. O TDAH pode se manifestar de três formas diferentes:",
-    "image": "/images/blog/Texto 6.png",
+    "image": "/images/blog/texto-6-960.webp",
+    "imageSrcSet": "/images/blog/texto-6-480.webp 480w, /images/blog/texto-6-960.webp 960w, /images/blog/texto-6-1440.webp 1440w",
     "content": [
       "De acordo com o Manual Diagnóstico e Estatístico de Transtornos Mentais, 2013. O TDAH pode se manifestar de três formas diferentes:",
       "Predominantemente desatento, ou com apresentação atual desatenta:",
@@ -109,7 +113,8 @@ export const blogPosts: BlogPost[] = [
     "slug": "tdah-apresentacao-desatenta",
     "title": "TDAH com apresentação desatenta: como reconhecer os sinais na criança",
     "summary": "O TDAH se caracteriza por uma combinação de dois grupos de sintomas: desatenção e/ou hiperatividade e impulsividade.",
-    "image": "/images/blog/Texto 4.png",
+    "image": "/images/blog/texto-4-960.webp",
+    "imageSrcSet": "/images/blog/texto-4-480.webp 480w, /images/blog/texto-4-960.webp 960w, /images/blog/texto-4-1440.webp 1440w",
     "content": [
       "O TDAH se caracteriza por uma combinação de dois grupos de sintomas: desatenção e/ou hiperatividade e impulsividade.",
       "Crianças diagnosticadas com TDAH predominantemente DESATENTO demonstram de forma geral:",
@@ -180,7 +185,8 @@ export const blogPosts: BlogPost[] = [
     "slug": "tdah-apresentacao-hiperativa",
     "title": "TDAH com apresentação hiperativa/impulsiva: entendendo os comportamentos",
     "summary": "Remexe ou batuca as mãos ou pés ou se contorce na cadeira.",
-    "image": "/images/blog/Texto 5.png",
+    "image": "/images/blog/texto-5-960.webp",
+    "imageSrcSet": "/images/blog/texto-5-480.webp 480w, /images/blog/texto-5-960.webp 960w, /images/blog/texto-5-1440.webp 1440w",
     "content": [
       "Remexe ou batuca as mãos ou pés ou se contorce na cadeira.",
       "Os professores ou os pais precisam mandar que se sente sossegado, quieto",
@@ -229,7 +235,8 @@ export const blogPosts: BlogPost[] = [
     "slug": "tdah-para-toda-a-vida",
     "title": "O TDAH pode ser um desafio para toda a vida — e precisa ser tratado desde cedo",
     "summary": "Os indivíduos com TDAH demonstram grandes dificuldades em manter a atenção em um fato, podem também apresentar muitos comportamentos impulsivos e/ou h...",
-    "image": "/images/blog/Texto 3.png",
+    "image": "/images/blog/texto-3-960.webp",
+    "imageSrcSet": "/images/blog/texto-3-480.webp 480w, /images/blog/texto-3-960.webp 960w, /images/blog/texto-3-1440.webp 1440w",
     "content": [
       "Os indivíduos com TDAH demonstram grandes dificuldades em manter a atenção em um fato, podem também apresentar muitos comportamentos impulsivos e/ou hiperativos. Em geral essas características estão presentes desde muito cedo em suas vidas, em grau intenso e inadequado para a idade ou nível de desenvolvimento. O resultado disso são os comprometimentos que essas pessoas demonstram na sua capacidade de:",
       "Prestar atenção;",

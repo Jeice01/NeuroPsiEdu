@@ -48,7 +48,7 @@ export function AboutSection() {
   }, [isContentInView, contentControls]);
 
   return (
-    <section id="sobre" className="py-12 xs:py-16 sm:py-20 md:py-24 bg-white relative overflow-hidden">
+    <section id="sobre" className="defer-render py-12 xs:py-16 sm:py-20 md:py-24 bg-white relative overflow-hidden">
       {/* Background decoration */}
       <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-neuro-blue/5 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/2 pointer-events-none" />
 
@@ -63,7 +63,13 @@ export function AboutSection() {
           >
             <div className="relative z-10 rounded-[2rem] xs:rounded-[2.5rem] overflow-hidden shadow-[0_30px_60px_-15px_rgba(28,69,104,0.15)] h-[350px] xs:h-[450px] sm:h-[500px] md:h-[650px]">
               <img
-                src="/images/foto-marilia-jaleco.jpeg"
+                src="/images/marilia-800.webp"
+                srcSet="/images/marilia-480.webp 480w, /images/marilia-800.webp 800w, /images/marilia-1120.webp 1120w"
+                sizes="(max-width: 1023px) 100vw, 50vw"
+                width={1120}
+                height={1402}
+                loading="lazy"
+                decoding="async"
                 alt="Dra. Marília Karine"
                 className="block w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
               />

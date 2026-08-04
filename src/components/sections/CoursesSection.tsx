@@ -240,7 +240,7 @@ export function CoursesSection() {
   ];
 
   return (
-    <section id="cursos" className="py-16 xs:py-20 sm:py-24 md:py-32 bg-[#fafbfc] relative overflow-hidden">
+    <section id="cursos" className="defer-render py-16 xs:py-20 sm:py-24 md:py-32 bg-[#fafbfc] relative overflow-hidden">
       {/* Cinematic Background Lighting */}
       <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-neuro-orange/5 rounded-full blur-[150px] translate-x-1/3 -translate-y-1/3 pointer-events-none" />
       <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-neuro-blue/5 rounded-full blur-[120px] -translate-x-1/4 translate-y-1/4 pointer-events-none" />
@@ -484,6 +484,10 @@ export function CoursesSection() {
                   <img 
                     src="/images/logo-saber-saude-icone.png" 
                     alt="NeuroPsiEdu Icon" 
+                    width={971}
+                    height={969}
+                    loading="lazy"
+                    decoding="async"
                     className="w-full h-full object-contain" 
                   />
                 </div>
