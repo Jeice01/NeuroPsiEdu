@@ -11,6 +11,18 @@ do gateway, conforme a validação própria de origem, CAPTCHA e rate limiting.
 O projeto `orbis-terapia` não é staging da NeuroPsiEdu e não deve ser usado por este
 pipeline. Não existe preview branch Supabase configurada no projeto de produção.
 
+Em 2026-08-03, a execução
+[`30863330211`](https://github.com/Jeice01/NeuroPsiEdu/actions/runs/30863330211)
+reconstruiu as migrations em banco isolado, aprovou o lint e o typecheck Deno,
+aguardou aprovação do responsável pelo ambiente `supabase-production` e concluiu o
+smoke test. Os seletores de deploy de banco e função permaneceram desligados, então
+essa verificação não alterou produção.
+
+O projeto de staging não pôde ser criado porque a organização gratuita já possui
+dois projetos ativos, que é o limite atual do plano. A conclusão de staging exige
+upgrade da organização ou pausa/remoção deliberada de outro projeto. O projeto
+`orbis-terapia` não será alterado automaticamente.
+
 ## Pipeline
 
 O workflow `Deploy Supabase` é exclusivamente manual e exige:
@@ -37,6 +49,9 @@ ambiente usado pelo frontend para não interromper o deploy automático da Hosti
 Nenhuma `service_role` é
 armazenada no GitHub: os secrets funcionais continuam gerenciados exclusivamente no
 Supabase.
+
+O token `NeuroPsiEdu GitHub Actions` foi criado com expiração em 2026-09-02. Ele
+deve ser rotacionado antes dessa data nos dois ambientes GitHub.
 
 ## Ordem de promoção
 
