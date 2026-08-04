@@ -15,8 +15,27 @@ Medição móvel Lighthouse 13.0.1 em produção antes das alterações:
 | Transferência total | 754 KiB |
 
 O relatório bruto foi mantido fora do repositório porque contém detalhes voláteis
-da execução. A medição final deve usar a mesma versão e configuração depois do
-deploy desta fase.
+da execução.
+
+## Resultado em produção
+
+Medição móvel realizada depois do merge da PR #14 e do deploy do commit
+`75d51513ca6cc8a0fc826129a8a538e221479d04`, usando a mesma versão e
+configuração do Lighthouse:
+
+| Indicador | Antes | Depois | Variação |
+|---|---:|---:|---:|
+| Performance | 41 | 57 | +16 pontos |
+| FCP | 3,4 s | 3,0 s | -0,4 s |
+| LCP | 9,4 s | 3,9 s | -5,5 s |
+| TBT | 1.230 ms | 1.110 ms | -120 ms |
+| CLS | 0 | 0 | mantido |
+| Speed Index | 5,3 s | 4,7 s | -0,6 s |
+| Transferência total | 754 KiB | 703 KiB | -51 KiB |
+
+Os scores de Acessibilidade (87), Boas Práticas (73) e SEO (100) foram
+mantidos. A meta desta fase, melhorar as métricas em relação à linha de base,
+foi atingida.
 
 ## Alterações
 
