@@ -68,6 +68,11 @@ jobs:
           deno check --node-modules-dir=auto
           supabase/functions/create-lead-formacao/index.ts
 
+      - name: Test Edge Function
+        run: >-
+          deno test --allow-env --node-modules-dir=auto
+          supabase/functions/create-lead-formacao/index_test.ts
+
   deploy:
     name: deploy-${{ inputs.target }}
     needs: validate

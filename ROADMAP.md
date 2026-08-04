@@ -507,16 +507,16 @@ Pipeline, promoção e rollback:
 
 ## 4.2 Testes da Edge Function
 
-- [ ] Método inválido.
-- [ ] JSON inválido.
-- [ ] Campos ausentes.
-- [ ] Consentimento ausente.
-- [ ] CAPTCHA inválido.
-- [ ] Rate limiting.
-- [ ] Duplicidade.
-- [ ] Falha do banco.
-- [ ] Resposta FANP.
-- [ ] Resposta FAMAF.
+- [x] Método inválido.
+- [x] JSON inválido.
+- [x] Campos ausentes.
+- [x] Consentimento ausente.
+- [x] CAPTCHA inválido.
+- [x] Rate limiting.
+- [x] Duplicidade.
+- [x] Falha do banco.
+- [x] Resposta FANP.
+- [x] Resposta FAMAF.
 
 ## 4.3 Testes end-to-end
 
@@ -734,6 +734,7 @@ Adicione uma linha para cada execução relevante.
 | 03/08/2026 | Fase 3.1 | GitHub Actions | Executar `quality-gates` no PR #1 | Aprovado em 1m13s | Run `30818771680`; job `91703055444` | Codex |
 | 03/08/2026 | Fase 3.1 | GitHub | Proteger a `main` para o fluxo individual | Aprovado | `quality-gates`, PR obrigatório, 0 aprovações, branch atualizada e conversas resolvidas | Codex |
 | 04/08/2026 | Fase 4.1 | Local | Testes unitários, typecheck, lint e build estático | Aprovado com 10 avisos conhecidos | 12 testes aprovados; 16 páginas estáticas | Codex |
+| 04/08/2026 | Fase 4.2 | Local | Typecheck e testes isolados da Edge Function | Aprovado | 10 cenários Deno; nenhum serviço externo ou dado real | Codex |
 
 ---
 

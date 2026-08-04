@@ -50,29 +50,100 @@ const WAITLIST = {
 } as const;
 
 const validBrazilianDDDs = new Set([
-  "11","12","13","14","15","16","17","18","19",
-  "21","22","24","27","28",
-  "31","32","33","34","35","37","38",
-  "41","42","43","44","45","46",
-  "47","48","49",
-  "51","53","54","55",
-  "61","62","63","64",
-  "65","66","67","68","69",
-  "71","73","74","75","77","79",
-  "81","82","83","84","85","86","87","88","89",
-  "91","92","93","94","95","96","97","98","99",
+  "11",
+  "12",
+  "13",
+  "14",
+  "15",
+  "16",
+  "17",
+  "18",
+  "19",
+  "21",
+  "22",
+  "24",
+  "27",
+  "28",
+  "31",
+  "32",
+  "33",
+  "34",
+  "35",
+  "37",
+  "38",
+  "41",
+  "42",
+  "43",
+  "44",
+  "45",
+  "46",
+  "47",
+  "48",
+  "49",
+  "51",
+  "53",
+  "54",
+  "55",
+  "61",
+  "62",
+  "63",
+  "64",
+  "65",
+  "66",
+  "67",
+  "68",
+  "69",
+  "71",
+  "73",
+  "74",
+  "75",
+  "77",
+  "79",
+  "81",
+  "82",
+  "83",
+  "84",
+  "85",
+  "86",
+  "87",
+  "88",
+  "89",
+  "91",
+  "92",
+  "93",
+  "94",
+  "95",
+  "96",
+  "97",
+  "98",
+  "99",
 ]);
 
 type RateLimitScope = keyof typeof RATE_LIMITS;
 type SupabaseAdmin = SupabaseClient<Database>;
 type Formation = (typeof FORMATIONS)[keyof typeof FORMATIONS];
-type WaitlistInsert =
-  Database["neuropsiedu"]["Tables"]["espera_pos"]["Insert"];
+type WaitlistInsert = Database["neuropsiedu"]["Tables"]["espera_pos"]["Insert"];
 type FormationLeadInsert =
   Database["neuropsiedu"]["Tables"]["leads_formacoes"]["Insert"];
 type ApiSuccess = { success: true; message: string };
 type ApiError = { error: string };
 type ApiResponseBody = ApiSuccess | ApiError;
+type RateLimitResult = { allowed: boolean; retryAfter: number };
+
+type HandlerDependencies = {
+  createAdminClient: (url: string, key: string) => SupabaseAdmin;
+  validateTurnstile: (
+    token: string,
+    remoteIp: string,
+    requestId: string,
+  ) => Promise<boolean>;
+  registerRateLimit: (
+    client: SupabaseAdmin,
+    scope: RateLimitScope,
+    keyHash: string,
+  ) => Promise<RateLimitResult>;
+  cleanupExpiredRateLimits: (client: SupabaseAdmin) => Promise<void>;
+};
 
 function configuredSet(name: string) {
   return new Set(
@@ -230,7 +301,11 @@ async function hmacSha256(value: string, secret: string) {
     false,
     ["sign"],
   );
-  const signature = await crypto.subtle.sign("HMAC", key, encoder.encode(value));
+  const signature = await crypto.subtle.sign(
+    "HMAC",
+    key,
+    encoder.encode(value),
+  );
 
   return Array.from(new Uint8Array(signature))
     .map((byte) => byte.toString(16).padStart(2, "0"))
@@ -402,8 +477,7 @@ async function validateTurnstile(
     if (!result.success) return false;
 
     const testMode = Deno.env.get("TURNSTILE_TEST_MODE") === "true";
-    const officialAlwaysPassesSecret =
-      "1x0000000000000000000000000000000AA";
+    const officialAlwaysPassesSecret = "1x0000000000000000000000000000000AA";
     if (
       testMode && secret === officialAlwaysPassesSecret &&
       result.metadata?.result_with_testing_key === true
@@ -411,8 +485,8 @@ async function validateTurnstile(
       return true;
     }
 
-    const expectedAction =
-      Deno.env.get("TURNSTILE_EXPECTED_ACTION") || "lead_formacao";
+    const expectedAction = Deno.env.get("TURNSTILE_EXPECTED_ACTION") ||
+      "lead_formacao";
     const allowedHostnames = configuredSet("TURNSTILE_ALLOWED_HOSTNAMES");
 
     return result.action === expectedAction &&
@@ -426,276 +500,302 @@ async function validateTurnstile(
   }
 }
 
-Deno.serve(async (req) => {
-  const requestId = crypto.randomUUID();
-  const origin = req.headers.get("origin") || "";
+const defaultDependencies: HandlerDependencies = {
+  createAdminClient: (url, key) =>
+    createClient<Database>(url, key, {
+      auth: { persistSession: false, autoRefreshToken: false },
+    }),
+  validateTurnstile,
+  registerRateLimit,
+  cleanupExpiredRateLimits,
+};
 
-  if (req.method === "OPTIONS") {
+export function createHandler(
+  overrides: Partial<HandlerDependencies> = {},
+) {
+  const dependencies = { ...defaultDependencies, ...overrides };
+
+  return async (req: Request) => {
+    const requestId = crypto.randomUUID();
+    const origin = req.headers.get("origin") || "";
+
+    if (req.method === "OPTIONS") {
+      if (!isAllowedOrigin(origin)) {
+        return jsonResponse(origin, { error: "Origem não autorizada." }, 403);
+      }
+      return new Response(null, {
+        status: 204,
+        headers: {
+          ...securityHeaders(),
+          ...corsHeaders(origin),
+        },
+      });
+    }
+
     if (!isAllowedOrigin(origin)) {
+      logSecurity("origin_rejected", requestId);
       return jsonResponse(origin, { error: "Origem não autorizada." }, 403);
     }
-    return new Response(null, {
-      status: 204,
-      headers: {
-        ...securityHeaders(),
-        ...corsHeaders(origin),
-      },
-    });
-  }
 
-  if (!isAllowedOrigin(origin)) {
-    logSecurity("origin_rejected", requestId);
-    return jsonResponse(origin, { error: "Origem não autorizada." }, 403);
-  }
-
-  if (req.method !== "POST") {
-    return jsonResponse(
-      origin,
-      { error: "Método não permitido." },
-      405,
-      { "Allow": "POST, OPTIONS" },
-    );
-  }
-
-  const supabaseUrl = Deno.env.get("SUPABASE_URL");
-  const serviceRoleKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
-  const rateLimitSalt = Deno.env.get("RATE_LIMIT_SALT");
-
-  if (!supabaseUrl || !serviceRoleKey || !rateLimitSalt) {
-    console.error(JSON.stringify({
-      event: "server_configuration_incomplete",
-      request_id: requestId,
-    }));
-    return jsonResponse(
-      origin,
-      { error: "Serviço temporariamente indisponível." },
-      503,
-    );
-  }
-
-  const supabaseAdmin = createClient<Database>(supabaseUrl, serviceRoleKey, {
-    auth: { persistSession: false, autoRefreshToken: false },
-  });
-
-  try {
-    const body = await readJsonBody(req);
-    const clientIp = getClientIp(req);
-    const ipHash = await hmacSha256(clientIp || "unknown", rateLimitSalt);
-
-    await cleanupExpiredRateLimits(supabaseAdmin);
-
-    const ipRateLimit = await registerRateLimit(
-      supabaseAdmin,
-      "ip",
-      ipHash,
-    );
-    if (!ipRateLimit.allowed) {
-      logSecurity("rate_limit_rejected", requestId, { scope: "ip" });
+    if (req.method !== "POST") {
       return jsonResponse(
         origin,
-        { error: "Muitas tentativas. Aguarde antes de tentar novamente." },
-        429,
-        { "Retry-After": String(ipRateLimit.retryAfter) },
+        { error: "Método não permitido." },
+        405,
+        { "Allow": "POST, OPTIONS" },
       );
     }
 
-    if (normalizeText(body.website)) {
-      logSecurity("honeypot_rejected", requestId);
-      return jsonResponse(origin, {
-        success: true,
-        message: "Recebemos seus dados.",
-      });
-    }
+    const supabaseUrl = Deno.env.get("SUPABASE_URL");
+    const serviceRoleKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
+    const rateLimitSalt = Deno.env.get("RATE_LIMIT_SALT");
 
-    const turnstileToken =
-      typeof body.turnstile_token === "string" ? body.turnstile_token : "";
-    const turnstileValid = await validateTurnstile(
-      turnstileToken,
-      clientIp,
-      requestId,
-    );
-
-    if (!turnstileValid) {
-      logSecurity("turnstile_rejected", requestId);
-      return jsonResponse(
-        origin,
-        { error: "Verificação de segurança inválida ou expirada." },
-        400,
-      );
-    }
-
-    const nome = String(body.nome || "").trim().replace(/\s+/g, " ");
-    const whatsapp = onlyDigits(String(body.whatsapp || ""));
-    const email = String(body.email || "").trim().toLowerCase();
-    const consentimentoContato = body.consentimento_contato === true;
-
-    if (!validateFullName(nome)) {
-      return jsonResponse(
-        origin,
-        { error: "Informe seu nome completo, com nome e sobrenome." },
-        400,
-      );
-    }
-    if (!validateBrazilianWhatsapp(whatsapp)) {
-      return jsonResponse(
-        origin,
-        { error: "Informe um WhatsApp válido com DDD." },
-        400,
-      );
-    }
-    if (!email || email.length > 254 || !isValidEmail(email)) {
-      return jsonResponse(origin, { error: "Informe um e-mail válido." }, 400);
-    }
-    if (!consentimentoContato) {
-      return jsonResponse(
-        origin,
-        { error: "É necessário autorizar o contato da NeuroPsiEdu." },
-        400,
-      );
-    }
-
-    const leadType = normalizeText(body.lead_type);
-    const isWaitlist = leadType === WAITLIST.type;
-    const formation = isWaitlist
-      ? null
-      : resolveFormation(body.formacao_interesse, body.pagina_origem);
-
-    if ((leadType && !isWaitlist) || (!isWaitlist && !formation)) {
-      logSecurity("formation_rejected", requestId);
-      return jsonResponse(
-        origin,
-        { error: "Formação ou página de origem inválida." },
-        400,
-      );
-    }
-
-    const emailHash = await hmacSha256(email, rateLimitSalt);
-    const phoneHash = await hmacSha256(whatsapp, rateLimitSalt);
-    const identifierLimits = await Promise.all([
-      registerRateLimit(supabaseAdmin, "email", emailHash),
-      registerRateLimit(supabaseAdmin, "phone", phoneHash),
-    ]);
-
-    const rejectedIdentifier = identifierLimits.find((result) =>
-      !result.allowed
-    );
-    if (rejectedIdentifier) {
-      logSecurity("rate_limit_rejected", requestId, {
-        scope: "contact",
-      });
-      return jsonResponse(
-        origin,
-        { error: "Muitas tentativas. Aguarde antes de tentar novamente." },
-        429,
-        { "Retry-After": String(rejectedIdentifier.retryAfter) },
-      );
-    }
-
-    const userAgent = req.headers.get("user-agent") || "";
-    const waitlistInsert: WaitlistInsert = {
-      nome: nome.slice(0, 180),
-      telefone: whatsapp,
-      email,
-      is_psicologo: body.is_psicologo === "não" ? "não" : "sim",
-      origem: "pos-graduacao",
-      consentimento_contato: consentimentoContato,
-      status_lead: "novo",
-    };
-    const formationInsert: FormationLeadInsert | null = formation
-      ? {
-        nome: nome.slice(0, 180),
-        whatsapp,
-        email,
-        perfil: limitText(body.perfil, 120),
-        crp_ou_instituicao: limitText(body.crp_ou_instituicao, 180),
-        cidade_estado: limitText(body.cidade_estado, 180),
-        interesse_principal: limitText(body.interesse_principal, 220),
-        mensagem: limitText(body.mensagem, 1200),
-        formacao_interesse: formation.name,
-        pagina_origem: formation.canonicalPage,
-        botao_origem: limitText(body.botao_origem, 180),
-        consentimento_contato: consentimentoContato,
-        status_lead: "novo",
-        utm_source: limitText(body.utm_source, 120),
-        utm_medium: limitText(body.utm_medium, 120),
-        utm_campaign: limitText(body.utm_campaign, 180),
-        utm_content: limitText(body.utm_content, 180),
-        utm_term: limitText(body.utm_term, 180),
-        user_agent: userAgent.slice(0, 500),
-        ip_hash: ipHash,
-      }
-      : null;
-
-    const insertResult = isWaitlist
-      ? await supabaseAdmin
-        .schema("neuropsiedu")
-        .from("espera_pos")
-        .insert(waitlistInsert)
-      : await supabaseAdmin
-        .schema("neuropsiedu")
-        .from("leads_formacoes")
-        .insert(requireFormationInsert(formationInsert));
-
-    const { error } = insertResult;
-
-    if (error) {
-      if (isUniqueViolation(error)) {
-        logSecurity("lead_duplicate", requestId, {
-          type: isWaitlist ? WAITLIST.type : "formacao",
-        });
-        return jsonResponse(origin, {
-          success: true,
-          message: isWaitlist
-            ? WAITLIST.successMessage
-            : formation!.successMessage,
-        });
-      }
-
+    if (!supabaseUrl || !serviceRoleKey || !rateLimitSalt) {
       console.error(JSON.stringify({
-        event: "lead_insert_failed",
+        event: "server_configuration_incomplete",
         request_id: requestId,
-        code: error.code,
       }));
       return jsonResponse(
         origin,
-        { error: "Não foi possível registrar seu interesse agora." },
-        500,
+        { error: "Serviço temporariamente indisponível." },
+        503,
       );
     }
 
-    logSecurity("lead_created", requestId, {
-      type: isWaitlist ? WAITLIST.type : "formacao",
-    });
+    const supabaseAdmin = dependencies.createAdminClient(
+      supabaseUrl,
+      serviceRoleKey,
+    );
 
-    return jsonResponse(origin, {
-      success: true,
-      message: isWaitlist
-        ? WAITLIST.successMessage
-        : formation!.successMessage,
-    });
-  } catch (error) {
-    if (error instanceof Response) {
-      const publicMessages: Record<number, string> = {
-        400: "JSON inválido.",
-        413: "Corpo da requisição acima do limite permitido.",
-        415: "Use Content-Type application/json.",
+    try {
+      const body = await readJsonBody(req);
+      const clientIp = getClientIp(req);
+      const ipHash = await hmacSha256(clientIp || "unknown", rateLimitSalt);
+
+      await dependencies.cleanupExpiredRateLimits(supabaseAdmin);
+
+      const ipRateLimit = await dependencies.registerRateLimit(
+        supabaseAdmin,
+        "ip",
+        ipHash,
+      );
+      if (!ipRateLimit.allowed) {
+        logSecurity("rate_limit_rejected", requestId, { scope: "ip" });
+        return jsonResponse(
+          origin,
+          { error: "Muitas tentativas. Aguarde antes de tentar novamente." },
+          429,
+          { "Retry-After": String(ipRateLimit.retryAfter) },
+        );
+      }
+
+      if (normalizeText(body.website)) {
+        logSecurity("honeypot_rejected", requestId);
+        return jsonResponse(origin, {
+          success: true,
+          message: "Recebemos seus dados.",
+        });
+      }
+
+      const turnstileToken = typeof body.turnstile_token === "string"
+        ? body.turnstile_token
+        : "";
+      const turnstileValid = await dependencies.validateTurnstile(
+        turnstileToken,
+        clientIp,
+        requestId,
+      );
+
+      if (!turnstileValid) {
+        logSecurity("turnstile_rejected", requestId);
+        return jsonResponse(
+          origin,
+          { error: "Verificação de segurança inválida ou expirada." },
+          400,
+        );
+      }
+
+      const nome = String(body.nome || "").trim().replace(/\s+/g, " ");
+      const whatsapp = onlyDigits(String(body.whatsapp || ""));
+      const email = String(body.email || "").trim().toLowerCase();
+      const consentimentoContato = body.consentimento_contato === true;
+
+      if (!validateFullName(nome)) {
+        return jsonResponse(
+          origin,
+          { error: "Informe seu nome completo, com nome e sobrenome." },
+          400,
+        );
+      }
+      if (!validateBrazilianWhatsapp(whatsapp)) {
+        return jsonResponse(
+          origin,
+          { error: "Informe um WhatsApp válido com DDD." },
+          400,
+        );
+      }
+      if (!email || email.length > 254 || !isValidEmail(email)) {
+        return jsonResponse(
+          origin,
+          { error: "Informe um e-mail válido." },
+          400,
+        );
+      }
+      if (!consentimentoContato) {
+        return jsonResponse(
+          origin,
+          { error: "É necessário autorizar o contato da NeuroPsiEdu." },
+          400,
+        );
+      }
+
+      const leadType = normalizeText(body.lead_type);
+      const isWaitlist = leadType === WAITLIST.type;
+      const formation = isWaitlist
+        ? null
+        : resolveFormation(body.formacao_interesse, body.pagina_origem);
+
+      if ((leadType && !isWaitlist) || (!isWaitlist && !formation)) {
+        logSecurity("formation_rejected", requestId);
+        return jsonResponse(
+          origin,
+          { error: "Formação ou página de origem inválida." },
+          400,
+        );
+      }
+
+      const emailHash = await hmacSha256(email, rateLimitSalt);
+      const phoneHash = await hmacSha256(whatsapp, rateLimitSalt);
+      const identifierLimits = await Promise.all([
+        dependencies.registerRateLimit(supabaseAdmin, "email", emailHash),
+        dependencies.registerRateLimit(supabaseAdmin, "phone", phoneHash),
+      ]);
+
+      const rejectedIdentifier = identifierLimits.find((result) =>
+        !result.allowed
+      );
+      if (rejectedIdentifier) {
+        logSecurity("rate_limit_rejected", requestId, {
+          scope: "contact",
+        });
+        return jsonResponse(
+          origin,
+          { error: "Muitas tentativas. Aguarde antes de tentar novamente." },
+          429,
+          { "Retry-After": String(rejectedIdentifier.retryAfter) },
+        );
+      }
+
+      const userAgent = req.headers.get("user-agent") || "";
+      const waitlistInsert: WaitlistInsert = {
+        nome: nome.slice(0, 180),
+        telefone: whatsapp,
+        email,
+        is_psicologo: body.is_psicologo === "não" ? "não" : "sim",
+        origem: "pos-graduacao",
+        consentimento_contato: consentimentoContato,
+        status_lead: "novo",
       };
+      const formationInsert: FormationLeadInsert | null = formation
+        ? {
+          nome: nome.slice(0, 180),
+          whatsapp,
+          email,
+          perfil: limitText(body.perfil, 120),
+          crp_ou_instituicao: limitText(body.crp_ou_instituicao, 180),
+          cidade_estado: limitText(body.cidade_estado, 180),
+          interesse_principal: limitText(body.interesse_principal, 220),
+          mensagem: limitText(body.mensagem, 1200),
+          formacao_interesse: formation.name,
+          pagina_origem: formation.canonicalPage,
+          botao_origem: limitText(body.botao_origem, 180),
+          consentimento_contato: consentimentoContato,
+          status_lead: "novo",
+          utm_source: limitText(body.utm_source, 120),
+          utm_medium: limitText(body.utm_medium, 120),
+          utm_campaign: limitText(body.utm_campaign, 180),
+          utm_content: limitText(body.utm_content, 180),
+          utm_term: limitText(body.utm_term, 180),
+          user_agent: userAgent.slice(0, 500),
+          ip_hash: ipHash,
+        }
+        : null;
+
+      const insertResult = isWaitlist
+        ? await supabaseAdmin
+          .schema("neuropsiedu")
+          .from("espera_pos")
+          .insert(waitlistInsert)
+        : await supabaseAdmin
+          .schema("neuropsiedu")
+          .from("leads_formacoes")
+          .insert(requireFormationInsert(formationInsert));
+
+      const { error } = insertResult;
+
+      if (error) {
+        if (isUniqueViolation(error)) {
+          logSecurity("lead_duplicate", requestId, {
+            type: isWaitlist ? WAITLIST.type : "formacao",
+          });
+          return jsonResponse(origin, {
+            success: true,
+            message: isWaitlist
+              ? WAITLIST.successMessage
+              : formation!.successMessage,
+          });
+        }
+
+        console.error(JSON.stringify({
+          event: "lead_insert_failed",
+          request_id: requestId,
+          code: error.code,
+        }));
+        return jsonResponse(
+          origin,
+          { error: "Não foi possível registrar seu interesse agora." },
+          500,
+        );
+      }
+
+      logSecurity("lead_created", requestId, {
+        type: isWaitlist ? WAITLIST.type : "formacao",
+      });
+
+      return jsonResponse(origin, {
+        success: true,
+        message: isWaitlist
+          ? WAITLIST.successMessage
+          : formation!.successMessage,
+      });
+    } catch (error) {
+      if (error instanceof Response) {
+        const publicMessages: Record<number, string> = {
+          400: "JSON inválido.",
+          413: "Corpo da requisição acima do limite permitido.",
+          415: "Use Content-Type application/json.",
+        };
+        return jsonResponse(
+          origin,
+          { error: publicMessages[error.status] || "Requisição inválida." },
+          error.status,
+        );
+      }
+
+      console.error(JSON.stringify({
+        event: "request_failed",
+        request_id: requestId,
+        reason: error instanceof Error ? error.message : "unknown",
+      }));
       return jsonResponse(
         origin,
-        { error: publicMessages[error.status] || "Requisição inválida." },
-        error.status,
+        { error: "Serviço temporariamente indisponível." },
+        503,
       );
     }
+  };
+}
 
-    console.error(JSON.stringify({
-      event: "request_failed",
-      request_id: requestId,
-      reason: error instanceof Error ? error.message : "unknown",
-    }));
-    return jsonResponse(
-      origin,
-      { error: "Serviço temporariamente indisponível." },
-      503,
-    );
-  }
-});
+if (import.meta.main) {
+  Deno.serve(createHandler());
+}
