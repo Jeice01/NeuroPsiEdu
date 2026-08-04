@@ -90,6 +90,7 @@ jobs:
         shell: bash
         run: |
           test -f out/index.html
+          test -f out/.htaccess
           GENERATED_AT="$(date -u +%Y-%m-%dT%H:%M:%SZ)"
           jq -n \
             --arg commit "${SOURCE_SHA}" \
