@@ -471,7 +471,7 @@ Arquitetura, operação e rollback:
 - [ ] Criar ambiente de staging.
 - [x] Validar migrations antes da produção.
 - [x] Criar workflow de deploy da Edge Function.
-- [ ] Exigir aprovação para alteração de banco em produção.
+- [x] Exigir aprovação para alteração de banco em produção.
 - [x] Validar a função após a publicação.
 - [x] Documentar rollback de função e banco.
 
@@ -480,10 +480,10 @@ Pipeline, promoção e rollback:
 
 ### Critérios de aceite da fase
 
-- [ ] Todo pull request executa os checks.
-- [ ] Merge inválido é bloqueado.
-- [ ] O deploy não depende de upload manual.
-- [ ] Cada versão publicada corresponde a um commit.
+- [x] Todo pull request executa os checks.
+- [x] Merge inválido é bloqueado.
+- [x] O deploy não depende de upload manual.
+- [x] Cada versão publicada corresponde a um commit.
 - [ ] Existe rollback testado.
 
 ---
