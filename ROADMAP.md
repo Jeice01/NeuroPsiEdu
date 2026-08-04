@@ -468,7 +468,7 @@ Arquitetura, operação e rollback:
 
 ## 3.3 Deploy do Supabase
 
-- [ ] Criar ambiente de staging.
+- [x] Criar ambiente de staging.
 - [x] Validar migrations antes da produção.
 - [x] Criar workflow de deploy da Edge Function.
 - [x] Exigir aprovação para alteração de banco em produção.
@@ -484,7 +484,7 @@ Pipeline, promoção e rollback:
 - [x] Merge inválido é bloqueado.
 - [x] O deploy não depende de upload manual.
 - [x] Cada versão publicada corresponde a um commit.
-- [ ] Existe rollback testado.
+- [x] Existe rollback testado.
 
 ---
 
