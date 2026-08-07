@@ -573,7 +573,7 @@ Pipeline, promoção e rollback:
 - [x] Revisar fontes externas.
 - [x] Reduzir JavaScript cliente.
 - [x] Medir bundle antes e depois.
-- [ ] Executar Lighthouse antes e depois.
+- [x] Executar Lighthouse antes e depois.
 
 ## 5.3 Acessibilidade
 
@@ -594,7 +594,7 @@ Pipeline, promoção e rollback:
 - [x] Reduzir o favicon para menos de 100 KB.
 - [ ] Não possuir URLs duplicadas indexáveis.
 - [ ] Não possuir problema crítico no axe.
-- [ ] Melhorar as métricas Lighthouse em relação à linha de base.
+- [x] Melhorar as métricas Lighthouse em relação à linha de base.
 
 ---
 
@@ -737,6 +737,7 @@ Adicione uma linha para cada execução relevante.
 | 04/08/2026 | Fase 4.2 | Local | Typecheck e testes isolados da Edge Function | Aprovado | 10 cenários Deno; nenhum serviço externo ou dado real | Codex |
 | 04/08/2026 | Fase 4.3 | Local | Playwright Chromium: navegação e formulários | Aprovado | 7 cenários E2E; API de leads e Turnstile simulados, sem dados reais | Codex |
 | 04/08/2026 | Fase 5.1 | Local | Build e inspeção automatizada do artefato SEO | Aprovado | Canonicals, redirects, sitemap, robots, social cards e JSON-LD verificados em `out` | Codex |
+| 04/08/2026 | Fase 5.2 | Produção | Lighthouse móvel antes e depois do deploy | Aprovado | Performance 41→57; LCP 9,4→3,9 s; CLS 0; SEO 100; commit `75d5151` | Codex |
 
 ---
 
