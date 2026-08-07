@@ -1,12 +1,20 @@
 "use client";
 
-import { useCallback, useState } from "react";
+import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { GraduationCap, Calendar, Award, ArrowRight, Clock, CheckCircle2, Activity, Network, X, User, Mail, Phone, AlertCircle, Loader2, ShieldCheck } from "lucide-react";
 import { TurnstileWidget } from "@/components/forms/TurnstileWidget";
-
-const EDGE_FN_URL =
-  "https://avfzuudrjnglqrkyxwkz.supabase.co/functions/v1/create-lead-formacao";
+import { HoneypotField } from "@/components/forms/SharedFormFields";
+import { useLeadSubmission } from "@/hooks/useLeadSubmission";
+import { pushLeadEvent } from "@/lib/lead-form-client";
+import {
+  normalizeEmail,
+  normalizeText,
+  onlyDigits,
+  validateBrazilianWhatsapp,
+  validateEmail,
+  validateFullName,
+} from "@/lib/lead-form";
 
 export function CoursesSection() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -20,30 +28,34 @@ export function CoursesSection() {
     isPsicologo: "sim",
     consentimentoContato: false,
   });
-  const [loading, setLoading] = useState(false);
-  const [apiError, setApiError] = useState("");
-  const [honeypot, setHoneypot] = useState("");
-  const [turnstileToken, setTurnstileToken] = useState("");
-  const [turnstileResetKey, setTurnstileResetKey] = useState(0);
-  const [captchaError, setCaptchaError] = useState("");
-
-  const handleTurnstileToken = useCallback((token: string) => {
-    setTurnstileToken(token);
-    if (token) setCaptchaError("");
-  }, []);
+  const submission = useLeadSubmission();
+  const {
+    loading, apiError, setApiError, honeypot, setHoneypot,
+    turnstileToken, handleTurnstileToken, turnstileResetKey,
+    captchaError, setCaptchaError, reset, submit,
+  } = submission;
 
   const openWaitlistModal = () => {
     setFormStep(1);
-    setApiError("");
-    setCaptchaError("");
-    setTurnstileToken("");
-    setTurnstileResetKey((value) => value + 1);
+    reset();
     setIsModalOpen(true);
   };
 
   const handleSubmit = async (e: React.SyntheticEvent) => {
     e.preventDefault();
 
+    if (!validateFullName(formData.nome)) {
+      setApiError("Informe seu nome completo, com nome e sobrenome.");
+      return;
+    }
+    if (!validateBrazilianWhatsapp(formData.telefone)) {
+      setApiError("Informe um WhatsApp válido com DDD. Exemplo: (61) 99999-9999.");
+      return;
+    }
+    if (!validateEmail(formData.email)) {
+      setApiError("Informe um e-mail válido.");
+      return;
+    }
     if (!formData.consentimentoContato) {
       setApiError("É necessário autorizar o contato para prosseguir.");
       return;
@@ -53,62 +65,28 @@ export function CoursesSection() {
       return;
     }
 
-    setLoading(true);
-    setApiError("");
+    const message = await submit({
+      lead_type: "espera_pos",
+      nome: normalizeText(formData.nome),
+      whatsapp: onlyDigits(formData.telefone),
+      email: normalizeEmail(formData.email),
+      is_psicologo: formData.isPsicologo,
+      consentimento_contato: true,
+      turnstile_token: turnstileToken,
+      website: honeypot,
+    }, "Cadastro realizado com sucesso.");
+    if (!message) return;
 
-    try {
-      const response = await fetch(EDGE_FN_URL, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          lead_type: "espera_pos",
-          nome: formData.nome.trim().replace(/\s+/g, " "),
-          whatsapp: formData.telefone.replace(/\D/g, ""),
-          email: formData.email.trim().toLowerCase(),
-          is_psicologo: formData.isPsicologo,
-          consentimento_contato: true,
-          turnstile_token: turnstileToken,
-          website: honeypot,
-        }),
-      });
+    setFormStep(2);
+    pushLeadEvent({
+      event: "lead_formacao", formacao: "POS_GRADUACAO", pagina: "/",
+      perfil: formData.isPsicologo, botao_origem: "lista_espera_home",
+    });
 
-      const data = await response.json().catch(() => ({})) as {
-        success?: boolean;
-        error?: string;
-      };
-
-      if (!response.ok || !data.success) {
-        throw new Error(
-          data.error || "Não foi possível entrar na lista de espera.",
-        );
-      }
-
-      setFormStep(2);
-
-      window.dataLayer = window.dataLayer || [];
-      window.dataLayer.push({
-        event: "lead_formacao",
-        formacao: "POS_GRADUACAO",
-        pagina: "/",
-        perfil: formData.isPsicologo,
-        botao_origem: "lista_espera_home",
-      });
-      
-      setTimeout(() => {
-        const msg = `Olá! Meu nome é ${formData.nome}. Sou ${formData.isPsicologo === 'sim' ? 'Psicólogo(a)' : 'estudante/outro'}. Gostaria de saber mais sobre a Pós-Graduação.`;
-        window.open(`https://wa.me/5561982088284?text=${encodeURIComponent(msg)}`, '_blank');
-      }, 2000);
-    } catch (error: unknown) {
-      setTurnstileToken("");
-      setTurnstileResetKey((value) => value + 1);
-      setApiError(
-        error instanceof Error
-          ? error.message
-          : "Não foi possível entrar na lista de espera.",
-      );
-    } finally {
-      setLoading(false);
-    }
+    setTimeout(() => {
+      const msg = `Olá! Meu nome é ${formData.nome}. Sou ${formData.isPsicologo === 'sim' ? 'Psicólogo(a)' : 'estudante/outro'}. Gostaria de saber mais sobre a Pós-Graduação.`;
+      window.open(`https://wa.me/5561982088284?text=${encodeURIComponent(msg)}`, '_blank');
+    }, 2000);
   };
   const moduleData = [
     {
@@ -498,18 +476,7 @@ export function CoursesSection() {
               <div className="p-5 xs:p-8">
                 {formStep === 1 ? (
                   <form onSubmit={handleSubmit} className="space-y-5">
-                    <div className="absolute left-[-9999px]" aria-hidden="true">
-                      <label htmlFor="waitlist-website">Website</label>
-                      <input
-                        id="waitlist-website"
-                        name="website"
-                        type="text"
-                        tabIndex={-1}
-                        autoComplete="off"
-                        value={honeypot}
-                        onChange={(event) => setHoneypot(event.target.value)}
-                      />
-                    </div>
+                    <HoneypotField id="waitlist-website" value={honeypot} onChange={setHoneypot} />
                     <div>
                       <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2 px-1">Nome Completo</label>
                       <div className="relative">
