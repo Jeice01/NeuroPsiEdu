@@ -606,13 +606,13 @@ Pipeline, promoção e rollback:
 
 ## 6.1 Formulários
 
-- [ ] Criar validações compartilhadas.
-- [ ] Criar hook compartilhado de envio.
-- [ ] Criar cliente compartilhado da Edge Function.
-- [ ] Criar componente de campos reutilizáveis.
-- [ ] Centralizar captura de UTMs.
-- [ ] Centralizar integração com `dataLayer`.
-- [ ] Centralizar estados de carregamento, sucesso e erro.
+- [x] Criar validações compartilhadas.
+- [x] Criar hook compartilhado de envio.
+- [x] Criar cliente compartilhado da Edge Function.
+- [x] Criar componente de campos reutilizáveis.
+- [x] Centralizar captura de UTMs.
+- [x] Centralizar integração com `dataLayer`.
+- [x] Centralizar estados de carregamento, sucesso e erro.
 
 ## 6.2 Componentes
 
@@ -738,6 +738,7 @@ Adicione uma linha para cada execução relevante.
 | 04/08/2026 | Fase 4.3 | Local | Playwright Chromium: navegação e formulários | Aprovado | 7 cenários E2E; API de leads e Turnstile simulados, sem dados reais | Codex |
 | 04/08/2026 | Fase 5.1 | Local | Build e inspeção automatizada do artefato SEO | Aprovado | Canonicals, redirects, sitemap, robots, social cards e JSON-LD verificados em `out` | Codex |
 | 04/08/2026 | Fase 5.2 | Produção | Lighthouse móvel antes e depois do deploy | Aprovado | Performance 41→57; LCP 9,4→3,9 s; CLS 0; SEO 100; commit `75d5151` | Codex |
+| 06/08/2026 | Fase 6.1 | Local | Typecheck, testes, build e Playwright dos formulários | Aprovado com observação no teardown local | 13 testes; 18 rotas; 3 cenários E2E executados; `docs/FORM_REFACTOR_6_1.md` | Codex |
 
 ---
 
