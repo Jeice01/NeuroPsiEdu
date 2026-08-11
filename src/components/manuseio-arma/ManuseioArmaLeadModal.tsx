@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   AlertCircle,
@@ -11,27 +11,19 @@ import {
   X,
 } from "lucide-react";
 import { TurnstileWidget } from "@/components/forms/TurnstileWidget";
+import { HoneypotField } from "@/components/forms/SharedFormFields";
+import { useLeadSubmission } from "@/hooks/useLeadSubmission";
+import { captureBrowserUtms, pushLeadEvent } from "@/lib/lead-form-client";
 import {
   FORMATIONS,
-  captureUtms,
   formatWhatsapp,
   normalizeEmail,
   normalizeText,
   onlyDigits,
-  parseLeadResponse,
   validateBrazilianWhatsapp,
   validateEmail,
   validateFullName,
 } from "@/lib/lead-form";
-
-declare global {
-  interface Window {
-    dataLayer?: Array<Record<string, unknown>>;
-  }
-}
-
-const EDGE_FN_URL =
-  "https://avfzuudrjnglqrkyxwkz.supabase.co/functions/v1/create-lead-formacao";
 
 const PERFIS = [
   "Psicólogo(a)",
@@ -79,48 +71,33 @@ const INITIAL_FORM: FormState = {
   consentimento_contato: false,
 };
 
-function getUtms() {
-  if (typeof window === "undefined") return {};
-  return captureUtms(window.location.search);
-}
-
 export function ManuseioArmaLeadModal({
   isOpen,
   onClose,
   buttonOrigin,
 }: ManuseioArmaLeadModalProps) {
   const [form, setForm] = useState<FormState>(INITIAL_FORM);
-  const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [successMessage, setSuccessMessage] = useState("");
-  const [apiError, setApiError] = useState("");
   const [fieldErrors, setFieldErrors] = useState<
     Partial<Record<keyof FormState, string>>
   >({});
-  const [honeypot, setHoneypot] = useState("");
-  const [turnstileToken, setTurnstileToken] = useState("");
-  const [turnstileResetKey, setTurnstileResetKey] = useState(0);
-  const [captchaError, setCaptchaError] = useState("");
-
-  const handleTurnstileToken = useCallback((token: string) => {
-    setTurnstileToken(token);
-    if (token) setCaptchaError("");
-  }, []);
+  const submission = useLeadSubmission();
+  const {
+    loading, apiError, honeypot, setHoneypot, turnstileToken,
+    handleTurnstileToken, turnstileResetKey, captchaError, setCaptchaError,
+    reset, submit,
+  } = submission;
 
   useEffect(() => {
     if (isOpen) {
       setForm(INITIAL_FORM);
-      setLoading(false);
       setSuccess(false);
       setSuccessMessage("");
-      setApiError("");
       setFieldErrors({});
-      setHoneypot("");
-      setTurnstileToken("");
-      setTurnstileResetKey((value) => value + 1);
-      setCaptchaError("");
+      reset();
     }
-  }, [isOpen]);
+  }, [isOpen, reset]);
 
   useEffect(() => {
     const handler = (event: KeyboardEvent) => {
@@ -193,9 +170,6 @@ export function ManuseioArmaLeadModal({
 
     if (!validate()) return;
 
-    setLoading(true);
-    setApiError("");
-
     const payload = {
       nome: normalizeText(form.nome),
       whatsapp: onlyDigits(form.whatsapp),
@@ -211,54 +185,20 @@ export function ManuseioArmaLeadModal({
       consentimento_contato: true,
       turnstile_token: turnstileToken,
       website: honeypot,
-      ...getUtms(),
+      ...captureBrowserUtms(),
     };
-
-    try {
-      const response = await fetch(EDGE_FN_URL, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      });
-
-      const data = (await response.json().catch(() => ({}))) as {
-        success?: boolean;
-        message?: string;
-        error?: string;
-      };
-
-      const result = parseLeadResponse(
-        response.ok,
-        data,
-        FORMATIONS.famaf.successMessage,
-      );
-      if (!result.ok) throw new Error(result.message);
-      setSuccessMessage(result.message);
-      // GTM / Google Ads
-      if (typeof window !== "undefined") {
-        window.dataLayer = window.dataLayer || [];
-
-        window.dataLayer.push({
-          event: "lead_formacao",
-          formacao: "MANUSEIO_ARMA",
-          pagina: "/formacao-manuseio-arma/",
-          perfil: form.perfil || "nao_informado",
-          interesse_principal: form.interesse_principal || "nao_informado",
-          botao_origem: buttonOrigin,
-        });
-      }
-      setSuccess(true);
-    } catch (error: unknown) {
-      setTurnstileToken("");
-      setTurnstileResetKey((value) => value + 1);
-      setApiError(
-        error instanceof Error
-          ? error.message
-          : "Erro inesperado. Tente novamente em instantes."
-      );
-    } finally {
-      setLoading(false);
-    }
+    const message = await submit(payload, FORMATIONS.famaf.successMessage);
+    if (!message) return;
+    setSuccessMessage(message);
+    pushLeadEvent({
+      event: "lead_formacao",
+      formacao: "MANUSEIO_ARMA",
+      pagina: "/formacao-manuseio-arma/",
+      perfil: form.perfil || "nao_informado",
+      interesse_principal: form.interesse_principal || "nao_informado",
+      botao_origem: buttonOrigin,
+    });
+    setSuccess(true);
   }
 
   const inputBase =
@@ -344,23 +284,7 @@ export function ManuseioArmaLeadModal({
                 </motion.div>
               ) : (
                 <form onSubmit={handleSubmit} noValidate className="space-y-5">
-                  <div
-                    aria-hidden="true"
-                    className="absolute left-[-10000px] top-auto h-px w-px overflow-hidden"
-                  >
-                    <label htmlFor="famaf-website">
-                      Não preencha este campo
-                    </label>
-                    <input
-                      id="famaf-website"
-                      name="website"
-                      type="text"
-                      tabIndex={-1}
-                      autoComplete="off"
-                      value={honeypot}
-                      onChange={(event) => setHoneypot(event.target.value)}
-                    />
-                  </div>
+                  <HoneypotField id="famaf-website" value={honeypot} onChange={setHoneypot} />
                   {apiError && (
                     <div
                       role="alert"

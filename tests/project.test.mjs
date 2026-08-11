@@ -71,3 +71,22 @@ test("the Supabase workflow gates production and never exposes administrative AP
   assert.doesNotMatch(workflow, /SUPABASE_SERVICE_ROLE_KEY/);
   assert.doesNotMatch(workflow, /--prune/);
 });
+
+test("active lead forms use the shared submission infrastructure", async () => {
+  const forms = await Promise.all([
+    readFile("src/components/fnp/FnpLeadModal.tsx", "utf8"),
+    readFile("src/components/manuseio-arma/ManuseioArmaLeadModal.tsx", "utf8"),
+    readFile("src/components/sections/CoursesSection.tsx", "utf8"),
+  ]);
+  const client = await readFile("src/lib/lead-form-client.ts", "utf8");
+
+  for (const source of forms) {
+    assert.match(source, /useLeadSubmission/);
+    assert.match(source, /pushLeadEvent/);
+    assert.doesNotMatch(source, /supabase\.co\/functions\/v1/);
+    assert.doesNotMatch(source, /dataLayer\.push/);
+    assert.doesNotMatch(source, /await fetch\(/);
+  }
+  assert.match(client, /create-lead-formacao/);
+  assert.match(client, /parseLeadResponse/);
+});
