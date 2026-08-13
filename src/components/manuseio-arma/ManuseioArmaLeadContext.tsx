@@ -1,7 +1,15 @@
 "use client";
 
 import { createContext, ReactNode, useContext, useMemo, useState } from "react";
-import { ManuseioArmaLeadModal } from "./ManuseioArmaLeadModal";
+import dynamic from "next/dynamic";
+
+const ManuseioArmaLeadModal = dynamic(
+  () =>
+    import("./ManuseioArmaLeadModal").then(
+      (module) => module.ManuseioArmaLeadModal
+    ),
+  { ssr: false }
+);
 
 type ManuseioArmaLeadContextValue = {
   openModal: (buttonOrigin?: string) => void;
@@ -31,11 +39,13 @@ export function ManuseioArmaLeadProvider({
     <ManuseioArmaLeadContext.Provider value={value}>
       {children}
 
-      <ManuseioArmaLeadModal
-        isOpen={isOpen}
-        onClose={() => setIsOpen(false)}
-        buttonOrigin={buttonOrigin}
-      />
+      {isOpen && (
+        <ManuseioArmaLeadModal
+          isOpen={isOpen}
+          onClose={() => setIsOpen(false)}
+          buttonOrigin={buttonOrigin}
+        />
+      )}
     </ManuseioArmaLeadContext.Provider>
   );
 }
