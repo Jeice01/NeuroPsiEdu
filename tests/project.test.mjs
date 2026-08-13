@@ -52,6 +52,11 @@ test("the Hostinger workflow deploys the approved artifact without embedded cred
   assert.match(workflow, /Wait for published version[\s\S]*--connect-timeout 4/);
   assert.match(workflow, /Wait for published version[\s\S]*--max-time 8/);
   assert.match(workflow, /Attempt \$\{attempt\}\/30/);
+  assert.match(workflow, /reachable_attempts=0/);
+  assert.match(workflow, /HOSTINGER_VERIFIED=false/);
+  assert.match(workflow, /Hostinger was unreachable from the GitHub runner/);
+  assert.match(workflow, /endpoint responded, but the expected version was not observed/);
+  assert.match(workflow, /if: env\.HOSTINGER_VERIFIED == 'true'/);
   assert.match(ciWorkflow, /include-hidden-files:\s*true/);
   assert.match(ciWorkflow, /test -f out\/\.htaccess/);
   assert.match(workflow, /test -f out\/\.htaccess/);

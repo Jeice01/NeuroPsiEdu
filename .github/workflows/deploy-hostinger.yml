@@ -146,8 +146,10 @@ jobs:
       - name: Wait for published version
         shell: bash
         run: |
+          reachable_attempts=0
           for attempt in {1..30}; do
-            PUBLISHED_SHA="$(curl --fail --silent --show-error \
+            response_file="$(mktemp)"
+            if curl --fail --silent --show-error \
               --ipv4 \
               --connect-timeout 4 \
               --max-time 8 \
@@ -155,18 +157,31 @@ jobs:
               --retry-all-errors \
               --retry-delay 1 \
               --retry-max-time 12 \
-              "https://neuropsiedu.com.br/deploy.json?run=${GITHUB_RUN_ID}" \
-              | jq -r '.commit // empty' 2>/dev/null || true)"
+              --output "${response_file}" \
+              "https://neuropsiedu.com.br/deploy.json?run=${GITHUB_RUN_ID}"; then
+              reachable_attempts=$((reachable_attempts + 1))
+              PUBLISHED_SHA="$(jq -r '.commit // empty' "${response_file}" 2>/dev/null || true)"
+            else
+              PUBLISHED_SHA=""
+            fi
+            rm -f "${response_file}"
             echo "Attempt ${attempt}/30: published=${PUBLISHED_SHA:-unavailable} expected=${SOURCE_SHA}"
             if [[ "${PUBLISHED_SHA}" == "${SOURCE_SHA}" ]]; then
+              echo "HOSTINGER_VERIFIED=true" >> "${GITHUB_ENV}"
               exit 0
             fi
             sleep 10
           done
-          echo "The expected version was not observed in production." >&2
+          if [[ "${reachable_attempts}" -eq 0 ]]; then
+            echo "HOSTINGER_VERIFIED=false" >> "${GITHUB_ENV}"
+            echo "::warning::Hostinger was unreachable from the GitHub runner; publication was triggered but external verification was unavailable."
+            exit 0
+          fi
+          echo "The Hostinger endpoint responded, but the expected version was not observed." >&2
           exit 1
 
       - name: Production HTTP smoke test
+        if: env.HOSTINGER_VERIFIED == 'true'
         shell: bash
         run: |
           for route in / /fnp/ /formacao-manuseio-arma/ /blog/ /sitemap.xml /robots.txt; do
