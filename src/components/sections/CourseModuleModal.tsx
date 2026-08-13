@@ -1,5 +1,3 @@
-"use client";
-
 import { AnimatePresence, motion } from "framer-motion";
 import { Activity, ArrowRight, CheckCircle2, X } from "lucide-react";
 

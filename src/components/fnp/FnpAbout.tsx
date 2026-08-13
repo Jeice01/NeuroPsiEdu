@@ -1,5 +1,3 @@
-"use client";
-
 import { Award, Microscope, GraduationCap } from "lucide-react";
 
 export function FnpAbout() {
