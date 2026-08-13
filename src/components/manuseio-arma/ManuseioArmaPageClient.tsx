@@ -1,5 +1,3 @@
-"use client";
-
 import { ManuseioArmaLeadProvider } from "./ManuseioArmaLeadContext";
 import { ManuseioArmaNavbar } from "./ManuseioArmaNavbar";
 import { ManuseioArmaHero } from "./ManuseioArmaHero";

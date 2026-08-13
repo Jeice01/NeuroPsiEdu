@@ -620,7 +620,7 @@ Pipeline, promoção e rollback:
 - [x] Dividir `FnpLeadModal.tsx`.
 - [x] Dividir `ManuseioArmaLeadModal.tsx`.
 - [x] Mover conteúdo estático para arquivos de dados.
-- [ ] Reduzir componentes marcados com `"use client"`.
+- [x] Reduzir componentes marcados com `"use client"`.
 - [x] Carregar modais sob demanda.
 - [x] Revisar uso do Framer Motion.
 
@@ -628,8 +628,13 @@ Validação parcial da Fase 6.2 em 13/08/2026: detalhes dos módulos e estado de
 sucesso dos leads foram extraídos para componentes próprios; opções estáticas
 dos formulários foram centralizadas; modais FANP e FAMAF passaram a usar
 carregamento dinâmico. Lint sem erros, typecheck, 13 testes unitários, build
-estático e 3 testes E2E dos formulários concluídos. A redução adicional de
-componentes cliente permanece pendente.
+estático e 3 testes E2E dos formulários concluídos. Naquela validação, a redução
+adicional de componentes cliente ainda permanecia pendente.
+
+Conclusão da Fase 6.2 em 13/08/2026: removidas cinco fronteiras cliente
+desnecessárias dos componentes estáticos e auxiliares. As marcações restantes
+dependem de estado, contexto, eventos do navegador ou animações interativas e
+foram preservadas.
 
 ## 6.3 Limpeza
 
