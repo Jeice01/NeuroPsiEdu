@@ -616,13 +616,20 @@ Pipeline, promoção e rollback:
 
 ## 6.2 Componentes
 
-- [ ] Dividir `CoursesSection.tsx`.
-- [ ] Dividir `FnpLeadModal.tsx`.
-- [ ] Dividir `ManuseioArmaLeadModal.tsx`.
-- [ ] Mover conteúdo estático para arquivos de dados.
+- [x] Dividir `CoursesSection.tsx`.
+- [x] Dividir `FnpLeadModal.tsx`.
+- [x] Dividir `ManuseioArmaLeadModal.tsx`.
+- [x] Mover conteúdo estático para arquivos de dados.
 - [ ] Reduzir componentes marcados com `"use client"`.
-- [ ] Carregar modais sob demanda.
-- [ ] Revisar uso do Framer Motion.
+- [x] Carregar modais sob demanda.
+- [x] Revisar uso do Framer Motion.
+
+Validação parcial da Fase 6.2 em 13/08/2026: detalhes dos módulos e estado de
+sucesso dos leads foram extraídos para componentes próprios; opções estáticas
+dos formulários foram centralizadas; modais FANP e FAMAF passaram a usar
+carregamento dinâmico. Lint sem erros, typecheck, 13 testes unitários, build
+estático e 3 testes E2E dos formulários concluídos. A redução adicional de
+componentes cliente permanece pendente.
 
 ## 6.3 Limpeza
 

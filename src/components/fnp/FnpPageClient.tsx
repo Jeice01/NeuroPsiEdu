@@ -1,8 +1,8 @@
 "use client";
 
 import { useState } from "react";
+import dynamic from "next/dynamic";
 import { LeadModalContext } from "./FnpLeadContext";
-import { FnpLeadModal } from "./FnpLeadModal";
 import { FnpNavbar } from "./FnpNavbar";
 import { FnpHero } from "./FnpHero";
 import { FnpPainPoints } from "./FnpPainPoints";
@@ -16,6 +16,11 @@ import { FnpPricing } from "./FnpPricing";
 import { FnpFaq } from "./FnpFaq";
 import { FnpCtaFinal } from "./FnpCtaFinal";
 import { FnpFooter } from "./FnpFooter";
+
+const FnpLeadModal = dynamic(
+  () => import("./FnpLeadModal").then((module) => module.FnpLeadModal),
+  { ssr: false }
+);
 
 export function FnpPageClient() {
   const [modalOpen, setModalOpen] = useState(false);
@@ -41,11 +46,13 @@ export function FnpPageClient() {
       <FnpFaq />
       <FnpCtaFinal />
       <FnpFooter />
-      <FnpLeadModal
-        isOpen={modalOpen}
-        onClose={() => setModalOpen(false)}
-        botaoOrigem={botaoOrigem}
-      />
+      {modalOpen && (
+        <FnpLeadModal
+          isOpen={modalOpen}
+          onClose={() => setModalOpen(false)}
+          botaoOrigem={botaoOrigem}
+        />
+      )}
     </LeadModalContext.Provider>
   );
 }
