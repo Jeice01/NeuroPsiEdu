@@ -148,8 +148,16 @@ jobs:
         run: |
           for attempt in {1..30}; do
             PUBLISHED_SHA="$(curl --fail --silent --show-error \
+              --ipv4 \
+              --connect-timeout 4 \
+              --max-time 8 \
+              --retry 1 \
+              --retry-all-errors \
+              --retry-delay 1 \
+              --retry-max-time 12 \
               "https://neuropsiedu.com.br/deploy.json?run=${GITHUB_RUN_ID}" \
               | jq -r '.commit // empty' 2>/dev/null || true)"
+            echo "Attempt ${attempt}/30: published=${PUBLISHED_SHA:-unavailable} expected=${SOURCE_SHA}"
             if [[ "${PUBLISHED_SHA}" == "${SOURCE_SHA}" ]]; then
               exit 0
             fi
