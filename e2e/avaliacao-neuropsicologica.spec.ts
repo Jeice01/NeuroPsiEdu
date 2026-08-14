@@ -29,6 +29,7 @@ test("registra visualização e clique no WhatsApp sem gerar lead falso", async 
   ).toBe(true);
 
   const cta = page.getByRole("link", { name: /Conversar pelo WhatsApp/i });
+  await expect(cta).toHaveAttribute("href", /^https:\/\/wa\.me\/5561996436007\?/);
   await cta.evaluate((link) => link.addEventListener("click", (event) => event.preventDefault(), { once: true }));
   await cta.click();
 
