@@ -14,6 +14,10 @@ test("publica conteúdo, SEO e dados estruturados da avaliação", async ({ page
     page.getByRole("heading", { level: 1, name: /Avaliação Neuropsicológica/i })
   ).toBeVisible();
   await expect(page.getByRole("heading", { name: "Dúvidas sobre a avaliação" })).toBeVisible();
+  await expect(page.getByRole("link", { name: "(61) 99643-6007" })).toHaveAttribute(
+    "href",
+    "https://wa.me/5561996436007"
+  );
 
   const schemas = await page.locator('script[type="application/ld+json"]').allTextContents();
   const pageSchema = schemas.find((schema) => schema.includes('"@type":"Service"'));

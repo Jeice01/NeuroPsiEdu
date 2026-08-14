@@ -3,7 +3,15 @@
 import { MessageCircle, ArrowRight, Send } from "lucide-react";
 import { TELEGRAM_LINK } from "@/lib/links";
 
-export function Footer() {
+type FooterProps = {
+  whatsappHref?: string;
+  whatsappLabel?: string;
+};
+
+export function Footer({
+  whatsappHref = "https://wa.me/5561982088284",
+  whatsappLabel = "(61) 98208-8284",
+}: FooterProps = {}) {
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
@@ -79,8 +87,8 @@ export function Footer() {
                 </div>
                 <div>
                   <p className="text-xs font-bold text-blue-200/50 uppercase tracking-wider">WhatsApp</p>
-                  <a href="https://wa.me/5561982088284" className="text-blue-100 hover:text-white transition-colors">
-                    (61) 98208-8284
+                  <a href={whatsappHref} className="text-blue-100 hover:text-white transition-colors">
+                    {whatsappLabel}
                   </a>
                 </div>
               </li>
