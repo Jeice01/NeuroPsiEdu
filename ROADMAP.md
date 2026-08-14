@@ -659,6 +659,10 @@ Decisões e evidências registradas em `docs/CLEANUP_6_3.md`. As remoções dos
 legados e a retirada de `out` do índice foram separadas para preservar mudanças
 locais e manter os PRs revisáveis.
 
+Em 14/08/2026, `out` foi retirado do índice em PR próprio e adicionado ao
+`.gitignore`. O export estático continua obrigatório e é gerado pela CI antes da
+publicação na branch `deploy` e na Hostinger.
+
 ---
 
 # Fase 7 — Documentação e operação
