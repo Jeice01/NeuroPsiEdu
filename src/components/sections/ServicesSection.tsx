@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { motion } from "framer-motion";
 import { Brain, Baby, User, Activity, ClipboardCheck, ArrowRight, MessageCircle, CheckCircle2, Award, Network } from "lucide-react";
 
@@ -102,10 +103,10 @@ export function ServicesSection() {
               </ul>
 
               <div className="pt-6 border-t border-slate-50">
-                <button className="flex items-center gap-2 text-sm font-black text-neuro-blue uppercase tracking-widest hover:text-neuro-orange transition-colors group/btn">
+                <Link href="/avaliacao-neuropsicologica/" className="flex items-center gap-2 text-sm font-black text-neuro-blue uppercase tracking-widest hover:text-neuro-orange transition-colors group/btn">
                   Saber mais
                   <ArrowRight className="w-4 h-4 transition-transform group-hover/btn:translate-x-1" />
-                </button>
+                </Link>
               </div>
             </motion.div>
           ))}
