@@ -31,6 +31,7 @@ O diretório `out` não deve permanecer versionado na branch `main`:
 - o deploy manual também executa um build novo;
 - a branch `deploy` já mantém a cópia exata publicada na Hostinger.
 
-A retirada de `out` do índice do Git deve ser feita em um PR próprio, adicionando
-`/out/` ao `.gitignore`. Essa separação evita misturar a limpeza de código com
-uma alteração massiva de artefatos e protege as mudanças locais existentes.
+A retirada de `out` do índice do Git foi executada em um PR próprio, com `/out/`
+adicionado ao `.gitignore`. A CI continua gerando e validando o export estático,
+enquanto a branch `deploy` mantém a cópia efetivamente publicada. Essa separação
+evita misturar código-fonte e artefatos reproduzíveis.
