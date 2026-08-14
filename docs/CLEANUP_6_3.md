@@ -18,8 +18,9 @@ Data da avaliação: 13/08/2026.
 As buscas no código ativo não encontraram imports ou referências de execução a
 `src/components/forms/LeadForm.tsx`, `old_html/` ou ao `index.html` da raiz.
 `LeadForm.tsx` foi removido em PR próprio após a comparação confirmar que o
-estado local não continha diferenças de conteúdo. `old_html/` e o `index.html`
-raiz permanecem para reconciliação e remoção separada.
+estado local não continha diferenças de conteúdo. A mesma verificação foi feita
+para `old_html/` e o `index.html` raiz; os dois também foram removidos em PR
+separado, sem afetar as rotas geradas pelo Next.js.
 
 ## Diretório `out`
 

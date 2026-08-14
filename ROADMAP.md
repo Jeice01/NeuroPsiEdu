@@ -668,6 +668,10 @@ após confirmar ausência de imports e de diferenças locais de conteúdo. FANP,
 FAMAF e lista de espera continuam usando os formulários ativos e a infraestrutura
 compartilhada da Fase 6.1.
 
+Na sequência, `old_html/` e o `index.html` raiz foram removidos após confirmar
+que não eram referenciados pelo aplicativo e que não continham diferenças locais
+de conteúdo. O site publicado continua sendo gerado exclusivamente por Next.js.
+
 ---
 
 # Fase 7 — Documentação e operação
