@@ -1,7 +1,6 @@
 "use client";
 
-import { MessageCircle, Activity, Network, Sparkles, LineChart, ArrowRight, Send } from "lucide-react";
-import { motion } from "framer-motion";
+import { MessageCircle, ArrowRight, Send } from "lucide-react";
 import { TELEGRAM_LINK } from "@/lib/links";
 
 export function Footer() {

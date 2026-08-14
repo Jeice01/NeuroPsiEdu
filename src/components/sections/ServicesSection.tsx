@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Brain, Baby, User, Users, Activity, ClipboardCheck, ArrowRight, MessageCircle, CheckCircle2, Award, Network } from "lucide-react";
+import { Brain, Baby, User, Activity, ClipboardCheck, ArrowRight, MessageCircle, CheckCircle2, Award, Network } from "lucide-react";
 
 export function ServicesSection() {
   const services = [

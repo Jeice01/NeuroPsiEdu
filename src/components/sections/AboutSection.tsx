@@ -2,7 +2,7 @@
 
 import { useRef, useEffect } from "react";
 import { motion, useAnimation, useInView } from "framer-motion";
-import { CheckCircle2, Award, GraduationCap, Microscope } from "lucide-react";
+import { Award, GraduationCap, Microscope } from "lucide-react";
 
 export function AboutSection() {
   const points = [
