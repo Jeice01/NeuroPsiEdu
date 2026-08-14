@@ -17,10 +17,9 @@ Data da avaliação: 13/08/2026.
 
 As buscas no código ativo não encontraram imports ou referências de execução a
 `src/components/forms/LeadForm.tsx`, `old_html/` ou ao `index.html` da raiz.
-Esses itens podem ser removidos tecnicamente, mas o diretório de trabalho
-principal possui alterações locais nesses arquivos. Para preservar esse
-trabalho, a remoção deve ocorrer em um PR separado depois que essas alterações
-forem reconciliadas ou arquivadas.
+`LeadForm.tsx` foi removido em PR próprio após a comparação confirmar que o
+estado local não continha diferenças de conteúdo. `old_html/` e o `index.html`
+raiz permanecem para reconciliação e remoção separada.
 
 ## Diretório `out`
 
