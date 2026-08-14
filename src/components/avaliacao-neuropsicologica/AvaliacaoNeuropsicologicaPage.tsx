@@ -386,8 +386,10 @@ export function AvaliacaoNeuropsicologicaPage() {
         </section>
       </main>
 
-      <Footer />
+      <Footer
+        whatsappHref="https://wa.me/5561996436007"
+        whatsappLabel="(61) 99643-6007"
+      />
     </div>
   );
 }
-
