@@ -1,7 +1,7 @@
 export const AVALIACAO_PATH = "/avaliacao-neuropsicologica/";
 
 export const AVALIACAO_WHATSAPP_URL =
-  "https://wa.me/5561982088284?text=Ol%C3%A1%2C%20quero%20entender%20se%20a%20avalia%C3%A7%C3%A3o%20neuropsicol%C3%B3gica%20%C3%A9%20indicada%20para%20o%20meu%20caso.";
+  "https://wa.me/5561996436007?text=Ol%C3%A1%2C%20quero%20entender%20se%20a%20avalia%C3%A7%C3%A3o%20neuropsicol%C3%B3gica%20%C3%A9%20indicada%20para%20o%20meu%20caso.";
 
 export const AVALIACAO_FAQS = [
   {
@@ -35,4 +35,3 @@ export const AVALIACAO_FAQS = [
       "A avaliação neuropsicológica contribui para a compreensão diagnóstica, mas seus resultados devem ser considerados junto à história da pessoa e, quando necessário, às informações de outros profissionais. Cada caso é analisado individualmente.",
   },
 ] as const;
-
