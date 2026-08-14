@@ -38,7 +38,7 @@ export function InfoBar() {
 
   useEffect(() => {
     if (isInView) {
-      itemControls.forEach((ctrl, idx) => {
+      [ctrl0, ctrl1, ctrl2, ctrl3].forEach((ctrl, idx) => {
         ctrl.set({ opacity: 0, y: 10 });
         ctrl.start({ opacity: 1, y: 0, transition: { duration: 0.5, delay: idx * 0.1 } });
       });

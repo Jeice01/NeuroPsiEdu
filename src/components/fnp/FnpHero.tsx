@@ -26,28 +26,6 @@ export function FnpHero() {
     },
   };
 
-  const orbitVariants: Variants = {
-    animate: {
-      rotate: 360,
-      transition: {
-        duration: 35,
-        repeat: Infinity,
-        ease: "linear",
-      },
-    },
-  };
-
-  const reverseOrbitVariants: Variants = {
-    animate: {
-      rotate: -360,
-      transition: {
-        duration: 45,
-        repeat: Infinity,
-        ease: "linear",
-      },
-    },
-  };
-
   return (
     <section className="relative min-h-[92vh] flex items-center pt-32 pb-20 bg-slate-950 text-white overflow-hidden">
       

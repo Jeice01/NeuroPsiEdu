@@ -638,22 +638,26 @@ foram preservadas.
 
 ## 6.3 Limpeza
 
-- [ ] Eliminar todos os avisos do lint.
-- [ ] Corrigir dependência do hook em `InfoBar`.
-- [ ] Remover imports não utilizados.
-- [ ] Avaliar remoção de `LeadForm`.
-- [ ] Avaliar remoção de `old_html`.
-- [ ] Avaliar remoção do `index.html` legado.
-- [ ] Decidir se `out` deve permanecer versionado.
-- [ ] Renomear o pacote `temp-app`.
-- [ ] Remover assets padrão não utilizados.
+- [x] Eliminar todos os avisos do lint.
+- [x] Corrigir dependência do hook em `InfoBar`.
+- [x] Remover imports não utilizados.
+- [x] Avaliar remoção de `LeadForm`.
+- [x] Avaliar remoção de `old_html`.
+- [x] Avaliar remoção do `index.html` legado.
+- [x] Decidir se `out` deve permanecer versionado.
+- [x] Renomear o pacote `temp-app`.
+- [x] Remover assets padrão não utilizados.
 
 ### Critérios de aceite da fase
 
-- [ ] ESLint sem erros e sem avisos.
-- [ ] Formulários utilizam regras compartilhadas.
-- [ ] Componentes grandes foram divididos por responsabilidade.
-- [ ] Bundle cliente foi reduzido ou não aumentou sem justificativa.
+- [x] ESLint sem erros e sem avisos.
+- [x] Formulários utilizam regras compartilhadas.
+- [x] Componentes grandes foram divididos por responsabilidade.
+- [x] Bundle cliente foi reduzido ou não aumentou sem justificativa.
+
+Decisões e evidências registradas em `docs/CLEANUP_6_3.md`. As remoções dos
+legados e a retirada de `out` do índice foram separadas para preservar mudanças
+locais e manter os PRs revisáveis.
 
 ---
 
