@@ -1,6 +1,6 @@
 # Inventário de configuração — NeuroPsiEdu
 
-Atualizado em: 30/07/2026
+Atualizado em: 14/08/2026
 
 Este documento descreve configurações públicas, variáveis de ambiente e
 segredos usados pelo projeto. Valores secretos reais não devem ser incluídos
@@ -11,17 +11,23 @@ neste arquivo, em `.env.example`, em logs, issues ou pull requests.
 | Ambiente | Frontend | Backend de leads | Configuração esperada |
 |---|---|---|---|
 | Local | Next.js | Supabase remoto ou local | `.env.local` e secrets locais da Edge Function |
-| Staging | Ainda não configurado | Ainda não configurado | Pendente nas fases de banco e CI/CD |
+| Staging | Sem domínio permanente | Supabase `heriktuywhaqjodrqyoq` | Deploy manual pelo ambiente GitHub `supabase-staging` |
 | Produção | Hostinger | Supabase Edge Functions | Variáveis de build e secrets gerenciados pelos provedores |
 
 ## Variáveis consumidas atualmente
 
 | Variável | Escopo | Exposição | Obrigatória | Origem |
 |---|---|---|---|---|
-| `NEXT_PUBLIC_SUPABASE_URL` | Next.js | Pública | Sim para inserts diretos | Dashboard Supabase |
-| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Next.js | Pública | Sim para inserts diretos | Chave publishable ou anon do Supabase |
+| `NEXT_PUBLIC_SUPABASE_URL` | Next.js | Pública | Sim para chamada da Edge Function | Dashboard Supabase |
+| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Next.js | Pública | Sim para chamada da Edge Function | Chave publishable ou anon do Supabase |
+| `NEXT_PUBLIC_TURNSTILE_SITE_KEY` | Next.js | Pública | Sim | Widget Cloudflare Turnstile |
 | `SUPABASE_URL` | Edge Function | Servidor | Sim | Fornecida automaticamente pelo Supabase |
 | `SUPABASE_SERVICE_ROLE_KEY` | Edge Function | Secreta | Sim | Fornecida automaticamente pelo Supabase |
+| `TURNSTILE_SECRET_KEY` | Edge Function | Secreta | Sim | Cloudflare Turnstile |
+| `TURNSTILE_EXPECTED_ACTION` | Edge Function | Servidor | Sim | Configuração do formulário |
+| `TURNSTILE_ALLOWED_HOSTNAMES` | Edge Function | Servidor | Sim | Domínios públicos autorizados |
+| `RATE_LIMIT_SALT` | Edge Function | Secreta | Sim | Valor aleatório exclusivo do ambiente |
+| `ALLOWED_ORIGINS` | Edge Function | Servidor | Opcional | Origens locais adicionais |
 
 ### Observações de segurança
 
@@ -102,16 +108,12 @@ A presença de uma chave `anon` em bundle público é esperada para aplicações
 web, mas o projeto antigo deve permanecer protegido por RLS ou ser desativado
 caso não seja mais utilizado.
 
-## Valores planejados, ainda não consumidos
+## Integração ativa dos formulários
 
-As seguintes variáveis aparecem no roadmap, mas ainda não devem ser exigidas
-por `.env.example`, pois o código atual não as consome:
-
-- `NEXT_PUBLIC_LEADS_FUNCTION_URL`
-- chave pública do CAPTCHA/Turnstile
-- secret privado do CAPTCHA/Turnstile
-
-Elas serão adicionadas aos exemplos no mesmo commit que implementar seu uso.
+Os formulários usam a URL pública do projeto para chamar
+`/functions/v1/create-lead-formacao`. A site key do Turnstile é enviada ao
+navegador; secret, salt e acesso administrativo permanecem somente na Edge
+Function. Não existe atualmente a variável `NEXT_PUBLIC_LEADS_FUNCTION_URL`.
 
 ## Checklist para novas configurações
 

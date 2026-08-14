@@ -667,29 +667,33 @@ locais e manter os PRs revisáveis.
 
 **Branch sugerida:** `docs/development-and-operations`
 
-- [ ] Substituir o README padrão.
-- [ ] Documentar objetivo e arquitetura.
-- [ ] Documentar estrutura de pastas.
-- [ ] Documentar instalação local.
-- [ ] Documentar variáveis de ambiente.
-- [ ] Documentar Supabase local e remoto.
-- [ ] Documentar migrations.
-- [ ] Documentar testes.
-- [ ] Documentar build.
-- [ ] Documentar deploy Hostinger.
-- [ ] Documentar deploy Supabase.
-- [ ] Documentar rollback.
-- [ ] Criar `CONTRIBUTING.md`.
-- [ ] Criar template de pull request.
-- [ ] Criar runbook de incidentes.
-- [ ] Documentar política de retenção de leads.
-- [ ] Documentar responsáveis técnicos e de negócio.
+- [x] Substituir o README padrão.
+- [x] Documentar objetivo e arquitetura.
+- [x] Documentar estrutura de pastas.
+- [x] Documentar instalação local.
+- [x] Documentar variáveis de ambiente.
+- [x] Documentar Supabase local e remoto.
+- [x] Documentar migrations.
+- [x] Documentar testes.
+- [x] Documentar build.
+- [x] Documentar deploy Hostinger.
+- [x] Documentar deploy Supabase.
+- [x] Documentar rollback.
+- [x] Criar `CONTRIBUTING.md`.
+- [x] Criar template de pull request.
+- [x] Criar runbook de incidentes.
+- [x] Documentar política de retenção de leads.
+- [x] Documentar responsáveis técnicos e de negócio.
 
 ### Critérios de aceite da fase
 
-- [ ] Uma nova pessoa consegue executar o projeto seguindo o README.
-- [ ] Uma nova pessoa consegue publicar em staging.
-- [ ] O rollback pode ser executado seguindo apenas o runbook.
+- [x] Uma nova pessoa consegue executar o projeto seguindo o README.
+- [x] Uma nova pessoa consegue publicar em staging.
+- [x] O rollback pode ser executado seguindo apenas o runbook.
+
+Documentação operacional consolidada em 14/08/2026. O staging disponível é o
+projeto Supabase protegido pelo workflow manual; não existe domínio frontend de
+staging permanente nesta arquitetura.
 
 ---
 
