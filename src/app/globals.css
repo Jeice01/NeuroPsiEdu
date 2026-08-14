@@ -1,6 +1,5 @@
 @import "tailwindcss";
 @source not "../../out";
-@source not "../../old_html";
 
 @font-face {
   font-family: "Inter";
