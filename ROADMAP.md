@@ -663,6 +663,11 @@ Em 14/08/2026, `out` foi retirado do índice em PR próprio e adicionado ao
 `.gitignore`. O export estático continua obrigatório e é gerado pela CI antes da
 publicação na branch `deploy` e na Hostinger.
 
+Também em 14/08/2026, o componente `LeadForm.tsx` foi removido em PR próprio
+após confirmar ausência de imports e de diferenças locais de conteúdo. FANP,
+FAMAF e lista de espera continuam usando os formulários ativos e a infraestrutura
+compartilhada da Fase 6.1.
+
 ---
 
 # Fase 7 — Documentação e operação
