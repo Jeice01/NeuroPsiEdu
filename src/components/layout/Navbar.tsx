@@ -71,7 +71,7 @@ export function Navbar() {
             <span>Área do Aluno</span>
           </a>
           <a
-            href="https://wa.me/5561982088284?text=Quero%20uma%20avalia%C3%A7%C3%A3o%2C%20pode%20me%20ajudar%3F"
+            href="https://wa.me/5561996436007?text=Quero%20uma%20avalia%C3%A7%C3%A3o%2C%20pode%20me%20ajudar%3F"
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center gap-2.5 px-6 py-3 rounded-xl bg-neuro-blue text-white font-bold text-[14px] hover:bg-neuro-blue-dark transition-all shadow-[0_10px_20px_-5px_rgba(28,69,104,0.3)]"
@@ -147,7 +147,7 @@ export function Navbar() {
                   <span>Área do Aluno</span>
                 </a>
                 <a
-                  href="https://wa.me/5561982088284?text=Quero%20uma%20avalia%C3%A7%C3%A3o%2C%20pode%20me%20ajudar%3F"
+                  href="https://wa.me/5561996436007?text=Quero%20uma%20avalia%C3%A7%C3%A3o%2C%20pode%20me%20ajudar%3F"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center justify-center gap-2.5 w-full py-3.5 rounded-xl bg-neuro-blue text-white font-bold text-sm hover:bg-neuro-blue-dark transition-all shadow-[0_10px_20px_-5px_rgba(28,69,104,0.3)]"

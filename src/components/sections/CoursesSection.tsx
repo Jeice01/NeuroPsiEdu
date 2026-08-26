@@ -86,7 +86,7 @@ export function CoursesSection() {
 
     setTimeout(() => {
       const msg = `Olá! Meu nome é ${formData.nome}. Sou ${formData.isPsicologo === 'sim' ? 'Psicólogo(a)' : 'estudante/outro'}. Gostaria de saber mais sobre a Pós-Graduação.`;
-      window.open(`https://wa.me/5561982088284?text=${encodeURIComponent(msg)}`, '_blank');
+      window.open(`https://wa.me/5561996436007?text=${encodeURIComponent(msg)}`, '_blank');
     }, 2000);
   };
   const moduleData = [

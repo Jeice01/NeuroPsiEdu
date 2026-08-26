@@ -136,7 +136,7 @@ export function DualEntryCards() {
           </ul>
 
           <a
-            href="https://wa.me/5561982088284?text=Olá,%20quero%20conhecer%20a%20Supervisão%20Clínica%20da%20NeuroPsiEdu"
+            href="https://wa.me/5561996436007?text=Olá,%20quero%20conhecer%20a%20Supervisão%20Clínica%20da%20NeuroPsiEdu"
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center justify-center gap-4 w-full p-4 rounded-2xl bg-slate-50/50 hover:bg-white border border-slate-100 hover:border-neuro-orange/30 hover:shadow-lg hover:shadow-neuro-orange/5 transition-all duration-300 group/btn"

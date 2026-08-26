@@ -187,7 +187,7 @@ export function ServicesSection() {
 
             {/* CTA Button */}
             <a 
-              href="https://wa.me/5561982088284?text=Quero%20uma%20avalia%C3%A7%C3%A3o%2C%20pode%20me%20ajudar%3F"
+              href="https://wa.me/5561996436007?text=Quero%20uma%20avalia%C3%A7%C3%A3o%2C%20pode%20me%20ajudar%3F"
               target="_blank"
               rel="noopener noreferrer"
               className="group relative flex items-center gap-4 bg-gradient-to-r from-[#f3821a] to-[#e07516] hover:from-[#e07516] hover:to-[#f3821a] text-white px-12 py-6 rounded-2xl font-black text-base uppercase tracking-widest transition-all shadow-[0_20px_50px_-10px_rgba(243,130,26,0.4)] hover:-translate-y-1"

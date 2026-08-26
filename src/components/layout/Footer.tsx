@@ -9,8 +9,8 @@ type FooterProps = {
 };
 
 export function Footer({
-  whatsappHref = "https://wa.me/5561982088284",
-  whatsappLabel = "(61) 98208-8284",
+  whatsappHref = "https://wa.me/5561996436007",
+  whatsappLabel = "(61) 99643-6007",
 }: FooterProps = {}) {
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
