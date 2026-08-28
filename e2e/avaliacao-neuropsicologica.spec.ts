@@ -44,6 +44,10 @@ test("registra visualização e clique no WhatsApp sem gerar lead falso", async 
   ]));
   expect(events.filter((item) => item.event === "click_whatsapp_avaliacao")).toHaveLength(1);
   expect(events.some((item) => item.event === "lead_avaliacao")).toBe(false);
+  expect(events.some((item) => item[0] === "config" && item[1] === "AW-18178022445")).toBe(true);
+  expect(events.some((item) =>
+    item[0] === "event" && item[1] === "ads_conversion_Pre_cadastro_1"
+  )).toBe(true);
 });
 
 for (const viewport of [
