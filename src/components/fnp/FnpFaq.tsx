@@ -173,7 +173,7 @@ export function FnpFaq() {
             </p>
           </div>
           <a
-            href="https://wa.me/5561982088284?text=Olá,%20tenho%20dúvidas%20sobre%20a%20Formação%20em%20Avaliação%20Neuropsicológica%20"
+            href="https://wa.me/5561996436007?text=Olá,%20tenho%20dúvidas%20sobre%20a%20Formação%20em%20Avaliação%20Neuropsicológica%20"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex px-5 py-2.5 rounded-xl text-xs font-bold text-white bg-slate-900 hover:bg-slate-800 transition-colors items-center gap-1.5"

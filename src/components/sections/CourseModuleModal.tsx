@@ -92,7 +92,7 @@ export function CourseModuleModal({ module, onClose }: CourseModuleModalProps) {
 
             <div className="p-5 pt-3 xs:p-8 xs:pt-4 flex-shrink-0 border-t border-slate-100">
               <a
-                href={`https://wa.me/5561982088284?text=${encodeURIComponent(`Olá! Tenho interesse em me inscrever no Módulo ${module.num} — ${module.title}. Pode me ajudar?`)}`}
+                href={`https://wa.me/5561996436007?text=${encodeURIComponent(`Olá! Tenho interesse em me inscrever no Módulo ${module.num} — ${module.title}. Pode me ajudar?`)}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center justify-center gap-3 w-full bg-neuro-orange hover:bg-neuro-orange-light text-white py-5 rounded-2xl font-black text-sm uppercase tracking-widest transition-all shadow-lg shadow-neuro-orange/20 hover:shadow-neuro-orange/30 hover:-translate-y-0.5 active:scale-95"

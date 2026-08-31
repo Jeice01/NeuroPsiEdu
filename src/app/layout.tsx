@@ -100,7 +100,7 @@ export default function RootLayout({
                   "logo": "https://neuropsiedu.com.br/images/logo-vertical-600.webp",
                   "image": "https://neuropsiedu.com.br/images/logo-vertical-600.webp",
                   "email": "contato@neuropsiedu.com.br",
-                  "telephone": "+55-61-98208-8284",
+                  "telephone": "+55-61-99643-6007",
                   "sameAs": ["https://www.instagram.com/academiadaneuropsicologia"],
                   "address": {
                     "@type": "PostalAddress",
@@ -111,7 +111,7 @@ export default function RootLayout({
                   },
                   "contactPoint": {
                     "@type": "ContactPoint",
-                    "telephone": "+55-61-98208-8284",
+                    "telephone": "+55-61-99643-6007",
                     "contactType": "Atendimento"
                   }
                 },

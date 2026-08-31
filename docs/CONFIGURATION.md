@@ -50,7 +50,7 @@ neste arquivo, em `.env.example`, em logs, issues ou pull requests.
 | Domínio alternativo | `https://www.neuropsiedu.com.br` | CORS da Edge Function |
 | GTM | `GTM-54TNTKLF` | `src/app/layout.tsx` |
 | Cookiebot | `bb101498-b476-4898-bc7d-7917299af0af` | `src/app/layout.tsx` |
-| WhatsApp | `+55 61 98208-8284` | Componentes institucionais e comerciais |
+| WhatsApp | `+55 61 99643-6007` | Componentes institucionais e comerciais |
 | E-mail | `contato@neuropsiedu.com.br` | Rodapés |
 | Telegram | `https://t.me/neuropsiedu` | `src/lib/links.ts` |
 | Instagram | `academiadaneuropsicologia` | Rodapé institucional |

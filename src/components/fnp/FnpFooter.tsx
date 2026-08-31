@@ -32,8 +32,8 @@ export function FnpFooter() {
             <ul className="space-y-2.5 text-sm">
               <li className="flex items-center gap-2 text-slate-400">
                 <MessageCircle className="w-4 h-4 text-emerald-400 fill-current" />
-                <a href="https://wa.me/5561982088284" className="hover:text-white transition-colors">
-                  (61) 98208-8284
+                <a href="https://wa.me/5561996436007" className="hover:text-white transition-colors">
+                  (61) 99643-6007
                 </a>
               </li>
               <li className="text-slate-400">

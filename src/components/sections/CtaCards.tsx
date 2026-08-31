@@ -18,7 +18,7 @@ const cards = [
     ],
     buttonText: "Agendar Consulta",
     buttonIcon: Calendar,
-    href: "https://wa.me/5561982088284?text=Quero%20uma%20avalia%C3%A7%C3%A3o%2C%20pode%20me%20ajudar%3F"
+    href: "https://wa.me/5561996436007?text=Quero%20uma%20avalia%C3%A7%C3%A3o%2C%20pode%20me%20ajudar%3F"
   },
   {
     title: "Quero Me Capacitar",
@@ -48,7 +48,7 @@ const cards = [
     ],
     buttonText: "Quero conhecer a supervisão",
     buttonIcon: ShieldCheck,
-    href: "https://wa.me/5561982088284?text=Olá,%20quero%20conhecer%20a%20Supervisão%20Clínica%20da%20NeuroPsiEdu"
+    href: "https://wa.me/5561996436007?text=Olá,%20quero%20conhecer%20a%20Supervisão%20Clínica%20da%20NeuroPsiEdu"
   }
 ];
 
