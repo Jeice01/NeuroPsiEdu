@@ -5,7 +5,28 @@ import { useEffect, type AnchorHTMLAttributes, type ReactNode } from "react";
 declare global {
   interface Window {
     dataLayer?: Array<Record<string, unknown>>;
+    gtag?: (...args: unknown[]) => void;
   }
+}
+
+const GOOGLE_ADS_ID = "AW-18178022445";
+const GOOGLE_ADS_WHATSAPP_EVENT = "ads_conversion_Pre_cadastro_1";
+
+function configureGoogleAds() {
+  window.dataLayer = window.dataLayer || [];
+  window.gtag = window.gtag || function gtag() {
+    // Google Tag uses the native arguments object as a dataLayer command.
+    // eslint-disable-next-line prefer-rest-params
+    window.dataLayer?.push(arguments as unknown as Record<string, unknown>);
+  };
+
+  window.gtag("config", GOOGLE_ADS_ID);
+}
+
+function trackGoogleAdsWhatsappConversion() {
+  window.gtag?.("event", GOOGLE_ADS_WHATSAPP_EVENT, {
+    event_timeout: 2000,
+  });
 }
 
 function track(event: "view_avaliacao" | "click_whatsapp_avaliacao", origin?: string) {
@@ -19,6 +40,7 @@ function track(event: "view_avaliacao" | "click_whatsapp_avaliacao", origin?: st
 
 export function AvaliacaoPageView() {
   useEffect(() => {
+    configureGoogleAds();
     track("view_avaliacao");
 
     const handleWhatsappClick = (event: MouseEvent) => {
@@ -28,6 +50,7 @@ export function AvaliacaoPageView() {
 
       if (link) {
         track("click_whatsapp_avaliacao", link.dataset.ctaOrigin || "global");
+        trackGoogleAdsWhatsappConversion();
       }
     };
 
