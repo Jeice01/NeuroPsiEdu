@@ -82,6 +82,10 @@ jobs:
 
       - name: Build manual deployment
         if: github.event_name == 'workflow_dispatch'
+        env:
+          ZULLIGER_INFORMATION_ONLY: "true"
+          NEXT_PUBLIC_CURSOS_ENABLED: "false"
+          NEXT_PUBLIC_CURSOS_CHECKOUT_SANDBOX_ENABLED: "false"
         run: |
           npm ci
           npm run build
@@ -184,7 +188,7 @@ jobs:
         if: env.HOSTINGER_VERIFIED == 'true'
         shell: bash
         run: |
-          for route in / /fnp/ /formacao-manuseio-arma/ /blog/ /sitemap.xml /robots.txt; do
+          for route in / /fnp/ /formacao-manuseio-arma/ /blog/ /curso-zulliger/ /curso-zulliger/inscricao/ /curso-zulliger/resultado/ /sitemap.xml /robots.txt; do
             curl --fail --silent --show-error \
               --retry 2 --max-time 20 --output /dev/null \
               "https://neuropsiedu.com.br${route}?deploy=${GITHUB_RUN_ID}"

@@ -1,0 +1,45 @@
+.z-registration-page { background: #f5f9fa; }
+.z-registration-main { padding-block: 48px 80px; }
+.z-registration-heading { max-width: 760px; margin-bottom: 36px; }
+.z-registration-heading h1 { font-size: clamp(34px, 4vw, 52px); }
+.z-registration-heading > p:last-child { color: #526879; font-size: 16px; line-height: 1.8; }
+.z-registration-grid { display: grid; grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr); gap: 40px; align-items: start; }
+.z-registration-summary { background: #edf5f2; padding: 32px; border: 1px solid #d1e3dc; border-radius: 14px; }
+.z-registration-summary h2 { font-size: 28px; margin-bottom: 12px; }
+.z-registration-subtitle { font-size: 14px; line-height: 1.8; color: #526879; }
+.z-registration-summary dl { margin-block: 24px 16px; }
+.z-registration-summary dl > div { padding-block: 12px; border-top: 1px solid #cfdfd9; }
+.z-registration-summary dt { font-size: 13px; font-weight: 700; margin-bottom: 5px; }
+.z-registration-summary dd { font-size: 14px; line-height: 1.75; margin: 0; }
+.z-registration-price { border-top: 1px solid #cfdfd9; margin-top: 24px; padding-top: 20px; }
+.z-registration-price > span { font-size: 13px; font-weight: 650; }
+.z-registration-price strong { display: block; font: 550 42px/1.4 "Outfit", sans-serif; }
+.z-registration-price p { font-size: 13px; line-height: 1.8; margin-block: 4px 16px; }
+.z-registration-grid > .z-form-card { border: 1px solid #dce4eb; min-width: 0; }
+.z-registration-back { max-width: 230px; }
+.z-registration-back svg { flex-shrink: 0; }
+.z-registration-page .z-footer a { overflow-wrap: anywhere; }
+.z-registration-error { color: #9c2525; line-height: 1.6; }
+.z-registration-error:empty { display: none; }
+.z-form-card button:disabled { opacity: .65; cursor: not-allowed; }
+.z-form-card > form > .z-text-link { margin-top: 20px; min-height: 48px; }
+.z-form-card input:not([type=checkbox]):not([type=radio]) { font-size: 16px; }
+.z-result-main { max-width: 820px; }
+.z-order-summary { padding: 24px; margin-block: 24px; background: #f5f9fa; border: 1px solid #d1e3dc; border-top: 3px solid var(--z-green); border-radius: 12px; }
+.z-order-brand { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; margin-bottom: 20px; }
+.z-order-brand img { display: block; width: 130px; height: auto; }
+.z-order-brand span { color: #703b10; background: #fff0dc; padding: 6px 10px; border-radius: 6px; font-size: 11px; font-weight: 700; }
+.z-order-summary h3 { font-size: 23px; line-height: 1.3; margin: 0 0 12px; }
+.z-order-summary > p { color: #526879; font-size: 14px; line-height: 1.7; }
+.z-order-summary dl { margin-block: 16px; }
+.z-order-summary dl > div { border-top: 1px solid #d1e3dc; padding-block: 12px; }
+.z-order-summary dt { font-size: 12px; font-weight: 700; margin-bottom: 4px; }
+.z-order-summary dd { margin: 0; font-size: 14px; line-height: 1.6; }
+.z-order-summary > .z-order-note { font-size: 12px; margin-bottom: 0; }
+@media (max-width: 850px) {
+  .z-registration-grid { grid-template-columns: minmax(0, 1fr); gap: 24px; }
+  .z-registration-main { padding-block: 32px 56px; }
+  .z-registration-summary { padding: 24px; }
+  .z-registration-back { max-width: 170px; font-size: 12px; }
+  .z-order-summary { padding: 18px; }
+}
