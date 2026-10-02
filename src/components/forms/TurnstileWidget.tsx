@@ -65,12 +65,13 @@ function loadTurnstile() {
 
 interface TurnstileWidgetProps {
   onTokenChange: (token: string) => void;
+  siteKey?: string;
+  action?: string;
 }
 
-export function TurnstileWidget({ onTokenChange }: TurnstileWidgetProps) {
+export function TurnstileWidget({ onTokenChange, siteKey = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY ?? "", action = "lead_formacao" }: TurnstileWidgetProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [loadError, setLoadError] = useState("");
-  const siteKey = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY ?? "";
 
   useEffect(() => {
     let active = true;
@@ -90,7 +91,7 @@ export function TurnstileWidget({ onTokenChange }: TurnstileWidgetProps) {
 
         widgetId = window.turnstile.render(containerRef.current, {
           sitekey: siteKey,
-          action: "lead_formacao",
+          action,
           theme: "dark",
           callback: (token) => onTokenChange(token),
           "expired-callback": () => onTokenChange(""),
@@ -112,7 +113,7 @@ export function TurnstileWidget({ onTokenChange }: TurnstileWidgetProps) {
         window.turnstile.remove(widgetId);
       }
     };
-  }, [onTokenChange, siteKey]);
+  }, [onTokenChange, siteKey, action]);
 
   return (
     <div className="space-y-2">

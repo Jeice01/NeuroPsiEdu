@@ -2,6 +2,7 @@ import { defineConfig, devices } from "@playwright/test";
 
 export default defineConfig({
   testDir: "./e2e",
+  testIgnore: ["**/cursos-registration.spec.ts", "**/zulliger-release.spec.ts"],
   fullyParallel: true,
   forbidOnly: Boolean(process.env.CI),
   retries: process.env.CI ? 2 : 0,
@@ -22,6 +23,7 @@ export default defineConfig({
     timeout: 120_000,
     env: {
       ...process.env,
+      NEXT_DEV_INSTANCE: "e2e",
       NEXT_PUBLIC_SUPABASE_URL: "https://avfzuudrjnglqrkyxwkz.supabase.co",
       NEXT_PUBLIC_SUPABASE_ANON_KEY: "e2e-public-placeholder",
       NEXT_PUBLIC_TURNSTILE_SITE_KEY: "e2e-site-key",

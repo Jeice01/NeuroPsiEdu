@@ -68,10 +68,17 @@ jobs:
         run: npm run audit:ci
 
       - name: Production build
+        env:
+          ZULLIGER_INFORMATION_ONLY: "true"
+          NEXT_PUBLIC_CURSOS_ENABLED: "false"
+          NEXT_PUBLIC_CURSOS_CHECKOUT_SANDBOX_ENABLED: "false"
         run: npm run build
 
       - name: Verify SEO artifact
         run: npm run test:seo
+
+      - name: Verify informational release in Google Chrome
+        run: npx playwright test --config playwright.release.config.ts
 
       - name: Verify performance budgets
         run: npm run test:performance
