@@ -43,11 +43,25 @@ export async function persistObservation(rpc: Rpc, observation: Observation) {
     p_chave: await sha256(JSON.stringify(observation)),
   });
 }
+export type WebhookAuthDiagnostic = {
+  event: 'pagbank_webhook_auth';
+  result:
+    | 'missing_signature'
+    | 'invalid_signature_format'
+    | 'signature_mismatch'
+    | 'verification_error'
+    | 'verified';
+  expected_header: 'x-payload-signature' | 'x-authenticity-token';
+  authenticity_header_present: boolean;
+  payload_signature_header_present: boolean;
+  body_bytes?: number;
+};
 export function createWebhook(dependencies: {
   rpc: Rpc;
   signatureHeader?: 'x-payload-signature' | 'x-authenticity-token';
   authenticate: (raw: Uint8Array, header: string) => Promise<boolean>;
   observe: (id: string, reference?: string) => Promise<Observation>;
+  diagnostic?: (entry: WebhookAuthDiagnostic) => void;
 }) {
   return async (request: Request) => {
     const reply = (status: number, error?: string) =>
@@ -60,16 +74,50 @@ export function createWebhook(dependencies: {
     if (request.headers.get('content-type')?.split(';')[0].trim() !== 'application/json') {
       return reply(415, 'tipo_invalido');
     }
-    const signature = request.headers.get(dependencies.signatureHeader ?? 'x-payload-signature') || '';
-    if (!signature) return reply(401, 'assinatura_invalida');
+    const expectedHeader = dependencies.signatureHeader ?? 'x-payload-signature';
+    const signature = request.headers.get(expectedHeader) || '';
+    const report = (result: WebhookAuthDiagnostic['result'], bodyBytes?: number) => {
+      // Never include header values, payloads, hashes, credentials or provider errors.
+      try {
+        dependencies.diagnostic?.({
+          event: 'pagbank_webhook_auth',
+          result,
+          expected_header: expectedHeader,
+          authenticity_header_present: Boolean(request.headers.get('x-authenticity-token')),
+          payload_signature_header_present: Boolean(request.headers.get('x-payload-signature')),
+          ...(bodyBytes !== undefined ? { body_bytes: bodyBytes } : {}),
+        });
+      } catch { /* Logging failure must not alter authentication or processing. */ }
+    };
+    if (!signature) {
+      report('missing_signature');
+      return reply(401, 'assinatura_invalida');
+    }
     let raw: Uint8Array;
     try {
       raw = await readRaw(request);
     } catch {
       return reply(400, 'corpo_invalido');
     }
+    let authenticated: boolean;
     try {
-      if (!await dependencies.authenticate(raw, signature)) return reply(401, 'assinatura_invalida');
+      authenticated = await dependencies.authenticate(raw, signature);
+    } catch {
+      report('verification_error', raw.byteLength);
+      return reply(503, 'conciliacao_indisponivel');
+    }
+    if (!authenticated) {
+      report(
+        signature.length > 2048 ||
+          (expectedHeader === 'x-authenticity-token' && !/^[a-f0-9]{64}$/i.test(signature))
+          ? 'invalid_signature_format'
+          : 'signature_mismatch',
+        raw.byteLength,
+      );
+      return reply(401, 'assinatura_invalida');
+    }
+    report('verified', raw.byteLength);
+    try {
       let data: unknown;
       try {
         data = JSON.parse(new TextDecoder('utf-8', { fatal: true }).decode(raw));

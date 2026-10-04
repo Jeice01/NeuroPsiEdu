@@ -43,6 +43,59 @@ test('legacy protocol is explicit, verifies original bytes and rejects invalid s
   both.headers.set('x-authenticity-token', signature);
   assert.equal((await strict(both)).status, 401);
 });
+test('webhook auth diagnostics distinguish missing, malformed and mismatched signatures without secrets or writes', async () => {
+  const records = [];
+  let authCalls = 0;
+  const raw = '{"email":"private@example.test","token":"private-body-value"}';
+  const handler = createWebhook({ signatureHeader: 'x-authenticity-token',
+    diagnostic: entry => records.push(entry),
+    authenticate: async () => { authCalls++; return false; },
+    observe: async () => { assert.fail('No provider reads before authentication'); },
+    rpc: async () => { assert.fail('No database writes before authentication'); },
+  });
+  for (const [signature, reason] of [[null, 'missing_signature'], ['private-signature', 'invalid_signature_format'], ['a'.repeat(64), 'signature_mismatch']]) {
+    const headers = { 'content-type': 'application/json', 'x-payload-signature': 'private-alternate-header' };
+    if (signature) headers['x-authenticity-token'] = signature;
+    const response = await handler(new Request('https://example.test/webhook', { method: 'POST', headers, body: raw }));
+    assert.equal(response.status, 401);
+    assert.deepEqual(await response.json(), { error: 'assinatura_invalida' });
+    assert.equal(records.at(-1).result, reason);
+    assert.equal(records.at(-1).authenticity_header_present, Boolean(signature));
+    assert.equal(records.at(-1).payload_signature_header_present, true);
+  }
+  assert.equal(authCalls, 2);
+  assert.deepEqual(records[0], { event: 'pagbank_webhook_auth', result: 'missing_signature',
+    expected_header: 'x-authenticity-token', authenticity_header_present: false, payload_signature_header_present: true });
+  assert.equal(records[2].body_bytes, Buffer.byteLength(raw));
+  for (const entry of records) {
+    assert.deepEqual(Object.keys(entry).sort(), ['event', 'result', 'expected_header', 'authenticity_header_present', 'payload_signature_header_present', ...(entry.body_bytes !== undefined ? ['body_bytes'] : [])].sort());
+  }
+  assert.ok(!JSON.stringify(records).includes('private'));
+  assert.ok(!JSON.stringify(records).includes('a'.repeat(64)));
+});
+
+test('webhook diagnostics report verifier outages and cannot change processing when logging fails', async () => {
+  const records = [];
+  const request = () => new Request('https://example.test/webhook', { method: 'POST',
+    headers: { 'content-type': 'application/json', 'x-payload-signature': 'private-signature' },
+    body: JSON.stringify({ id, reference_id: reference }),
+  });
+  const unavailable = createWebhook({ diagnostic: entry => records.push(entry),
+    authenticate: async () => { throw Error('private-provider-details'); },
+    observe: async () => { assert.fail('No reads'); }, rpc: async () => { assert.fail('No writes'); },
+  });
+  assert.equal((await unavailable(request())).status, 503);
+  assert.equal(records[0].result, 'verification_error');
+  assert.ok(!JSON.stringify(records).includes('private'));
+  let writes = 0;
+  const valid = createWebhook({ diagnostic: () => { throw Error('logging unavailable'); },
+    authenticate: async () => true, observe: async () => normalizeOrder(order(), id),
+    rpc: async () => { writes++; return 'processado'; },
+  });
+  assert.equal((await valid(request())).status, 200);
+  assert.equal(writes, 1);
+});
+
 test('ECDSA verifies raw bytes and multiple signatures; altered bytes and missing signature fail', () => {
   const raw = Buffer.from('{ "id": "teste" }');
   const signature = sign('sha256', raw, pair.privateKey).toString('base64');

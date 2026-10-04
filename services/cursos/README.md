@@ -37,6 +37,13 @@ invalida o anterior; não registrar códigos, hashes de OTP ou sessões nos logs
 
 ## Testes
 
+O webhook registra `pagbank_webhook_auth` nos logs da função: `missing_signature`,
+`invalid_signature_format`, `signature_mismatch`, `verification_error` ou
+`verified`. O diagnóstico contém apenas o nome do cabeçalho esperado, presença
+dos dois cabeçalhos e tamanho do corpo. Não contém assinaturas, tokens, corpo,
+hashes, dados pessoais ou mensagens internas. Uma assinatura recusada continua
+retornando 401 antes de consultas ao provedor ou escritas no banco.
+
 Na raiz do repositório, com Node do projeto:
 
 ```powershell
