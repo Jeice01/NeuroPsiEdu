@@ -1,35 +1,36 @@
 export const TURMA_ID = "b43bce5c-7764-42a1-b361-5134c7b0370a";
 const STORAGE_KEY = "neuropsiedu.cursos.continuacao.v1";
 const CHECKOUT_KEY = "neuropsiedu.cursos.checkout.v1";
+const scopedKey = (key: string, turmaId?: string) => turmaId ? `${key}.${turmaId}` : key;
 export type RegistrationStatus = { etapa_funil: string; valor_centavos: number; moeda: "BRL"; sessao_expira_em: string };
 export class RegistrationError extends Error {
   status: number;
   constructor(status: number, code: string) { super(code); this.status = status; }
 }
-export function continuationToken(): string {
+export function continuationToken(turmaId?: string): string {
   try {
-    const existing = sessionStorage.getItem(STORAGE_KEY);
+    const existing = sessionStorage.getItem(scopedKey(STORAGE_KEY, turmaId));
     if (existing && /^[a-f0-9]{64}$/.test(existing)) return existing;
   } catch { /* Browsers may block storage; the caller retains an in-memory copy. */ }
   const token = Array.from(crypto.getRandomValues(new Uint8Array(32)), (byte) => byte.toString(16).padStart(2, "0")).join("");
-  try { sessionStorage.setItem(STORAGE_KEY, token); } catch { /* Recovery remains available after navigation. */ }
+  try { sessionStorage.setItem(scopedKey(STORAGE_KEY, turmaId), token); } catch { /* Recovery remains available after navigation. */ }
   return token;
 }
-export function existingContinuation(): string | null {
-  try { const value = sessionStorage.getItem(STORAGE_KEY); return value && /^[a-f0-9]{64}$/.test(value) ? value : null; }
+export function existingContinuation(turmaId?: string): string | null {
+  try { const value = sessionStorage.getItem(scopedKey(STORAGE_KEY, turmaId)); return value && /^[a-f0-9]{64}$/.test(value) ? value : null; }
   catch { return null; }
 }
-export function clearContinuation() {
-  try { sessionStorage.removeItem(STORAGE_KEY); sessionStorage.removeItem(CHECKOUT_KEY); } catch { /* Storage may be disabled. */ }
+export function clearContinuation(turmaId?: string) {
+  try { sessionStorage.removeItem(scopedKey(STORAGE_KEY, turmaId)); sessionStorage.removeItem(scopedKey(CHECKOUT_KEY, turmaId)); } catch { /* Storage may be disabled. */ }
 }
-export function checkoutAttemptKey(): string {
-  try { const key = sessionStorage.getItem(CHECKOUT_KEY); if (key && /^[a-f0-9-]{36}$/.test(key)) return key; } catch { /* In-memory fallback. */ }
+export function checkoutAttemptKey(turmaId?: string): string {
+  try { const key = sessionStorage.getItem(scopedKey(CHECKOUT_KEY, turmaId)); if (key && /^[a-f0-9-]{36}$/.test(key)) return key; } catch { /* In-memory fallback. */ }
   const key = crypto.randomUUID();
-  try { sessionStorage.setItem(CHECKOUT_KEY, key); } catch { /* Server also prevents duplicate attempts. */ }
+  try { sessionStorage.setItem(scopedKey(CHECKOUT_KEY, turmaId), key); } catch { /* Server also prevents duplicate attempts. */ }
   return key;
 }
-export function resetCheckoutAttempt() {
-  try { sessionStorage.removeItem(CHECKOUT_KEY); } catch { /* Storage may be unavailable. */ }
+export function resetCheckoutAttempt(turmaId?: string) {
+  try { sessionStorage.removeItem(scopedKey(CHECKOUT_KEY, turmaId)); } catch { /* Storage may be unavailable. */ }
 }
 export async function checkoutRequest(endpoint: string, token: string, key: string): Promise<string | null> {
   const response = await fetch(endpoint, { method: "POST", credentials: "omit", cache: "no-store", redirect: "error",

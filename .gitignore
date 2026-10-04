@@ -24,6 +24,7 @@
 /out/
 /backups/
 /supabase/.temp/
+/services/cursos/supabase/.temp/
 
 # misc
 .DS_Store

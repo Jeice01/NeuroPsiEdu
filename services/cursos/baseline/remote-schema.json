@@ -1,0 +1,1954 @@
+{
+  "rls": [
+    {
+      "table": "inscricoes",
+      "forced": false,
+      "enabled": true
+    },
+    {
+      "table": "pagamentos",
+      "forced": false,
+      "enabled": true
+    },
+    {
+      "table": "cursos",
+      "forced": false,
+      "enabled": true
+    },
+    {
+      "table": "turmas",
+      "forced": false,
+      "enabled": true
+    },
+    {
+      "table": "participantes",
+      "forced": false,
+      "enabled": true
+    },
+    {
+      "table": "aceites_autorizacoes",
+      "forced": false,
+      "enabled": true
+    },
+    {
+      "table": "eventos_pagamento",
+      "forced": false,
+      "enabled": true
+    },
+    {
+      "table": "comunicacoes",
+      "forced": false,
+      "enabled": true
+    }
+  ],
+  "grants": [
+    {
+      "grantee": "anon",
+      "table_name": "aceites_autorizacoes",
+      "privilege_type": "DELETE"
+    },
+    {
+      "grantee": "anon",
+      "table_name": "aceites_autorizacoes",
+      "privilege_type": "INSERT"
+    },
+    {
+      "grantee": "anon",
+      "table_name": "aceites_autorizacoes",
+      "privilege_type": "REFERENCES"
+    },
+    {
+      "grantee": "anon",
+      "table_name": "aceites_autorizacoes",
+      "privilege_type": "SELECT"
+    },
+    {
+      "grantee": "anon",
+      "table_name": "aceites_autorizacoes",
+      "privilege_type": "TRIGGER"
+    },
+    {
+      "grantee": "anon",
+      "table_name": "aceites_autorizacoes",
+      "privilege_type": "TRUNCATE"
+    },
+    {
+      "grantee": "anon",
+      "table_name": "aceites_autorizacoes",
+      "privilege_type": "UPDATE"
+    },
+    {
+      "grantee": "authenticated",
+      "table_name": "aceites_autorizacoes",
+      "privilege_type": "DELETE"
+    },
+    {
+      "grantee": "authenticated",
+      "table_name": "aceites_autorizacoes",
+      "privilege_type": "INSERT"
+    },
+    {
+      "grantee": "authenticated",
+      "table_name": "aceites_autorizacoes",
+      "privilege_type": "REFERENCES"
+    },
+    {
+      "grantee": "authenticated",
+      "table_name": "aceites_autorizacoes",
+      "privilege_type": "SELECT"
+    },
+    {
+      "grantee": "authenticated",
+      "table_name": "aceites_autorizacoes",
+      "privilege_type": "TRIGGER"
+    },
+    {
+      "grantee": "authenticated",
+      "table_name": "aceites_autorizacoes",
+      "privilege_type": "TRUNCATE"
+    },
+    {
+      "grantee": "authenticated",
+      "table_name": "aceites_autorizacoes",
+      "privilege_type": "UPDATE"
+    },
+    {
+      "grantee": "postgres",
+      "table_name": "aceites_autorizacoes",
+      "privilege_type": "DELETE"
+    },
+    {
+      "grantee": "postgres",
+      "table_name": "aceites_autorizacoes",
+      "privilege_type": "INSERT"
+    },
+    {
+      "grantee": "postgres",
+      "table_name": "aceites_autorizacoes",
+      "privilege_type": "REFERENCES"
+    },
+    {
+      "grantee": "postgres",
+      "table_name": "aceites_autorizacoes",
+      "privilege_type": "SELECT"
+    },
+    {
+      "grantee": "postgres",
+      "table_name": "aceites_autorizacoes",
+      "privilege_type": "TRIGGER"
+    },
+    {
+      "grantee": "postgres",
+      "table_name": "aceites_autorizacoes",
+      "privilege_type": "TRUNCATE"
+    },
+    {
+      "grantee": "postgres",
+      "table_name": "aceites_autorizacoes",
+      "privilege_type": "UPDATE"
+    },
+    {
+      "grantee": "service_role",
+      "table_name": "aceites_autorizacoes",
+      "privilege_type": "DELETE"
+    },
+    {
+      "grantee": "service_role",
+      "table_name": "aceites_autorizacoes",
+      "privilege_type": "INSERT"
+    },
+    {
+      "grantee": "service_role",
+      "table_name": "aceites_autorizacoes",
+      "privilege_type": "REFERENCES"
+    },
+    {
+      "grantee": "service_role",
+      "table_name": "aceites_autorizacoes",
+      "privilege_type": "SELECT"
+    },
+    {
+      "grantee": "service_role",
+      "table_name": "aceites_autorizacoes",
+      "privilege_type": "TRIGGER"
+    },
+    {
+      "grantee": "service_role",
+      "table_name": "aceites_autorizacoes",
+      "privilege_type": "TRUNCATE"
+    },
+    {
+      "grantee": "service_role",
+      "table_name": "aceites_autorizacoes",
+      "privilege_type": "UPDATE"
+    },
+    {
+      "grantee": "anon",
+      "table_name": "comunicacoes",
+      "privilege_type": "DELETE"
+    },
+    {
+      "grantee": "anon",
+      "table_name": "comunicacoes",
+      "privilege_type": "INSERT"
+    },
+    {
+      "grantee": "anon",
+      "table_name": "comunicacoes",
+      "privilege_type": "REFERENCES"
+    },
+    {
+      "grantee": "anon",
+      "table_name": "comunicacoes",
+      "privilege_type": "SELECT"
+    },
+    {
+      "grantee": "anon",
+      "table_name": "comunicacoes",
+      "privilege_type": "TRIGGER"
+    },
+    {
+      "grantee": "anon",
+      "table_name": "comunicacoes",
+      "privilege_type": "TRUNCATE"
+    },
+    {
+      "grantee": "anon",
+      "table_name": "comunicacoes",
+      "privilege_type": "UPDATE"
+    },
+    {
+      "grantee": "authenticated",
+      "table_name": "comunicacoes",
+      "privilege_type": "DELETE"
+    },
+    {
+      "grantee": "authenticated",
+      "table_name": "comunicacoes",
+      "privilege_type": "INSERT"
+    },
+    {
+      "grantee": "authenticated",
+      "table_name": "comunicacoes",
+      "privilege_type": "REFERENCES"
+    },
+    {
+      "grantee": "authenticated",
+      "table_name": "comunicacoes",
+      "privilege_type": "SELECT"
+    },
+    {
+      "grantee": "authenticated",
+      "table_name": "comunicacoes",
+      "privilege_type": "TRIGGER"
+    },
+    {
+      "grantee": "authenticated",
+      "table_name": "comunicacoes",
+      "privilege_type": "TRUNCATE"
+    },
+    {
+      "grantee": "authenticated",
+      "table_name": "comunicacoes",
+      "privilege_type": "UPDATE"
+    },
+    {
+      "grantee": "postgres",
+      "table_name": "comunicacoes",
+      "privilege_type": "DELETE"
+    },
+    {
+      "grantee": "postgres",
+      "table_name": "comunicacoes",
+      "privilege_type": "INSERT"
+    },
+    {
+      "grantee": "postgres",
+      "table_name": "comunicacoes",
+      "privilege_type": "REFERENCES"
+    },
+    {
+      "grantee": "postgres",
+      "table_name": "comunicacoes",
+      "privilege_type": "SELECT"
+    },
+    {
+      "grantee": "postgres",
+      "table_name": "comunicacoes",
+      "privilege_type": "TRIGGER"
+    },
+    {
+      "grantee": "postgres",
+      "table_name": "comunicacoes",
+      "privilege_type": "TRUNCATE"
+    },
+    {
+      "grantee": "postgres",
+      "table_name": "comunicacoes",
+      "privilege_type": "UPDATE"
+    },
+    {
+      "grantee": "service_role",
+      "table_name": "comunicacoes",
+      "privilege_type": "DELETE"
+    },
+    {
+      "grantee": "service_role",
+      "table_name": "comunicacoes",
+      "privilege_type": "INSERT"
+    },
+    {
+      "grantee": "service_role",
+      "table_name": "comunicacoes",
+      "privilege_type": "REFERENCES"
+    },
+    {
+      "grantee": "service_role",
+      "table_name": "comunicacoes",
+      "privilege_type": "SELECT"
+    },
+    {
+      "grantee": "service_role",
+      "table_name": "comunicacoes",
+      "privilege_type": "TRIGGER"
+    },
+    {
+      "grantee": "service_role",
+      "table_name": "comunicacoes",
+      "privilege_type": "TRUNCATE"
+    },
+    {
+      "grantee": "service_role",
+      "table_name": "comunicacoes",
+      "privilege_type": "UPDATE"
+    },
+    {
+      "grantee": "anon",
+      "table_name": "cursos",
+      "privilege_type": "DELETE"
+    },
+    {
+      "grantee": "anon",
+      "table_name": "cursos",
+      "privilege_type": "INSERT"
+    },
+    {
+      "grantee": "anon",
+      "table_name": "cursos",
+      "privilege_type": "REFERENCES"
+    },
+    {
+      "grantee": "anon",
+      "table_name": "cursos",
+      "privilege_type": "SELECT"
+    },
+    {
+      "grantee": "anon",
+      "table_name": "cursos",
+      "privilege_type": "TRIGGER"
+    },
+    {
+      "grantee": "anon",
+      "table_name": "cursos",
+      "privilege_type": "TRUNCATE"
+    },
+    {
+      "grantee": "anon",
+      "table_name": "cursos",
+      "privilege_type": "UPDATE"
+    },
+    {
+      "grantee": "authenticated",
+      "table_name": "cursos",
+      "privilege_type": "DELETE"
+    },
+    {
+      "grantee": "authenticated",
+      "table_name": "cursos",
+      "privilege_type": "INSERT"
+    },
+    {
+      "grantee": "authenticated",
+      "table_name": "cursos",
+      "privilege_type": "REFERENCES"
+    },
+    {
+      "grantee": "authenticated",
+      "table_name": "cursos",
+      "privilege_type": "SELECT"
+    },
+    {
+      "grantee": "authenticated",
+      "table_name": "cursos",
+      "privilege_type": "TRIGGER"
+    },
+    {
+      "grantee": "authenticated",
+      "table_name": "cursos",
+      "privilege_type": "TRUNCATE"
+    },
+    {
+      "grantee": "authenticated",
+      "table_name": "cursos",
+      "privilege_type": "UPDATE"
+    },
+    {
+      "grantee": "postgres",
+      "table_name": "cursos",
+      "privilege_type": "DELETE"
+    },
+    {
+      "grantee": "postgres",
+      "table_name": "cursos",
+      "privilege_type": "INSERT"
+    },
+    {
+      "grantee": "postgres",
+      "table_name": "cursos",
+      "privilege_type": "REFERENCES"
+    },
+    {
+      "grantee": "postgres",
+      "table_name": "cursos",
+      "privilege_type": "SELECT"
+    },
+    {
+      "grantee": "postgres",
+      "table_name": "cursos",
+      "privilege_type": "TRIGGER"
+    },
+    {
+      "grantee": "postgres",
+      "table_name": "cursos",
+      "privilege_type": "TRUNCATE"
+    },
+    {
+      "grantee": "postgres",
+      "table_name": "cursos",
+      "privilege_type": "UPDATE"
+    },
+    {
+      "grantee": "service_role",
+      "table_name": "cursos",
+      "privilege_type": "DELETE"
+    },
+    {
+      "grantee": "service_role",
+      "table_name": "cursos",
+      "privilege_type": "INSERT"
+    },
+    {
+      "grantee": "service_role",
+      "table_name": "cursos",
+      "privilege_type": "REFERENCES"
+    },
+    {
+      "grantee": "service_role",
+      "table_name": "cursos",
+      "privilege_type": "SELECT"
+    },
+    {
+      "grantee": "service_role",
+      "table_name": "cursos",
+      "privilege_type": "TRIGGER"
+    },
+    {
+      "grantee": "service_role",
+      "table_name": "cursos",
+      "privilege_type": "TRUNCATE"
+    },
+    {
+      "grantee": "service_role",
+      "table_name": "cursos",
+      "privilege_type": "UPDATE"
+    },
+    {
+      "grantee": "anon",
+      "table_name": "eventos_pagamento",
+      "privilege_type": "DELETE"
+    },
+    {
+      "grantee": "anon",
+      "table_name": "eventos_pagamento",
+      "privilege_type": "INSERT"
+    },
+    {
+      "grantee": "anon",
+      "table_name": "eventos_pagamento",
+      "privilege_type": "REFERENCES"
+    },
+    {
+      "grantee": "anon",
+      "table_name": "eventos_pagamento",
+      "privilege_type": "SELECT"
+    },
+    {
+      "grantee": "anon",
+      "table_name": "eventos_pagamento",
+      "privilege_type": "TRIGGER"
+    },
+    {
+      "grantee": "anon",
+      "table_name": "eventos_pagamento",
+      "privilege_type": "TRUNCATE"
+    },
+    {
+      "grantee": "anon",
+      "table_name": "eventos_pagamento",
+      "privilege_type": "UPDATE"
+    },
+    {
+      "grantee": "authenticated",
+      "table_name": "eventos_pagamento",
+      "privilege_type": "DELETE"
+    },
+    {
+      "grantee": "authenticated",
+      "table_name": "eventos_pagamento",
+      "privilege_type": "INSERT"
+    },
+    {
+      "grantee": "authenticated",
+      "table_name": "eventos_pagamento",
+      "privilege_type": "REFERENCES"
+    },
+    {
+      "grantee": "authenticated",
+      "table_name": "eventos_pagamento",
+      "privilege_type": "SELECT"
+    },
+    {
+      "grantee": "authenticated",
+      "table_name": "eventos_pagamento",
+      "privilege_type": "TRIGGER"
+    },
+    {
+      "grantee": "authenticated",
+      "table_name": "eventos_pagamento",
+      "privilege_type": "TRUNCATE"
+    },
+    {
+      "grantee": "authenticated",
+      "table_name": "eventos_pagamento",
+      "privilege_type": "UPDATE"
+    },
+    {
+      "grantee": "postgres",
+      "table_name": "eventos_pagamento",
+      "privilege_type": "DELETE"
+    },
+    {
+      "grantee": "postgres",
+      "table_name": "eventos_pagamento",
+      "privilege_type": "INSERT"
+    },
+    {
+      "grantee": "postgres",
+      "table_name": "eventos_pagamento",
+      "privilege_type": "REFERENCES"
+    },
+    {
+      "grantee": "postgres",
+      "table_name": "eventos_pagamento",
+      "privilege_type": "SELECT"
+    },
+    {
+      "grantee": "postgres",
+      "table_name": "eventos_pagamento",
+      "privilege_type": "TRIGGER"
+    },
+    {
+      "grantee": "postgres",
+      "table_name": "eventos_pagamento",
+      "privilege_type": "TRUNCATE"
+    },
+    {
+      "grantee": "postgres",
+      "table_name": "eventos_pagamento",
+      "privilege_type": "UPDATE"
+    },
+    {
+      "grantee": "service_role",
+      "table_name": "eventos_pagamento",
+      "privilege_type": "DELETE"
+    },
+    {
+      "grantee": "service_role",
+      "table_name": "eventos_pagamento",
+      "privilege_type": "INSERT"
+    },
+    {
+      "grantee": "service_role",
+      "table_name": "eventos_pagamento",
+      "privilege_type": "REFERENCES"
+    },
+    {
+      "grantee": "service_role",
+      "table_name": "eventos_pagamento",
+      "privilege_type": "SELECT"
+    },
+    {
+      "grantee": "service_role",
+      "table_name": "eventos_pagamento",
+      "privilege_type": "TRIGGER"
+    },
+    {
+      "grantee": "service_role",
+      "table_name": "eventos_pagamento",
+      "privilege_type": "TRUNCATE"
+    },
+    {
+      "grantee": "service_role",
+      "table_name": "eventos_pagamento",
+      "privilege_type": "UPDATE"
+    },
+    {
+      "grantee": "anon",
+      "table_name": "inscricoes",
+      "privilege_type": "DELETE"
+    },
+    {
+      "grantee": "anon",
+      "table_name": "inscricoes",
+      "privilege_type": "INSERT"
+    },
+    {
+      "grantee": "anon",
+      "table_name": "inscricoes",
+      "privilege_type": "REFERENCES"
+    },
+    {
+      "grantee": "anon",
+      "table_name": "inscricoes",
+      "privilege_type": "SELECT"
+    },
+    {
+      "grantee": "anon",
+      "table_name": "inscricoes",
+      "privilege_type": "TRIGGER"
+    },
+    {
+      "grantee": "anon",
+      "table_name": "inscricoes",
+      "privilege_type": "TRUNCATE"
+    },
+    {
+      "grantee": "anon",
+      "table_name": "inscricoes",
+      "privilege_type": "UPDATE"
+    },
+    {
+      "grantee": "authenticated",
+      "table_name": "inscricoes",
+      "privilege_type": "DELETE"
+    },
+    {
+      "grantee": "authenticated",
+      "table_name": "inscricoes",
+      "privilege_type": "INSERT"
+    },
+    {
+      "grantee": "authenticated",
+      "table_name": "inscricoes",
+      "privilege_type": "REFERENCES"
+    },
+    {
+      "grantee": "authenticated",
+      "table_name": "inscricoes",
+      "privilege_type": "SELECT"
+    },
+    {
+      "grantee": "authenticated",
+      "table_name": "inscricoes",
+      "privilege_type": "TRIGGER"
+    },
+    {
+      "grantee": "authenticated",
+      "table_name": "inscricoes",
+      "privilege_type": "TRUNCATE"
+    },
+    {
+      "grantee": "authenticated",
+      "table_name": "inscricoes",
+      "privilege_type": "UPDATE"
+    },
+    {
+      "grantee": "postgres",
+      "table_name": "inscricoes",
+      "privilege_type": "DELETE"
+    },
+    {
+      "grantee": "postgres",
+      "table_name": "inscricoes",
+      "privilege_type": "INSERT"
+    },
+    {
+      "grantee": "postgres",
+      "table_name": "inscricoes",
+      "privilege_type": "REFERENCES"
+    },
+    {
+      "grantee": "postgres",
+      "table_name": "inscricoes",
+      "privilege_type": "SELECT"
+    },
+    {
+      "grantee": "postgres",
+      "table_name": "inscricoes",
+      "privilege_type": "TRIGGER"
+    },
+    {
+      "grantee": "postgres",
+      "table_name": "inscricoes",
+      "privilege_type": "TRUNCATE"
+    },
+    {
+      "grantee": "postgres",
+      "table_name": "inscricoes",
+      "privilege_type": "UPDATE"
+    },
+    {
+      "grantee": "service_role",
+      "table_name": "inscricoes",
+      "privilege_type": "DELETE"
+    },
+    {
+      "grantee": "service_role",
+      "table_name": "inscricoes",
+      "privilege_type": "INSERT"
+    },
+    {
+      "grantee": "service_role",
+      "table_name": "inscricoes",
+      "privilege_type": "REFERENCES"
+    },
+    {
+      "grantee": "service_role",
+      "table_name": "inscricoes",
+      "privilege_type": "SELECT"
+    },
+    {
+      "grantee": "service_role",
+      "table_name": "inscricoes",
+      "privilege_type": "TRIGGER"
+    },
+    {
+      "grantee": "service_role",
+      "table_name": "inscricoes",
+      "privilege_type": "TRUNCATE"
+    },
+    {
+      "grantee": "service_role",
+      "table_name": "inscricoes",
+      "privilege_type": "UPDATE"
+    },
+    {
+      "grantee": "anon",
+      "table_name": "pagamentos",
+      "privilege_type": "DELETE"
+    },
+    {
+      "grantee": "anon",
+      "table_name": "pagamentos",
+      "privilege_type": "INSERT"
+    },
+    {
+      "grantee": "anon",
+      "table_name": "pagamentos",
+      "privilege_type": "REFERENCES"
+    },
+    {
+      "grantee": "anon",
+      "table_name": "pagamentos",
+      "privilege_type": "SELECT"
+    },
+    {
+      "grantee": "anon",
+      "table_name": "pagamentos",
+      "privilege_type": "TRIGGER"
+    },
+    {
+      "grantee": "anon",
+      "table_name": "pagamentos",
+      "privilege_type": "TRUNCATE"
+    },
+    {
+      "grantee": "anon",
+      "table_name": "pagamentos",
+      "privilege_type": "UPDATE"
+    },
+    {
+      "grantee": "authenticated",
+      "table_name": "pagamentos",
+      "privilege_type": "DELETE"
+    },
+    {
+      "grantee": "authenticated",
+      "table_name": "pagamentos",
+      "privilege_type": "INSERT"
+    },
+    {
+      "grantee": "authenticated",
+      "table_name": "pagamentos",
+      "privilege_type": "REFERENCES"
+    },
+    {
+      "grantee": "authenticated",
+      "table_name": "pagamentos",
+      "privilege_type": "SELECT"
+    },
+    {
+      "grantee": "authenticated",
+      "table_name": "pagamentos",
+      "privilege_type": "TRIGGER"
+    },
+    {
+      "grantee": "authenticated",
+      "table_name": "pagamentos",
+      "privilege_type": "TRUNCATE"
+    },
+    {
+      "grantee": "authenticated",
+      "table_name": "pagamentos",
+      "privilege_type": "UPDATE"
+    },
+    {
+      "grantee": "postgres",
+      "table_name": "pagamentos",
+      "privilege_type": "DELETE"
+    },
+    {
+      "grantee": "postgres",
+      "table_name": "pagamentos",
+      "privilege_type": "INSERT"
+    },
+    {
+      "grantee": "postgres",
+      "table_name": "pagamentos",
+      "privilege_type": "REFERENCES"
+    },
+    {
+      "grantee": "postgres",
+      "table_name": "pagamentos",
+      "privilege_type": "SELECT"
+    },
+    {
+      "grantee": "postgres",
+      "table_name": "pagamentos",
+      "privilege_type": "TRIGGER"
+    },
+    {
+      "grantee": "postgres",
+      "table_name": "pagamentos",
+      "privilege_type": "TRUNCATE"
+    },
+    {
+      "grantee": "postgres",
+      "table_name": "pagamentos",
+      "privilege_type": "UPDATE"
+    },
+    {
+      "grantee": "service_role",
+      "table_name": "pagamentos",
+      "privilege_type": "DELETE"
+    },
+    {
+      "grantee": "service_role",
+      "table_name": "pagamentos",
+      "privilege_type": "INSERT"
+    },
+    {
+      "grantee": "service_role",
+      "table_name": "pagamentos",
+      "privilege_type": "REFERENCES"
+    },
+    {
+      "grantee": "service_role",
+      "table_name": "pagamentos",
+      "privilege_type": "SELECT"
+    },
+    {
+      "grantee": "service_role",
+      "table_name": "pagamentos",
+      "privilege_type": "TRIGGER"
+    },
+    {
+      "grantee": "service_role",
+      "table_name": "pagamentos",
+      "privilege_type": "TRUNCATE"
+    },
+    {
+      "grantee": "service_role",
+      "table_name": "pagamentos",
+      "privilege_type": "UPDATE"
+    },
+    {
+      "grantee": "anon",
+      "table_name": "participantes",
+      "privilege_type": "DELETE"
+    },
+    {
+      "grantee": "anon",
+      "table_name": "participantes",
+      "privilege_type": "INSERT"
+    },
+    {
+      "grantee": "anon",
+      "table_name": "participantes",
+      "privilege_type": "REFERENCES"
+    },
+    {
+      "grantee": "anon",
+      "table_name": "participantes",
+      "privilege_type": "SELECT"
+    },
+    {
+      "grantee": "anon",
+      "table_name": "participantes",
+      "privilege_type": "TRIGGER"
+    },
+    {
+      "grantee": "anon",
+      "table_name": "participantes",
+      "privilege_type": "TRUNCATE"
+    },
+    {
+      "grantee": "anon",
+      "table_name": "participantes",
+      "privilege_type": "UPDATE"
+    },
+    {
+      "grantee": "authenticated",
+      "table_name": "participantes",
+      "privilege_type": "DELETE"
+    },
+    {
+      "grantee": "authenticated",
+      "table_name": "participantes",
+      "privilege_type": "INSERT"
+    },
+    {
+      "grantee": "authenticated",
+      "table_name": "participantes",
+      "privilege_type": "REFERENCES"
+    },
+    {
+      "grantee": "authenticated",
+      "table_name": "participantes",
+      "privilege_type": "SELECT"
+    },
+    {
+      "grantee": "authenticated",
+      "table_name": "participantes",
+      "privilege_type": "TRIGGER"
+    },
+    {
+      "grantee": "authenticated",
+      "table_name": "participantes",
+      "privilege_type": "TRUNCATE"
+    },
+    {
+      "grantee": "authenticated",
+      "table_name": "participantes",
+      "privilege_type": "UPDATE"
+    },
+    {
+      "grantee": "postgres",
+      "table_name": "participantes",
+      "privilege_type": "DELETE"
+    },
+    {
+      "grantee": "postgres",
+      "table_name": "participantes",
+      "privilege_type": "INSERT"
+    },
+    {
+      "grantee": "postgres",
+      "table_name": "participantes",
+      "privilege_type": "REFERENCES"
+    },
+    {
+      "grantee": "postgres",
+      "table_name": "participantes",
+      "privilege_type": "SELECT"
+    },
+    {
+      "grantee": "postgres",
+      "table_name": "participantes",
+      "privilege_type": "TRIGGER"
+    },
+    {
+      "grantee": "postgres",
+      "table_name": "participantes",
+      "privilege_type": "TRUNCATE"
+    },
+    {
+      "grantee": "postgres",
+      "table_name": "participantes",
+      "privilege_type": "UPDATE"
+    },
+    {
+      "grantee": "service_role",
+      "table_name": "participantes",
+      "privilege_type": "DELETE"
+    },
+    {
+      "grantee": "service_role",
+      "table_name": "participantes",
+      "privilege_type": "INSERT"
+    },
+    {
+      "grantee": "service_role",
+      "table_name": "participantes",
+      "privilege_type": "REFERENCES"
+    },
+    {
+      "grantee": "service_role",
+      "table_name": "participantes",
+      "privilege_type": "SELECT"
+    },
+    {
+      "grantee": "service_role",
+      "table_name": "participantes",
+      "privilege_type": "TRIGGER"
+    },
+    {
+      "grantee": "service_role",
+      "table_name": "participantes",
+      "privilege_type": "TRUNCATE"
+    },
+    {
+      "grantee": "service_role",
+      "table_name": "participantes",
+      "privilege_type": "UPDATE"
+    },
+    {
+      "grantee": "anon",
+      "table_name": "turmas",
+      "privilege_type": "DELETE"
+    },
+    {
+      "grantee": "anon",
+      "table_name": "turmas",
+      "privilege_type": "INSERT"
+    },
+    {
+      "grantee": "anon",
+      "table_name": "turmas",
+      "privilege_type": "REFERENCES"
+    },
+    {
+      "grantee": "anon",
+      "table_name": "turmas",
+      "privilege_type": "SELECT"
+    },
+    {
+      "grantee": "anon",
+      "table_name": "turmas",
+      "privilege_type": "TRIGGER"
+    },
+    {
+      "grantee": "anon",
+      "table_name": "turmas",
+      "privilege_type": "TRUNCATE"
+    },
+    {
+      "grantee": "anon",
+      "table_name": "turmas",
+      "privilege_type": "UPDATE"
+    },
+    {
+      "grantee": "authenticated",
+      "table_name": "turmas",
+      "privilege_type": "DELETE"
+    },
+    {
+      "grantee": "authenticated",
+      "table_name": "turmas",
+      "privilege_type": "INSERT"
+    },
+    {
+      "grantee": "authenticated",
+      "table_name": "turmas",
+      "privilege_type": "REFERENCES"
+    },
+    {
+      "grantee": "authenticated",
+      "table_name": "turmas",
+      "privilege_type": "SELECT"
+    },
+    {
+      "grantee": "authenticated",
+      "table_name": "turmas",
+      "privilege_type": "TRIGGER"
+    },
+    {
+      "grantee": "authenticated",
+      "table_name": "turmas",
+      "privilege_type": "TRUNCATE"
+    },
+    {
+      "grantee": "authenticated",
+      "table_name": "turmas",
+      "privilege_type": "UPDATE"
+    },
+    {
+      "grantee": "postgres",
+      "table_name": "turmas",
+      "privilege_type": "DELETE"
+    },
+    {
+      "grantee": "postgres",
+      "table_name": "turmas",
+      "privilege_type": "INSERT"
+    },
+    {
+      "grantee": "postgres",
+      "table_name": "turmas",
+      "privilege_type": "REFERENCES"
+    },
+    {
+      "grantee": "postgres",
+      "table_name": "turmas",
+      "privilege_type": "SELECT"
+    },
+    {
+      "grantee": "postgres",
+      "table_name": "turmas",
+      "privilege_type": "TRIGGER"
+    },
+    {
+      "grantee": "postgres",
+      "table_name": "turmas",
+      "privilege_type": "TRUNCATE"
+    },
+    {
+      "grantee": "postgres",
+      "table_name": "turmas",
+      "privilege_type": "UPDATE"
+    },
+    {
+      "grantee": "service_role",
+      "table_name": "turmas",
+      "privilege_type": "DELETE"
+    },
+    {
+      "grantee": "service_role",
+      "table_name": "turmas",
+      "privilege_type": "INSERT"
+    },
+    {
+      "grantee": "service_role",
+      "table_name": "turmas",
+      "privilege_type": "REFERENCES"
+    },
+    {
+      "grantee": "service_role",
+      "table_name": "turmas",
+      "privilege_type": "SELECT"
+    },
+    {
+      "grantee": "service_role",
+      "table_name": "turmas",
+      "privilege_type": "TRIGGER"
+    },
+    {
+      "grantee": "service_role",
+      "table_name": "turmas",
+      "privilege_type": "TRUNCATE"
+    },
+    {
+      "grantee": "service_role",
+      "table_name": "turmas",
+      "privilege_type": "UPDATE"
+    }
+  ],
+  "columns": [
+    {
+      "udt_name": "uuid",
+      "data_type": "uuid",
+      "table_name": "aceites_autorizacoes",
+      "column_name": "id",
+      "is_nullable": "NO",
+      "numeric_scale": null,
+      "column_default": "gen_random_uuid()",
+      "ordinal_position": 1,
+      "numeric_precision": null
+    },
+    {
+      "udt_name": "uuid",
+      "data_type": "uuid",
+      "table_name": "aceites_autorizacoes",
+      "column_name": "inscricao_id",
+      "is_nullable": "NO",
+      "numeric_scale": null,
+      "column_default": null,
+      "ordinal_position": 2,
+      "numeric_precision": null
+    },
+    {
+      "udt_name": "text",
+      "data_type": "text",
+      "table_name": "aceites_autorizacoes",
+      "column_name": "termo_versao",
+      "is_nullable": "NO",
+      "numeric_scale": null,
+      "column_default": null,
+      "ordinal_position": 3,
+      "numeric_precision": null
+    },
+    {
+      "udt_name": "bool",
+      "data_type": "boolean",
+      "table_name": "aceites_autorizacoes",
+      "column_name": "aceita_marketing",
+      "is_nullable": "YES",
+      "numeric_scale": null,
+      "column_default": "false",
+      "ordinal_position": 4,
+      "numeric_precision": null
+    },
+    {
+      "udt_name": "bool",
+      "data_type": "boolean",
+      "table_name": "aceites_autorizacoes",
+      "column_name": "aceita_imagem",
+      "is_nullable": "YES",
+      "numeric_scale": null,
+      "column_default": "false",
+      "ordinal_position": 5,
+      "numeric_precision": null
+    },
+    {
+      "udt_name": "timestamptz",
+      "data_type": "timestamp with time zone",
+      "table_name": "aceites_autorizacoes",
+      "column_name": "data_aceite",
+      "is_nullable": "YES",
+      "numeric_scale": null,
+      "column_default": "now()",
+      "ordinal_position": 6,
+      "numeric_precision": null
+    },
+    {
+      "udt_name": "uuid",
+      "data_type": "uuid",
+      "table_name": "comunicacoes",
+      "column_name": "id",
+      "is_nullable": "NO",
+      "numeric_scale": null,
+      "column_default": "gen_random_uuid()",
+      "ordinal_position": 1,
+      "numeric_precision": null
+    },
+    {
+      "udt_name": "uuid",
+      "data_type": "uuid",
+      "table_name": "comunicacoes",
+      "column_name": "inscricao_id",
+      "is_nullable": "NO",
+      "numeric_scale": null,
+      "column_default": null,
+      "ordinal_position": 2,
+      "numeric_precision": null
+    },
+    {
+      "udt_name": "text",
+      "data_type": "text",
+      "table_name": "comunicacoes",
+      "column_name": "canal",
+      "is_nullable": "NO",
+      "numeric_scale": null,
+      "column_default": null,
+      "ordinal_position": 3,
+      "numeric_precision": null
+    },
+    {
+      "udt_name": "text",
+      "data_type": "text",
+      "table_name": "comunicacoes",
+      "column_name": "tipo",
+      "is_nullable": "NO",
+      "numeric_scale": null,
+      "column_default": null,
+      "ordinal_position": 4,
+      "numeric_precision": null
+    },
+    {
+      "udt_name": "text",
+      "data_type": "text",
+      "table_name": "comunicacoes",
+      "column_name": "status",
+      "is_nullable": "YES",
+      "numeric_scale": null,
+      "column_default": "'pendente'::text",
+      "ordinal_position": 5,
+      "numeric_precision": null
+    },
+    {
+      "udt_name": "int4",
+      "data_type": "integer",
+      "table_name": "comunicacoes",
+      "column_name": "tentativas",
+      "is_nullable": "YES",
+      "numeric_scale": 0,
+      "column_default": "0",
+      "ordinal_position": 6,
+      "numeric_precision": 32
+    },
+    {
+      "udt_name": "text",
+      "data_type": "text",
+      "table_name": "comunicacoes",
+      "column_name": "erro_log",
+      "is_nullable": "YES",
+      "numeric_scale": null,
+      "column_default": null,
+      "ordinal_position": 7,
+      "numeric_precision": null
+    },
+    {
+      "udt_name": "timestamptz",
+      "data_type": "timestamp with time zone",
+      "table_name": "comunicacoes",
+      "column_name": "criado_em",
+      "is_nullable": "YES",
+      "numeric_scale": null,
+      "column_default": "now()",
+      "ordinal_position": 8,
+      "numeric_precision": null
+    },
+    {
+      "udt_name": "timestamptz",
+      "data_type": "timestamp with time zone",
+      "table_name": "comunicacoes",
+      "column_name": "atualizado_em",
+      "is_nullable": "YES",
+      "numeric_scale": null,
+      "column_default": "now()",
+      "ordinal_position": 9,
+      "numeric_precision": null
+    },
+    {
+      "udt_name": "uuid",
+      "data_type": "uuid",
+      "table_name": "cursos",
+      "column_name": "id",
+      "is_nullable": "NO",
+      "numeric_scale": null,
+      "column_default": "gen_random_uuid()",
+      "ordinal_position": 1,
+      "numeric_precision": null
+    },
+    {
+      "udt_name": "text",
+      "data_type": "text",
+      "table_name": "cursos",
+      "column_name": "nome",
+      "is_nullable": "NO",
+      "numeric_scale": null,
+      "column_default": null,
+      "ordinal_position": 2,
+      "numeric_precision": null
+    },
+    {
+      "udt_name": "text",
+      "data_type": "text",
+      "table_name": "cursos",
+      "column_name": "descricao",
+      "is_nullable": "YES",
+      "numeric_scale": null,
+      "column_default": null,
+      "ordinal_position": 3,
+      "numeric_precision": null
+    },
+    {
+      "udt_name": "bool",
+      "data_type": "boolean",
+      "table_name": "cursos",
+      "column_name": "ativo",
+      "is_nullable": "YES",
+      "numeric_scale": null,
+      "column_default": "true",
+      "ordinal_position": 4,
+      "numeric_precision": null
+    },
+    {
+      "udt_name": "uuid",
+      "data_type": "uuid",
+      "table_name": "eventos_pagamento",
+      "column_name": "id",
+      "is_nullable": "NO",
+      "numeric_scale": null,
+      "column_default": "gen_random_uuid()",
+      "ordinal_position": 1,
+      "numeric_precision": null
+    },
+    {
+      "udt_name": "uuid",
+      "data_type": "uuid",
+      "table_name": "eventos_pagamento",
+      "column_name": "pagamento_id",
+      "is_nullable": "NO",
+      "numeric_scale": null,
+      "column_default": null,
+      "ordinal_position": 2,
+      "numeric_precision": null
+    },
+    {
+      "udt_name": "text",
+      "data_type": "text",
+      "table_name": "eventos_pagamento",
+      "column_name": "status_reportado",
+      "is_nullable": "NO",
+      "numeric_scale": null,
+      "column_default": null,
+      "ordinal_position": 3,
+      "numeric_precision": null
+    },
+    {
+      "udt_name": "text",
+      "data_type": "text",
+      "table_name": "eventos_pagamento",
+      "column_name": "x_authenticity_token",
+      "is_nullable": "YES",
+      "numeric_scale": null,
+      "column_default": null,
+      "ordinal_position": 4,
+      "numeric_precision": null
+    },
+    {
+      "udt_name": "timestamptz",
+      "data_type": "timestamp with time zone",
+      "table_name": "eventos_pagamento",
+      "column_name": "processado_em",
+      "is_nullable": "YES",
+      "numeric_scale": null,
+      "column_default": "now()",
+      "ordinal_position": 5,
+      "numeric_precision": null
+    },
+    {
+      "udt_name": "uuid",
+      "data_type": "uuid",
+      "table_name": "inscricoes",
+      "column_name": "id",
+      "is_nullable": "NO",
+      "numeric_scale": null,
+      "column_default": "gen_random_uuid()",
+      "ordinal_position": 1,
+      "numeric_precision": null
+    },
+    {
+      "udt_name": "uuid",
+      "data_type": "uuid",
+      "table_name": "inscricoes",
+      "column_name": "participante_id",
+      "is_nullable": "NO",
+      "numeric_scale": null,
+      "column_default": null,
+      "ordinal_position": 2,
+      "numeric_precision": null
+    },
+    {
+      "udt_name": "uuid",
+      "data_type": "uuid",
+      "table_name": "inscricoes",
+      "column_name": "turma_id",
+      "is_nullable": "NO",
+      "numeric_scale": null,
+      "column_default": null,
+      "ordinal_position": 3,
+      "numeric_precision": null
+    },
+    {
+      "udt_name": "text",
+      "data_type": "text",
+      "table_name": "inscricoes",
+      "column_name": "etapa_funil",
+      "is_nullable": "YES",
+      "numeric_scale": null,
+      "column_default": "'lead_capturado'::text",
+      "ordinal_position": 4,
+      "numeric_precision": null
+    },
+    {
+      "udt_name": "numeric",
+      "data_type": "numeric",
+      "table_name": "inscricoes",
+      "column_name": "valor_cobrado",
+      "is_nullable": "NO",
+      "numeric_scale": 2,
+      "column_default": null,
+      "ordinal_position": 5,
+      "numeric_precision": 10
+    },
+    {
+      "udt_name": "timestamptz",
+      "data_type": "timestamp with time zone",
+      "table_name": "inscricoes",
+      "column_name": "reserva_expira_em",
+      "is_nullable": "YES",
+      "numeric_scale": null,
+      "column_default": null,
+      "ordinal_position": 6,
+      "numeric_precision": null
+    },
+    {
+      "udt_name": "timestamptz",
+      "data_type": "timestamp with time zone",
+      "table_name": "inscricoes",
+      "column_name": "criada_em",
+      "is_nullable": "YES",
+      "numeric_scale": null,
+      "column_default": "now()",
+      "ordinal_position": 7,
+      "numeric_precision": null
+    },
+    {
+      "udt_name": "uuid",
+      "data_type": "uuid",
+      "table_name": "pagamentos",
+      "column_name": "id",
+      "is_nullable": "NO",
+      "numeric_scale": null,
+      "column_default": "gen_random_uuid()",
+      "ordinal_position": 1,
+      "numeric_precision": null
+    },
+    {
+      "udt_name": "uuid",
+      "data_type": "uuid",
+      "table_name": "pagamentos",
+      "column_name": "inscricao_id",
+      "is_nullable": "NO",
+      "numeric_scale": null,
+      "column_default": null,
+      "ordinal_position": 2,
+      "numeric_precision": null
+    },
+    {
+      "udt_name": "text",
+      "data_type": "text",
+      "table_name": "pagamentos",
+      "column_name": "pagbank_pedido_id",
+      "is_nullable": "YES",
+      "numeric_scale": null,
+      "column_default": null,
+      "ordinal_position": 3,
+      "numeric_precision": null
+    },
+    {
+      "udt_name": "text",
+      "data_type": "text",
+      "table_name": "pagamentos",
+      "column_name": "status",
+      "is_nullable": "YES",
+      "numeric_scale": null,
+      "column_default": "'pendente'::text",
+      "ordinal_position": 4,
+      "numeric_precision": null
+    },
+    {
+      "udt_name": "timestamptz",
+      "data_type": "timestamp with time zone",
+      "table_name": "pagamentos",
+      "column_name": "criado_em",
+      "is_nullable": "YES",
+      "numeric_scale": null,
+      "column_default": "now()",
+      "ordinal_position": 5,
+      "numeric_precision": null
+    },
+    {
+      "udt_name": "timestamptz",
+      "data_type": "timestamp with time zone",
+      "table_name": "pagamentos",
+      "column_name": "atualizado_em",
+      "is_nullable": "YES",
+      "numeric_scale": null,
+      "column_default": "now()",
+      "ordinal_position": 6,
+      "numeric_precision": null
+    },
+    {
+      "udt_name": "uuid",
+      "data_type": "uuid",
+      "table_name": "participantes",
+      "column_name": "id",
+      "is_nullable": "NO",
+      "numeric_scale": null,
+      "column_default": "gen_random_uuid()",
+      "ordinal_position": 1,
+      "numeric_precision": null
+    },
+    {
+      "udt_name": "text",
+      "data_type": "text",
+      "table_name": "participantes",
+      "column_name": "nome",
+      "is_nullable": "NO",
+      "numeric_scale": null,
+      "column_default": null,
+      "ordinal_position": 2,
+      "numeric_precision": null
+    },
+    {
+      "udt_name": "text",
+      "data_type": "text",
+      "table_name": "participantes",
+      "column_name": "email",
+      "is_nullable": "NO",
+      "numeric_scale": null,
+      "column_default": null,
+      "ordinal_position": 3,
+      "numeric_precision": null
+    },
+    {
+      "udt_name": "text",
+      "data_type": "text",
+      "table_name": "participantes",
+      "column_name": "telefone",
+      "is_nullable": "YES",
+      "numeric_scale": null,
+      "column_default": null,
+      "ordinal_position": 4,
+      "numeric_precision": null
+    },
+    {
+      "udt_name": "timestamptz",
+      "data_type": "timestamp with time zone",
+      "table_name": "participantes",
+      "column_name": "criado_em",
+      "is_nullable": "YES",
+      "numeric_scale": null,
+      "column_default": "now()",
+      "ordinal_position": 5,
+      "numeric_precision": null
+    },
+    {
+      "udt_name": "uuid",
+      "data_type": "uuid",
+      "table_name": "turmas",
+      "column_name": "id",
+      "is_nullable": "NO",
+      "numeric_scale": null,
+      "column_default": "gen_random_uuid()",
+      "ordinal_position": 1,
+      "numeric_precision": null
+    },
+    {
+      "udt_name": "uuid",
+      "data_type": "uuid",
+      "table_name": "turmas",
+      "column_name": "curso_id",
+      "is_nullable": "NO",
+      "numeric_scale": null,
+      "column_default": null,
+      "ordinal_position": 2,
+      "numeric_precision": null
+    },
+    {
+      "udt_name": "text",
+      "data_type": "text",
+      "table_name": "turmas",
+      "column_name": "nome",
+      "is_nullable": "NO",
+      "numeric_scale": null,
+      "column_default": null,
+      "ordinal_position": 3,
+      "numeric_precision": null
+    },
+    {
+      "udt_name": "numeric",
+      "data_type": "numeric",
+      "table_name": "turmas",
+      "column_name": "preco",
+      "is_nullable": "NO",
+      "numeric_scale": 2,
+      "column_default": null,
+      "ordinal_position": 4,
+      "numeric_precision": 10
+    },
+    {
+      "udt_name": "int4",
+      "data_type": "integer",
+      "table_name": "turmas",
+      "column_name": "vagas_limite",
+      "is_nullable": "NO",
+      "numeric_scale": 0,
+      "column_default": null,
+      "ordinal_position": 5,
+      "numeric_precision": 32
+    },
+    {
+      "udt_name": "text",
+      "data_type": "text",
+      "table_name": "turmas",
+      "column_name": "local",
+      "is_nullable": "YES",
+      "numeric_scale": null,
+      "column_default": null,
+      "ordinal_position": 6,
+      "numeric_precision": null
+    },
+    {
+      "udt_name": "text",
+      "data_type": "text",
+      "table_name": "turmas",
+      "column_name": "orientacoes",
+      "is_nullable": "YES",
+      "numeric_scale": null,
+      "column_default": null,
+      "ordinal_position": 7,
+      "numeric_precision": null
+    },
+    {
+      "udt_name": "timestamptz",
+      "data_type": "timestamp with time zone",
+      "table_name": "turmas",
+      "column_name": "data_abertura",
+      "is_nullable": "YES",
+      "numeric_scale": null,
+      "column_default": null,
+      "ordinal_position": 8,
+      "numeric_precision": null
+    },
+    {
+      "udt_name": "bool",
+      "data_type": "boolean",
+      "table_name": "turmas",
+      "column_name": "ativo",
+      "is_nullable": "YES",
+      "numeric_scale": null,
+      "column_default": "true",
+      "ordinal_position": 9,
+      "numeric_precision": null
+    },
+    {
+      "udt_name": "timestamptz",
+      "data_type": "timestamp with time zone",
+      "table_name": "turmas",
+      "column_name": "criado_em",
+      "is_nullable": "YES",
+      "numeric_scale": null,
+      "column_default": "now()",
+      "ordinal_position": 10,
+      "numeric_precision": null
+    }
+  ],
+  "indexes": [
+    {
+      "name": "aceites_autorizacoes_pkey",
+      "table": "aceites_autorizacoes",
+      "definition": "CREATE UNIQUE INDEX aceites_autorizacoes_pkey ON public.aceites_autorizacoes USING btree (id)"
+    },
+    {
+      "name": "comunicacoes_pkey",
+      "table": "comunicacoes",
+      "definition": "CREATE UNIQUE INDEX comunicacoes_pkey ON public.comunicacoes USING btree (id)"
+    },
+    {
+      "name": "cursos_pkey",
+      "table": "cursos",
+      "definition": "CREATE UNIQUE INDEX cursos_pkey ON public.cursos USING btree (id)"
+    },
+    {
+      "name": "eventos_pagamento_pkey",
+      "table": "eventos_pagamento",
+      "definition": "CREATE UNIQUE INDEX eventos_pagamento_pkey ON public.eventos_pagamento USING btree (id)"
+    },
+    {
+      "name": "inscricoes_pkey",
+      "table": "inscricoes",
+      "definition": "CREATE UNIQUE INDEX inscricoes_pkey ON public.inscricoes USING btree (id)"
+    },
+    {
+      "name": "pagamentos_pkey",
+      "table": "pagamentos",
+      "definition": "CREATE UNIQUE INDEX pagamentos_pkey ON public.pagamentos USING btree (id)"
+    },
+    {
+      "name": "participantes_email_key",
+      "table": "participantes",
+      "definition": "CREATE UNIQUE INDEX participantes_email_key ON public.participantes USING btree (email)"
+    },
+    {
+      "name": "participantes_pkey",
+      "table": "participantes",
+      "definition": "CREATE UNIQUE INDEX participantes_pkey ON public.participantes USING btree (id)"
+    },
+    {
+      "name": "turmas_pkey",
+      "table": "turmas",
+      "definition": "CREATE UNIQUE INDEX turmas_pkey ON public.turmas USING btree (id)"
+    },
+    {
+      "name": "unica_inscricao_turma",
+      "table": "inscricoes",
+      "definition": "CREATE UNIQUE INDEX unica_inscricao_turma ON public.inscricoes USING btree (participante_id, turma_id)"
+    }
+  ],
+  "policies": [],
+  "routines": [
+    {
+      "acl": "{=X/postgres,postgres=X/postgres,anon=X/postgres,authenticated=X/postgres,service_role=X/postgres}",
+      "name": "rls_auto_enable",
+      "definition": "CREATE OR REPLACE FUNCTION public.rls_auto_enable()\n RETURNS event_trigger\n LANGUAGE plpgsql\n SECURITY DEFINER\n SET search_path TO 'pg_catalog'\nAS $function$\nDECLARE\n  cmd record;\nBEGIN\n  FOR cmd IN\n    SELECT *\n    FROM pg_event_trigger_ddl_commands()\n    WHERE command_tag IN ('CREATE TABLE', 'CREATE TABLE AS', 'SELECT INTO')\n      AND object_type IN ('table','partitioned table')\n  LOOP\n     IF cmd.schema_name IS NOT NULL AND cmd.schema_name IN ('public') AND cmd.schema_name NOT IN ('pg_catalog','information_schema') AND cmd.schema_name NOT LIKE 'pg_toast%' AND cmd.schema_name NOT LIKE 'pg_temp%' THEN\n      BEGIN\n        EXECUTE format('alter table if exists %s enable row level security', cmd.object_identity);\n        RAISE LOG 'rls_auto_enable: enabled RLS on %', cmd.object_identity;\n      EXCEPTION\n        WHEN OTHERS THEN\n          RAISE LOG 'rls_auto_enable: failed to enable RLS on %', cmd.object_identity;\n      END;\n     ELSE\n        RAISE LOG 'rls_auto_enable: skip % (either system schema or not in enforced list: %.)', cmd.object_identity, cmd.schema_name;\n     END IF;\n  END LOOP;\nEND;\n$function$\n"
+    }
+  ],
+  "captured_at": "2026-09-29T19:53:46.257966+00:00",
+  "constraints": [
+    {
+      "name": "aceites_autorizacoes_inscricao_id_fkey",
+      "table": "aceites_autorizacoes",
+      "definition": "FOREIGN KEY (inscricao_id) REFERENCES inscricoes(id)"
+    },
+    {
+      "name": "aceites_autorizacoes_pkey",
+      "table": "aceites_autorizacoes",
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "name": "comunicacoes_inscricao_id_fkey",
+      "table": "comunicacoes",
+      "definition": "FOREIGN KEY (inscricao_id) REFERENCES inscricoes(id)"
+    },
+    {
+      "name": "comunicacoes_pkey",
+      "table": "comunicacoes",
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "name": "cursos_pkey",
+      "table": "cursos",
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "name": "eventos_pagamento_pagamento_id_fkey",
+      "table": "eventos_pagamento",
+      "definition": "FOREIGN KEY (pagamento_id) REFERENCES pagamentos(id)"
+    },
+    {
+      "name": "eventos_pagamento_pkey",
+      "table": "eventos_pagamento",
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "name": "inscricoes_participante_id_fkey",
+      "table": "inscricoes",
+      "definition": "FOREIGN KEY (participante_id) REFERENCES participantes(id)"
+    },
+    {
+      "name": "inscricoes_pkey",
+      "table": "inscricoes",
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "name": "inscricoes_turma_id_fkey",
+      "table": "inscricoes",
+      "definition": "FOREIGN KEY (turma_id) REFERENCES turmas(id)"
+    },
+    {
+      "name": "unica_inscricao_turma",
+      "table": "inscricoes",
+      "definition": "UNIQUE (participante_id, turma_id)"
+    },
+    {
+      "name": "pagamentos_inscricao_id_fkey",
+      "table": "pagamentos",
+      "definition": "FOREIGN KEY (inscricao_id) REFERENCES inscricoes(id)"
+    },
+    {
+      "name": "pagamentos_pkey",
+      "table": "pagamentos",
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "name": "participantes_email_key",
+      "table": "participantes",
+      "definition": "UNIQUE (email)"
+    },
+    {
+      "name": "participantes_pkey",
+      "table": "participantes",
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "name": "turmas_curso_id_fkey",
+      "table": "turmas",
+      "definition": "FOREIGN KEY (curso_id) REFERENCES cursos(id)"
+    },
+    {
+      "name": "turmas_pkey",
+      "table": "turmas",
+      "definition": "PRIMARY KEY (id)"
+    }
+  ],
+  "project_ref": "ydmvbssgiffqrmwigkae",
+  "event_triggers": [
+    {
+      "name": "issue_graphql_placeholder",
+      "tags": [
+        "DROP EXTENSION"
+      ],
+      "event": "sql_drop",
+      "enabled": "O",
+      "function": "set_graphql_placeholder()"
+    },
+    {
+      "name": "pgrst_ddl_watch",
+      "tags": null,
+      "event": "ddl_command_end",
+      "enabled": "O",
+      "function": "pgrst_ddl_watch()"
+    },
+    {
+      "name": "pgrst_drop_watch",
+      "tags": null,
+      "event": "sql_drop",
+      "enabled": "O",
+      "function": "pgrst_drop_watch()"
+    },
+    {
+      "name": "issue_pg_cron_access",
+      "tags": [
+        "CREATE EXTENSION"
+      ],
+      "event": "ddl_command_end",
+      "enabled": "O",
+      "function": "grant_pg_cron_access()"
+    },
+    {
+      "name": "issue_pg_net_access",
+      "tags": [
+        "CREATE EXTENSION"
+      ],
+      "event": "ddl_command_end",
+      "enabled": "O",
+      "function": "grant_pg_net_access()"
+    },
+    {
+      "name": "issue_pg_graphql_access",
+      "tags": [
+        "CREATE EXTENSION"
+      ],
+      "event": "ddl_command_end",
+      "enabled": "O",
+      "function": "grant_pg_graphql_access()"
+    },
+    {
+      "name": "ensure_rls",
+      "tags": [
+        "CREATE TABLE",
+        "CREATE TABLE AS",
+        "SELECT INTO"
+      ],
+      "event": "ddl_command_end",
+      "enabled": "O",
+      "function": "rls_auto_enable()"
+    }
+  ],
+  "server_version": "17.6",
+  "table_triggers": []
+}

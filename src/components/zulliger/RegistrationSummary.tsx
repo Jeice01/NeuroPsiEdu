@@ -25,15 +25,15 @@ export function RegistrationSummary({ status, token, config, onStatus }: {
   useEffect(() => { if (error) feedback.current?.focus(); }, [error]);
   useEffect(() => {
     if (["checkout_abandonado", "expirado"].includes(status.etapa_funil)) {
-      resetCheckoutAttempt(); attempt.current = "";
+      resetCheckoutAttempt(config?.turmaId); attempt.current = "";
     }
-  }, [status.etapa_funil]);
+  }, [status.etapa_funil, config.turmaId]);
   async function run(pay: boolean) {
     if (inFlight.current) return;
     inFlight.current = true; setBusy(true); setError(""); setNotice("");
     try {
       if (pay && config.checkoutEndpoint) {
-        if (!attempt.current) attempt.current = checkoutAttemptKey();
+        if (!attempt.current) attempt.current = checkoutAttemptKey(config?.turmaId);
         const url = await checkoutRequest(config.checkoutEndpoint, token, attempt.current);
         if (url) { window.location.assign(url); return; }
         setNotice("Estamos verificando a tentativa de pagamento. Aguarde e atualize a situação antes de tentar novamente.");
@@ -43,16 +43,21 @@ export function RegistrationSummary({ status, token, config, onStatus }: {
       }
     } catch (reason) {
       const code = reason instanceof RegistrationError ? reason.message : "";
-      if (["nova_tentativa_necessaria", "pagamento_indisponivel"].includes(code)) { resetCheckoutAttempt(); attempt.current = ""; }
+      if (["nova_tentativa_necessaria", "pagamento_indisponivel"].includes(code)) { resetCheckoutAttempt(config?.turmaId); attempt.current = ""; }
       setError(code === "vagas_esgotadas" ? "As vagas estão esgotadas. Nenhuma cobrança foi criada. Fale com a equipe sobre a lista de espera."
         : code === "oferta_alterada" ? "O valor da oferta mudou. Consulte a equipe antes de continuar."
-        : reason instanceof RegistrationError && [401, 404].includes(reason.status) ? "Seu acesso expirou. Volte à inscrição e recupere o acesso pelo e-mail."
+        : reason instanceof RegistrationError && [401, 404].includes(reason.status) ? config.recoveryEnabled
+          ? "Seu acesso expirou. Volte à inscrição e recupere o acesso pelo e-mail."
+          : "Seu acesso expirou. A recuperação por e-mail ainda está indisponível. Fale com a equipe para continuar."
         : "Não foi possível concluir a consulta. Atualize a situação antes de tentar novamente. Se persistir, fale com a equipe.");
     } finally { inFlight.current = false; setBusy(false); }
   }
   return <div aria-busy={busy}>
     <CourseOrderSummary />
-    <p role="status">{messages[status.etapa_funil] || "Consulte a equipe para acompanhar sua inscrição."}</p>
+    {config.sandbox && <p className="z-form-help"><strong>Sandbox: este cadastro e pagamento são testes. Não garantem vaga no curso real.</strong></p>}
+    <p role="status">{config.sandbox && status.etapa_funil === "matricula_confirmada"
+      ? "Pagamento de teste confirmado. Nenhuma matrícula real foi realizada."
+      : messages[status.etapa_funil] || "Consulte a equipe para acompanhar sua inscrição."}</p>
     <p className="z-registration-price"><span>Valor de 1 inscrição</span><strong>{new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL" }).format(status.valor_centavos / 100)}</strong></p>
     {canPay && <><button type="button" className="z-button z-button-full" disabled={busy || !config.checkoutEndpoint} onClick={() => void run(true)}>{busy ? "Aguarde…" : "Ir para pagamento"}</button>
       <p className="z-form-help">{config.checkoutEndpoint ? "Ambiente de testes do PagBank. Não use dados reais de pagamento." : "Pagamento online ainda indisponível. Salvar o cadastro não reserva vaga."}</p></>}
