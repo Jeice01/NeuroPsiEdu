@@ -57,7 +57,7 @@ jobs:
         run: npm test
 
       - name: Courses boundary tests
-        run: node --test services/cursos/tests/registration.test.mjs services/cursos/tests/checkout.test.mjs services/cursos/tests/reconciliation.test.mjs
+        run: node --test services/cursos/tests/registration.test.mjs services/cursos/tests/checkout.test.mjs services/cursos/tests/reconciliation.test.mjs services/cursos/tests/confirmation.test.mjs
 
       - name: Courses recovery adapter tests
         run: deno test --allow-env services/cursos/supabase/functions/cadastro-curso/recovery_test.ts
