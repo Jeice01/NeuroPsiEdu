@@ -71,6 +71,45 @@ test('normalization refuses wrong reference and flags multiple charges, unknown 
   const unknown=order(); unknown.charges[0].status='CHARGEBACK';
   assert.equal(normalizeOrder(unknown,id).status,'REVIEW');
 });
+
+test('buyer interest preserves gross evidence while comparing only the fully paid principal', () => {
+  const value = order();
+  const charge = value.charges[0];
+  charge.amount = { value: 66426, currency: 'BRL', summary: { total: 66426, paid: 66426, refunded: 0, incremented: 0 },
+    fees: { buyer: { interest: { total: 6426, installments: 5 } } } };
+  charge.payment_method = { type: 'CREDIT_CARD', installments: 5 };
+  const observed = normalizeOrder(value, id, reference);
+  assert.equal(observed.status, 'PAID');
+  assert.equal(observed.valor_centavos, 60000);
+  assert.equal(observed.pago_centavos, 60000);
+  assert.equal(observed.valor_bruto_centavos, 66426);
+  assert.equal(observed.pago_bruto_centavos, 66426);
+  assert.equal(observed.juros_comprador_centavos, 6426);
+  for (const mutate of [
+    c => { c.amount.fees.buyer.interest.total = -1; },
+    c => { c.amount.fees.buyer.interest.total = '6426'; },
+    c => { c.amount.fees.buyer.interest.total = 6426.5; },
+    c => { c.amount.fees.buyer.interest.total = 66426; },
+    c => { c.amount.fees.buyer.interest.installments = 6; },
+    c => { c.payment_method.installments = 11; },
+    c => { c.payment_method.type = 'PIX'; },
+    c => { c.amount.summary.paid = 66425; },
+    c => { c.amount.summary.total = 60000; },
+    c => { c.amount.summary.refunded = 100; },
+    c => { c.amount.summary.refunded = 60000; },
+    c => { c.amount.summary.refunded = 66426; },
+    c => { c.amount.summary.incremented = 1; },
+    c => { c.amount.fees.buyer.other = 10; },
+  ]) {
+    const invalid = structuredClone(value);
+    mutate(invalid.charges[0]);
+    assert.equal(normalizeOrder(invalid, id).status, 'REVIEW');
+  }
+  const missing = structuredClone(value);
+  delete missing.charges[0].amount.fees;
+  assert.equal(normalizeOrder(missing, id).valor_centavos, 66426);
+  assert.equal(normalizeOrder(order(), id).valor_centavos, 60000);
+});
 test('provider uses own account and fixed host, caches webhook key and does not trust expiration alone', async () => {
   let keyCalls=0;
   const provider=createProvider('synthetic-token',async (url, options) => {
