@@ -22,6 +22,12 @@ do banco, chave secreta Turnstile, token PagBank e senha SMTP devem permanecer
 no arquivo ignorado `.env.deploy.local` e nos serviços correspondentes.
 Não enviar credenciais pelo chat nem publicar backups.
 
+A recuperação exige códigos de oito dígitos, inclusive zeros iniciais. Manter
+`mailer_otp_length=8` no Auth hospedado e `otp_length=8` no ambiente local,
+em concordância com o formulário e a validação da função. Os templates de
+confirmação e magic link devem usar `{{ .Token }}`. Solicitar um novo código
+invalida o anterior; não registrar códigos, hashes de OTP ou sessões nos logs.
+
 ## Testes
 
 Na raiz do repositório, com Node do projeto:

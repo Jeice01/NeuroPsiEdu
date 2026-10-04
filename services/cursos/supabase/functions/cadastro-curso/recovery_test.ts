@@ -29,6 +29,8 @@ Deno.test('Auth adapter requests OTP, verifies server user and revokes its tempo
         return Response.json({});
       }
       if (path.endsWith('/verify')) {
+        const body = JSON.parse(String(init?.body));
+        assert(body.token === '01234567' && body.type === 'email', 'Preserve all eight OTP digits');
         return Response.json({
           user,
           access_token: 'synthetic-access',
@@ -44,7 +46,7 @@ Deno.test('Auth adapter requests OTP, verifies server user and revokes its tempo
   );
   await recovery.requestCode(user.email);
   assert(
-    await recovery.verifyCode(user.email, '123456') === user.email,
+    await recovery.verifyCode(user.email, '01234567') === user.email,
     'Only verified email may be returned',
   );
   assert(
@@ -61,7 +63,7 @@ Deno.test('Auth adapter rejects invalid OTP and does not return a capability or 
       Response.json({ error_code: 'otp_expired', msg: 'sensitive-provider-detail' }, { status: 403 }),
   );
   try {
-    await recovery.verifyCode('test@example.test', '000000');
+    await recovery.verifyCode('test@example.test', '00000000');
     throw new Error('Expected rejection');
   } catch (error) {
     assert(error instanceof Error && error.message === 'codigo_invalido', 'Expose only safe error');

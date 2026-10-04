@@ -134,7 +134,7 @@ test("recupera por código e permite tentar novamente após código inválido", 
     if (req.method() === "GET") return route.fulfill({ status: verified ? 200 : 404, json: verified ? saved : { error: "continuacao_indisponivel" } });
     const body = req.postDataJSON();
     if (body.action === "validar_codigo") {
-      if (body.codigo !== "123456") return route.fulfill({ status: 401, json: { error: "codigo_invalido" } });
+      if (body.codigo !== "01234567") return route.fulfill({ status: 401, json: { error: "codigo_invalido" } });
       verified = true;
     }
     return route.fulfill({ status: 202, json: { status: "solicitacao_recebida" } });
@@ -143,10 +143,13 @@ test("recupera por código e permite tentar novamente após código inválido", 
   await page.getByRole("button", { name: "Salvar e continuar" }).click();
   await expect(page.getByRole("heading", { name: "Continue com seu e-mail" })).toBeVisible();
   await page.getByRole("button", { name: "Enviar código de acesso" }).click();
-  await page.getByLabel("Código de seis dígitos").fill("000000");
+  const codeInput = page.getByLabel("Código de oito dígitos");
+  await codeInput.fill("123456");
+  expect(await codeInput.evaluate((element: HTMLInputElement) => element.checkValidity())).toBe(false);
+  await codeInput.fill("00000000");
   await page.getByRole("button", { name: "Validar código" }).click();
   await expect(page.locator(".z-registration-error")).toContainText("Código inválido");
-  await page.getByLabel("Código de seis dígitos").fill("123456");
+  await page.getByLabel("Código de oito dígitos").fill("01234567");
   await page.getByRole("button", { name: "Validar código" }).click();
   await expect(page.getByRole("status")).toContainText("Cadastro recebido");
 });
