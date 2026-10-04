@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
-import Script from "next/script";
 import "./globals.css";
 import { FloatingWhatsAppButton } from "@/components/ui/FloatingWhatsAppButton";
-import { trackingConsentScript } from "@/lib/tracking-consent";
 import {
   absoluteUrl,
   DEFAULT_DESCRIPTION,
@@ -75,16 +73,6 @@ export default function RootLayout({
           type="font/woff2"
           crossOrigin="anonymous"
         />
-        {/* Cookiebot — deve ser o primeiro script do <head> */}
-        <Script
-          id="Cookiebot"
-          src="https://consent.cookiebot.com/uc.js"
-          data-cbid="bb101498-b476-4898-bc7d-7917299af0af"
-          data-blockingmode="auto"
-          type="text/javascript"
-          strategy="beforeInteractive"
-        />
-
         {/* Structured Data — Local Business / Medical Clinic */}
         <script
           type="application/ld+json"
@@ -128,12 +116,6 @@ export default function RootLayout({
           }}
         />
 
-        {/* Fail closed even when the consent provider cannot load its configuration. */}
-        <Script
-          id="tracking-consent"
-          strategy="afterInteractive"
-          dangerouslySetInnerHTML={{ __html: trackingConsentScript }}
-        />
       </head>
       <body className="antialiased">
         {children}

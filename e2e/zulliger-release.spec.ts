@@ -1,47 +1,23 @@
 import { expect, test } from "@playwright/test";
 
-test("rastreamento exige consentimento completo e para após revogação", async ({ page }) => {
+test("navegação pública não carrega Cookiebot ou rastreamento", async ({ page }) => {
   const errors: string[] = [], failures: string[] = [], trackingRequests: string[] = [];
   page.on("pageerror", error => errors.push(error.message));
   page.on("console", message => { if (message.type() === "error") errors.push(message.text()); });
   page.on("requestfailed", request => failures.push(request.url()));
   page.on("request", request => {
-    if (/googletagmanager|google-analytics|clarity\.ms/.test(request.url())) trackingRequests.push(request.url());
+    if (/cookiebot|googletagmanager|google-analytics|clarity\.ms/.test(request.url())) trackingRequests.push(request.url());
   });
-  await page.route("https://consent.cookiebot.com/**", route => route.fulfill({
-    contentType: "application/javascript", body: "window.Cookiebot = { consent: { statistics: false, marketing: false } };",
-  }));
-  await page.route("https://www.googletagmanager.com/**", route => route.fulfill({ contentType: "application/javascript", body: "" }));
-  await page.goto("/curso-zulliger/");
-  await expect(page.locator("#tracking-consent")).toBeAttached();
+  for (const path of ["/", "/curso-zulliger/", "/curso-zulliger/inscricao/", "/curso-zulliger/resultado/"]) {
+    await page.goto(path);
+    await expect(page.locator("body")).toBeVisible();
+    await page.waitForLoadState("networkidle");
+    await expect(page.locator('#Cookiebot, #tracking-consent, #consented-gtm, iframe[src*="googletagmanager"]')).toHaveCount(0);
+  }
   expect(trackingRequests).toEqual([]);
-  expect(await page.content()).not.toContain("googletagmanager.com/ns.html");
-  await page.evaluate(() => {
-    Object.assign(window, { Cookiebot: { consent: { statistics: true, marketing: false } } });
-    window.dispatchEvent(new Event("CookiebotOnAccept"));
-  });
-  expect(trackingRequests).toEqual([]);
-  await page.evaluate(() => {
-    Object.assign(window, { Cookiebot: { consent: { statistics: true, marketing: true } } });
-    window.dispatchEvent(new Event("CookiebotOnAccept"));
-    window.dispatchEvent(new Event("CookiebotOnConsentReady"));
-  });
-  await expect(page.locator("#consented-gtm")).toBeAttached();
-  await expect.poll(() => trackingRequests.length).toBe(1);
-  await Promise.all([
-    page.waitForEvent("load"),
-    page.evaluate(() => {
-      Object.assign(window, { Cookiebot: { consent: { statistics: false, marketing: false } } });
-      window.dispatchEvent(new Event("CookiebotOnDecline"));
-    }),
-  ]);
-  await expect(page.locator("#tracking-consent")).toBeAttached();
-  await expect(page.locator("#consented-gtm")).toHaveCount(0);
-  expect(trackingRequests).toHaveLength(1);
   expect(errors).toEqual([]);
   expect(failures).toEqual([]);
 });
-
 test("artefato público informa abertura futura sem coletar dados ou iniciar pagamento", async ({ page }) => {
   const errors: string[] = [], failures: string[] = [], courseRequests: string[] = [];
   page.on("pageerror", error => errors.push(error.message));
