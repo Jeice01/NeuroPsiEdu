@@ -11,6 +11,13 @@ backup privado e ensaio de restauração. As quatro Edge Functions estão public
 A conciliação agendada executa a cada cinco minutos. O pagamento utiliza somente
 PagBank Sandbox; não há liberação de vendas reais.
 
+Na conciliação, os juros comprovados por `charges.amount.fees.buyer.interest`
+são separados do principal do curso. O total bruto deve estar integralmente pago,
+sem reembolso ou acréscimo; principal, total bruto e juros permanecem no resumo
+do evento. Não deduzir taxas do vendedor. Taxas inválidas, excesso sem juros
+comprovados e reembolsos de cobranças com juros seguem para revisão. Referência,
+moeda, preço do servidor, capacidade e deduplicação continuam obrigatórios.
+
 A homologação integrada usa um curso e uma turma novos, identificados como
 Sandbox, sem ocupar vagas da turma real. `CURSOS_SANDBOX_TURMA_ID` e
 `CURSOS_SANDBOX_TEST_EMAIL`, definidos juntos no servidor, restringem novos

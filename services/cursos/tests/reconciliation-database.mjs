@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import { randomUUID } from 'node:crypto';
 import { sha256 } from '../supabase/functions/cadastro-curso/handler.ts';
+import { normalizeOrder } from '../supabase/functions/pagbank-webhook/provider.ts';
 const quote = v => `'${String(v).replaceAll("'","''")}'`;
 export async function reconciliationDatabaseTests(t,{ sql, scalar, createOffer, register }) {
   const setup=async (turma) => {
@@ -30,6 +31,28 @@ export async function reconciliationDatabaseTests(t,{ sql, scalar, createOffer, 
     assert.equal(await sql(`SELECT etapa_funil FROM public.inscricoes WHERE id='${a.id}';`),'revisao_necessaria');
     assert.equal(await sql(`SELECT status FROM public.pagamentos WHERE id='${a.r.pagamento_id}';`),'pendente');
     assert.equal(await sql(`SELECT estado FROM public.reservas WHERE id='${a.r.id}';`),'conciliacao');
+  });
+  await t.test('paid installments confirm principal once, preserve gross audit and reject unexplained excess', async () => {
+    for (const fee of [6426, 6400, null]) {
+      const a = await setup();
+      const raw = { id: a.observation.pedido_id, reference_id: a.r.pagamento_id, charges: [{
+        id: a.observation.cobranca_id, status: 'PAID', payment_method: { type: 'CREDIT_CARD', installments: 5 },
+        amount: { value: 66426, currency: 'BRL', summary: { total: 66426, paid: 66426, refunded: 0 },
+          ...(fee !== null ? { fees: { buyer: { interest: { total: fee, installments: 5 } } } } : {}) },
+      }] };
+      const observed = normalizeOrder(raw, raw.id, a.r.pagamento_id);
+      await reconcile(observed);
+      if (fee === 6426) {
+        assert.equal(await sql(`SELECT etapa_funil FROM public.inscricoes WHERE id='${a.id}';`), 'matricula_confirmada');
+        assert.equal(await reconcile(observed), 'duplicado');
+        assert.equal(await scalar(`SELECT count(*) FROM public.comunicacoes WHERE inscricao_id='${a.id}';`), 1);
+        assert.equal(await scalar(`SELECT (resumo->>'valor_bruto_centavos')::integer FROM public.eventos_pagamento WHERE pagamento_id='${a.r.pagamento_id}';`), 66426);
+        assert.equal(await scalar(`SELECT (resumo->>'juros_comprador_centavos')::integer FROM public.eventos_pagamento WHERE pagamento_id='${a.r.pagamento_id}';`), 6426);
+      } else {
+        assert.equal(await sql(`SELECT etapa_funil FROM public.inscricoes WHERE id='${a.id}';`), 'revisao_necessaria');
+        assert.equal(await sql(`SELECT status FROM public.pagamentos WHERE id='${a.r.pagamento_id}';`), 'pendente');
+      }
+    }
   });
   await t.test('late paid without capacity is retained as paid but never enrolls beyond capacity',async () => {
     const {turma}=await createOffer(1), a=await setup(turma);
