@@ -260,7 +260,7 @@ export function createHandler(config: Config, dependencies: Dependencies) {
           typeof input.turnstile_token !== 'string' || !input.turnstile_token.trim() ||
           input.turnstile_token.length > 2048 ||
           (input.action === 'validar_codigo' &&
-            (typeof input.codigo !== 'string' || !/^\d{6}$/.test(input.codigo)))
+            (typeof input.codigo !== 'string' || !/^\d{8}$/.test(input.codigo)))
         ) {
           throw new ApiError(400, 'dados_invalidos');
         }

@@ -131,7 +131,7 @@ export function RegistrationForm({ config }: { config: RegistrationConfig }) {
         <p className="z-form-help">Use o e-mail informado no cadastro. Esta etapa não altera seus dados nem cria uma reserva.</p>
         <label htmlFor="z-recovery-email">E-mail do cadastro (obrigatório)</label>
         <input id="z-recovery-email" name="email" type="email" autoComplete="email" required maxLength={254} value={email} readOnly={codeSent} onChange={(event) => setEmail(event.target.value)} />
-        {codeSent && <><p role="status">Solicitação recebida. Confira sua caixa de entrada e a pasta de spam.</p><label htmlFor="z-code">Código de seis dígitos</label><input id="z-code" name="codigo" autoComplete="one-time-code" inputMode="numeric" pattern="[0-9]{6}" minLength={6} maxLength={6} required /></>}
+        {codeSent && <><p role="status">Solicitação recebida. Confira sua caixa de entrada e a pasta de spam.</p><label htmlFor="z-code">Código de oito dígitos</label><input id="z-code" name="codigo" autoComplete="one-time-code" inputMode="numeric" pattern="[0-9]{8}" minLength={8} maxLength={8} required /></>}
       </fieldset> : <fieldset disabled={!ready || busy || frozen}>
         <legend className="z-form-help">Preencha seus dados para salvar o cadastro. Isso ainda não reserva vaga.</legend>
         <label htmlFor="z-name">Nome completo (obrigatório)</label><input id="z-name" name="nome" autoComplete="name" required minLength={2} maxLength={120} />

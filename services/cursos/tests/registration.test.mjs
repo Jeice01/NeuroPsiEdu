@@ -42,6 +42,7 @@ test('Sandbox denies other identities, real cohorts and optional permissions bef
   assert.equal(saved, true);
   assert.equal((await eligible(request({ action: 'solicitar_codigo', turma_id: turmaId, email: 'synthetic@example.test', turnstile_token: 'synthetic' }))).status, 202);
   assert.equal(sent, true);
+
 });
 
 test('registration HTTP validation rejects malformed input before any dependency call', async () => {
@@ -128,7 +129,7 @@ test('production adapters enforce project, timeout, challenge hostname and actio
 test('recovery requires challenge, valid OTP and matching verified email before privileged binding', async () => {
   const calls = [];
   const data = { action: 'validar_codigo', email: 'person@example.test', turma_id: payload().turma_id,
-    codigo: '123456', turnstile_token: 'synthetic' };
+    codigo: '01234567', turnstile_token: 'synthetic' };
   for (const verifyCode of [async () => { throw new ApiError(401, 'codigo_invalido'); }, async () => 'other@example.test']) {
     const handler = createHandler(config, { rpc: async (name) => { calls.push(name); return true; },
       verifyChallenge: async () => true, recovery: { requestCode: async () => {}, verifyCode } });
@@ -140,6 +141,21 @@ test('recovery requires challenge, valid OTP and matching verified email before 
     recovery: { requestCode: async () => { sent = true; }, verifyCode: async () => data.email } });
   assert.equal((await handler(request({ ...data, action: 'solicitar_codigo' }))).status, 202);
   assert.equal(sent, true);
+  calls.length = 0;
+  const strict = createHandler(config, {
+    rpc: async (name) => { calls.push(name); return true; },
+    verifyChallenge: async () => true,
+    recovery: { requestCode: async () => {}, verifyCode: async (email, code) => {
+      assert.equal(code, '01234567');
+      return email;
+    } },
+  });
+  for (const codigo of ['123456', '1234567', '123456789', 'abcdefgh', '0123 4567']) {
+    assert.equal((await strict(request({ ...data, codigo }))).status, 400);
+  }
+  assert.deepEqual(calls, []);
+  assert.equal((await strict(request(data))).status, 202);
+  assert.ok(calls.includes('recuperar_cadastro_curso'));
   const disabled = createHandler(config, { rpc: async () => { assert.fail('Must fail closed'); }, verifyChallenge: async () => true });
   assert.equal((await disabled(request(data))).status, 503);
 });

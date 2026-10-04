@@ -31,7 +31,7 @@ export async function registrationDatabaseTests(t, { sql, scalar, createOffer })
   };
   const handler = createHandler(config, { rpc, verifyChallenge: async () => true,
     recovery: { requestCode: async () => {}, verifyCode: async (email, code) => {
-      if (code !== '123456') throw new ApiError(401, 'codigo_invalido');
+      if (code !== '01234567') throw new ApiError(401, 'codigo_invalido');
       return email;
     } } });
   const data = (turma, email = `${randomUUID()}@example.test`) => ({ turma_id: turma,
@@ -148,11 +148,11 @@ export async function registrationDatabaseTests(t, { sql, scalar, createOffer })
     const id = await idFor(body.email);
     const before = await sql(`SELECT to_jsonb(i) FROM public.inscricoes i WHERE id='${id}';`);
     const recovery = { action: 'validar_codigo', email: body.email, turma_id: turma,
-      codigo: '000000', turnstile_token: 'synthetic' };
+      codigo: '00000000', turnstile_token: 'synthetic' };
     assert.equal((await send(recovery, newToken)).status, 401);
     assert.equal((await get(oldToken)).status, 200);
     assert.equal((await get(newToken)).status, 404);
-    assert.equal((await send({ ...recovery, codigo: '123456' }, newToken)).status, 202);
+    assert.equal((await send({ ...recovery, codigo: '01234567' }, newToken)).status, 202);
     assert.equal((await get(newToken)).status, 200);
     assert.equal((await get(oldToken)).status, 404);
     assert.equal(await sql(`SELECT to_jsonb(i) FROM public.inscricoes i WHERE id='${id}';`), before);
