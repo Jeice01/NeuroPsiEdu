@@ -8,6 +8,7 @@ const required = (name: string) => {
 };
 Deno.serve(
   createWebhook({
+    diagnostic: (entry) => console.info(JSON.stringify(entry)),
     rpc: createRpc(required('SUPABASE_URL'), required('SUPABASE_SERVICE_ROLE_KEY')),
     ...createProvider(
       required('PAGBANK_SANDBOX_TOKEN'),
