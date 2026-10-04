@@ -14,6 +14,8 @@ export function createRpc(url: string, serviceKey: string, transport: typeof fet
     'finalizar_checkout_curso',
     'conciliar_pagamento_curso',
     'preparar_conciliacao_cursos',
+    'preparar_confirmacao_sandbox',
+    'finalizar_confirmacao_sandbox',
   ]);
   return async (name, parameters) => {
     if (!names.has(name)) throw new Error('RPC nao permitida');
@@ -33,9 +35,18 @@ export function createRpc(url: string, serviceKey: string, transport: typeof fet
       if (body && typeof body === 'object' && 'message' in body) {
         if (body.message === 'reenvio_divergente') throw new ApiError(409, 'reenvio_divergente');
         if (body.message === 'oferta_indisponivel') throw new ApiError(409, 'oferta_indisponivel');
-        if (typeof body.message === 'string' && ['vagas_esgotadas', 'checkout_indisponivel',
-          'oferta_alterada', 'oferta_inativa', 'aceite_obrigatorio', 'etapa_nao_permite_reserva',
-          'idempotencia_outra_inscricao'].includes(body.message)) {
+        if (
+          typeof body.message === 'string' &&
+          [
+            'vagas_esgotadas',
+            'checkout_indisponivel',
+            'oferta_alterada',
+            'oferta_inativa',
+            'aceite_obrigatorio',
+            'etapa_nao_permite_reserva',
+            'idempotencia_outra_inscricao',
+          ].includes(body.message)
+        ) {
           throw new ApiError(409, body.message);
         }
       }

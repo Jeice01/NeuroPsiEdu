@@ -1,0 +1,5 @@
+{
+  "compilerOptions": { "strict": true },
+  "fmt": { "singleQuote": true, "lineWidth": 110 },
+  "lock": true
+}

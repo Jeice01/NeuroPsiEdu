@@ -2,6 +2,6 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "test": "node --test tests/registration.test.mjs tests/checkout.test.mjs tests/reconciliation.test.mjs tests/database.test.mjs"
+    "test": "node --test tests/registration.test.mjs tests/checkout.test.mjs tests/reconciliation.test.mjs tests/confirmation.test.mjs tests/database.test.mjs"
   }
 }
