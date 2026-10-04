@@ -1,5 +1,46 @@
 import { expect, test } from "@playwright/test";
 
+test("Sandbox grava somente turma de teste e não oferece consentimentos opcionais", async ({ page }) => {
+  const errors: string[] = [], failures: string[] = [], writes: Record<string, unknown>[] = [];
+  page.on("pageerror", error => errors.push(error.message));
+  page.on("console", message => { if (message.type() === "error") errors.push(message.text()); });
+  page.on("requestfailed", request => failures.push(request.url()));
+  await page.route("https://challenges.cloudflare.com/**", route => route.fulfill({ contentType: "application/javascript", body: "window.turnstile={render:(el,opts)=>{setTimeout(()=>opts.callback('synthetic'),10);return 'test-widget'},remove:()=>{}};" }));
+  await page.route("https://ydmvbssgiffqrmwigkae.supabase.co/functions/v1/cadastro-curso", route => {
+    if (route.request().method() === "POST") {
+      writes.push(route.request().postDataJSON());
+      return route.fulfill({ contentType: "application/json", body: JSON.stringify({ status: "solicitacao_recebida" }), status: 202 });
+    }
+    return route.fulfill({ contentType: "application/json", body: JSON.stringify({ etapa_funil: "lead_capturado", valor_centavos: 60000, moeda: "BRL", sessao_expira_em: new Date(Date.now() + 3600000).toISOString() }) });
+  });
+  await page.goto("/curso-zulliger/teste/");
+  await expect(page.getByRole("heading", { name: "Teste de cadastro e pagamento" })).toBeVisible();
+  await expect(page.getByText(/Este teste não reserva vagas/)).toBeVisible();
+  await expect(page.locator('meta[name="robots"][content*="noindex"]')).toHaveCount(1);
+  await expect(page.locator('input[name="imagem"],input[name="marketing"]')).toHaveCount(0);
+  await page.getByLabel("Nome completo").fill("Pessoa Sintética");
+  await page.getByRole("textbox", { name: "E-mail (obrigatório)", exact: true }).fill("synthetic@example.test");
+  await page.getByLabel("Telefone com DDD").fill("61 99999-0000");
+  await page.getByRole("checkbox", { name: /Li e aceito/ }).check();
+  for (const width of [390, 320]) {
+    await page.setViewportSize({ width, height: 844 });
+    expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(width);
+  }
+  await page.getByRole("button", { name: "Salvar e continuar" }).click();
+  await expect(page.getByText(/Não garantem vaga no curso real/)).toBeVisible();
+  expect(writes).toHaveLength(1);
+  expect(writes[0].turma_id).toBe("1349d08b-4fc6-4b1f-a485-2e691f716ab2");
+  expect(writes[0].aceita_imagem).toBe(false);
+  expect(writes[0].aceita_marketing).toBe(false);
+  await page.getByRole("button", { name: "Encerrar acesso neste navegador" }).click();
+  await expect(page.getByRole("heading", { name: "Continue com seu e-mail" })).toBeFocused();
+  await page.goto("/curso-zulliger/teste/condicoes/");
+  await expect(page.getByRole("heading", { name: "Condições do Sandbox" })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Privacidade durante a homologação" })).toBeVisible();
+  expect(errors).toEqual([]);
+  expect(failures).toEqual([]);
+});
+
 test("navegação pública não carrega Cookiebot ou rastreamento", async ({ page }) => {
   const errors: string[] = [], failures: string[] = [], trackingRequests: string[] = [];
   page.on("pageerror", error => errors.push(error.message));

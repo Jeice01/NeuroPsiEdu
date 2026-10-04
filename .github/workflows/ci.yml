@@ -56,6 +56,12 @@ jobs:
       - name: Automated tests
         run: npm test
 
+      - name: Courses boundary tests
+        run: node --test services/cursos/tests/registration.test.mjs services/cursos/tests/checkout.test.mjs services/cursos/tests/reconciliation.test.mjs
+
+      - name: Courses recovery adapter tests
+        run: deno test --allow-env services/cursos/supabase/functions/cadastro-curso/recovery_test.ts
+
       - name: Edge Function tests
         run: >-
           deno test --allow-env --node-modules-dir=auto
@@ -72,6 +78,15 @@ jobs:
           ZULLIGER_INFORMATION_ONLY: "true"
           NEXT_PUBLIC_CURSOS_ENABLED: "false"
           NEXT_PUBLIC_CURSOS_CHECKOUT_SANDBOX_ENABLED: "false"
+          NEXT_PUBLIC_CURSOS_SANDBOX_ENABLED: "true"
+          NEXT_PUBLIC_CURSOS_SANDBOX_TURMA_ID: ${{ vars.CURSOS_SANDBOX_TURMA_ID }}
+          NEXT_PUBLIC_CURSOS_FUNCTION_URL: https://ydmvbssgiffqrmwigkae.supabase.co/functions/v1/cadastro-curso
+          NEXT_PUBLIC_CURSOS_TURNSTILE_SITE_KEY: ${{ vars.CURSOS_TURNSTILE_SITE_KEY }}
+          NEXT_PUBLIC_CURSOS_RECOVERY_ENABLED: "true"
+          NEXT_PUBLIC_CURSOS_TERMS_VERSION: sandbox-20261003
+          NEXT_PUBLIC_CURSOS_PRIVACY_VERSION: sandbox-20261003
+          NEXT_PUBLIC_CURSOS_TERMS_URL: https://neuropsiedu.com.br/curso-zulliger/teste/condicoes/#termos
+          NEXT_PUBLIC_CURSOS_PRIVACY_URL: https://neuropsiedu.com.br/curso-zulliger/teste/condicoes/#privacidade
         run: npm run build
 
       - name: Verify SEO artifact

@@ -1,0 +1,118 @@
+import assert from 'node:assert/strict';
+import { createHash, generateKeyPairSync, sign, randomUUID } from 'node:crypto';
+import { test } from 'node:test';
+import { createProvider, normalizeOrder, verifySignature } from '../supabase/functions/pagbank-webhook/provider.ts';
+import { createWebhook } from '../supabase/functions/pagbank-webhook/handler.ts';
+import { createReconciler } from '../supabase/functions/conciliar-cursos/handler.ts';
+const pair = generateKeyPairSync('ec', { namedCurve: 'prime256v1' });
+const key = pair.publicKey.export({ type: 'spki', format: 'der' }).toString('base64');
+const id = `ORDE_${randomUUID()}`, reference = randomUUID();
+const order = () => ({ id, reference_id: reference, charges: [{ id: 'CHAR_test', status: 'PAID',
+  amount: { value: 60000, currency: 'BRL', summary: { paid: 60000, refunded: 0 } } }] });
+
+test('legacy protocol is explicit, verifies original bytes and rejects invalid signatures before dependencies', async () => {
+  const token = 'synthetic-secret';
+  const raw = `{ "id":"${id}", "reference_id":"${reference}" }`;
+  const signature = createHash('sha256').update(`${token}-${raw}`).digest('hex');
+  const provider = createProvider(token, async () => { throw Error('unexpected network'); }, 'legacy-sha256');
+  assert.equal(provider.signatureHeader, 'x-authenticity-token');
+  assert.equal(await provider.authenticate(Buffer.from(raw), signature), true);
+  assert.equal(await provider.authenticate(Buffer.from(raw + ' '), signature), false);
+  assert.equal(await provider.authenticate(Buffer.from(raw), '0'.repeat(64)), false);
+  assert.equal(await provider.authenticate(Buffer.from(raw), ''), false);
+  assert.equal(await provider.authenticate(Buffer.from(raw), 'a'.repeat(63)), false);
+  assert.equal(await createProvider('wrong', fetch, 'legacy-sha256').authenticate(Buffer.from(raw), signature), false);
+  assert.throws(() => createProvider(token, fetch, 'unknown'));
+  assert.equal(createProvider(token).signatureHeader, 'x-payload-signature');
+  let reads = 0, writes = 0;
+  const handler = createWebhook({ ...provider,
+    observe: async (objectId, ref) => { reads++; assert.equal(objectId, id); assert.equal(ref, reference); return normalizeOrder(order(), id); },
+    rpc: async () => { writes++; return 'processado'; },
+  });
+  const request = (header, value, body = raw) => new Request('https://example.test/webhook', {
+    method: 'POST', headers: { 'content-type': 'application/json', [header]: value }, body,
+  });
+  assert.equal((await handler(request('x-payload-signature', signature))).status, 401);
+  assert.equal((await handler(request('x-authenticity-token', signature, raw + ' '))).status, 401);
+  assert.equal(reads, 0); assert.equal(writes, 0);
+  assert.equal((await handler(request('x-authenticity-token', signature))).status, 200);
+  assert.equal(reads, 1); assert.equal(writes, 1);
+  const strict = createWebhook({ ...provider, signatureHeader: 'x-payload-signature',
+    authenticate: async () => false, rpc: async () => { throw Error('unexpected write'); } });
+  const both = request('x-payload-signature', 'invalid');
+  both.headers.set('x-authenticity-token', signature);
+  assert.equal((await strict(both)).status, 401);
+});
+test('ECDSA verifies raw bytes and multiple signatures; altered bytes and missing signature fail', () => {
+  const raw = Buffer.from('{ "id": "teste" }');
+  const signature = sign('sha256', raw, pair.privateKey).toString('base64');
+  assert.equal(verifySignature(raw, `invalid,${signature}`, key), true);
+  assert.equal(verifySignature(Buffer.from('{"id":"teste"}'), signature, key), false);
+  assert.equal(verifySignature(raw, '', key), false);
+  assert.equal(verifySignature(raw, signature, 'invalid'), false);
+});
+test('webhook authenticates before JSON and consults provider before mutation', async () => {
+  let calls = 0;
+  const handler = createWebhook({ authenticate: async (raw, header) => verifySignature(raw, header, key),
+    observe: async (objectId, ref) => { calls++; assert.equal(objectId,id); assert.equal(ref,reference); return normalizeOrder(order(), id); },
+    rpc: async (name, params) => { calls++; assert.equal(name,'conciliar_pagamento_curso'); assert.equal(params.p_observacao.status,'PAID'); return 'processado'; } });
+  const raw = JSON.stringify({ id, reference_id: reference, charges: [{ status: 'DECLINED' }] });
+  const request = (signature) => new Request('https://example.test/webhook', { method: 'POST', headers: { 'content-type': 'application/json', 'x-payload-signature': signature }, body: raw });
+  assert.equal((await handler(request('invalid'))).status,401); assert.equal(calls,0);
+  assert.equal((await handler(request(sign('sha256', Buffer.from(raw), pair.privateKey).toString('base64')))).status,200);
+  assert.equal(calls,2);
+});
+test('normalization refuses wrong reference and flags multiple charges, unknown states and partial refunds', () => {
+  assert.throws(() => normalizeOrder(order(),id,randomUUID()));
+  const data=order(); data.charges.push(data.charges[0]);
+  assert.equal(normalizeOrder(data,id).status,'REVIEW');
+  const refund=order(); refund.charges[0].amount.summary.refunded=100;
+  assert.equal(normalizeOrder(refund,id).status,'REFUNDED');
+  const unknown=order(); unknown.charges[0].status='CHARGEBACK';
+  assert.equal(normalizeOrder(unknown,id).status,'REVIEW');
+});
+test('provider uses own account and fixed host, caches webhook key and does not trust expiration alone', async () => {
+  let keyCalls=0;
+  const provider=createProvider('synthetic-token',async (url, options) => {
+    assert.equal(options.headers.Authorization,'Bearer synthetic-token'); assert.equal(options.redirect,'error');
+    if (url === 'https://sandbox.api.pagseguro.com/public-keys/webhook') { keyCalls++; return Response.json({ public_key:key }); }
+    assert.equal(url,'https://sandbox.api.pagseguro.com/checkouts/CHEC_test');
+    return Response.json({ id:'CHEC_test', reference_id:reference, status:'EXPIRED' });
+  });
+  const raw=Buffer.from('{}'), signature=sign('sha256',raw,pair.privateKey).toString('base64');
+  assert.equal(await provider.authenticate(raw,signature),true); assert.equal(await provider.authenticate(raw,signature),true); assert.equal(keyCalls,1);
+  assert.equal((await provider.observe('CHEC_test',reference)).status,'REVIEW');
+  await assert.rejects(provider.observe('https://evil.test/token'));
+});
+test('worker requires secret and isolates failures; unknown creation becomes review without duplicate POST', async () => {
+  const secret='synthetic-worker-secret-minimum-32-characters'; let writes=0;
+  const handler=createReconciler(secret,async (name, params) => {
+    if (name==='preparar_conciliacao_cursos') return [{ id:reference, envio_iniciado_em:'2020-01-01T00:00:00Z' }];
+    writes++; assert.equal(params.p_observacao.status,'REVIEW'); return 'revisao';
+  },async () => { throw new Error('should not call provider'); });
+  assert.equal((await handler(new Request('https://example.test/worker',{method:'POST'}))).status,401);
+  assert.equal(writes,0);
+  assert.equal((await handler(new Request('https://example.test/worker',{method:'POST',headers:{authorization:`Bearer ${secret}`}}))).status,200);
+  assert.equal(writes,1);
+});
+
+test('checkout reconciliation consults its associated order and preserves reference and amount checks', async () => {
+  const requests = [];
+  let orders = [{ id }], mismatch = false;
+  const provider = createProvider('synthetic-token', async (url) => {
+    requests.push(url);
+    if (url.endsWith('/checkouts/CHEC_test')) return Response.json({ id:'CHEC_test', reference_id:reference, status:'ACTIVE', orders });
+    assert.equal(url, `https://sandbox.api.pagseguro.com/orders/${id}`);
+    return Response.json({ ...order(), reference_id: mismatch ? randomUUID() : reference });
+  });
+  const observed = await provider.observe('CHEC_test', reference);
+  assert.equal(observed.status, 'PAID'); assert.equal(observed.checkout_id, 'CHEC_test');
+  assert.equal(observed.pedido_id, id); assert.equal(observed.pago_centavos, 60000);
+  mismatch = true;
+  await assert.rejects(provider.observe('CHEC_test', reference));
+  orders = [{ id }, { id }]; requests.length = 0;
+  assert.equal((await provider.observe('CHEC_test', reference)).status, 'REVIEW');
+  assert.equal(requests.length, 1);
+  orders = [{ id: 'https://evil.test/order' }];
+  assert.equal((await provider.observe('CHEC_test', reference)).status, 'REVIEW');
+});
