@@ -103,7 +103,7 @@ export default function ZulligerPage() {
               <li><Monitor size={22} aria-hidden="true" /><div><strong>Abertura online</strong><span>Comece o percurso em 6 de novembro, às 20h30.</span></div></li>
               <li><CalendarDays size={22} aria-hidden="true" /><div><strong>Dois dias presenciais</strong><span>Encontros em 7 e 8 de novembro, em Águas Claras.</span></div></li>
               <li><Users size={22} aria-hidden="true" /><div><strong>Prática supervisionada em turma reduzida</strong><span>Aprenda com o professor em uma turma de até {course.capacity} participantes.</span></div></li>
-              <li><Award size={22} aria-hidden="true" /><div><strong>Certificado de {course.certificateHours} horas</strong><span>Mediante frequência mínima de {course.minimumAttendancePercent}%.</span></div></li>
+              <li><Award size={22} aria-hidden="true" /><div><strong>Certificado de {course.certificateHours} horas</strong><span>Emissão em até {course.certificateDeadlineDays} dias após o término do curso, mediante frequência mínima de {course.minimumAttendancePercent}%.</span></div></li>
             </ul>
             <p className="z-value-summary">Fundamentação, encontros presenciais e prática supervisionada reunidos em uma única capacitação.</p>
             <p className="z-investment-label">Tudo isso por um investimento de</p>
@@ -111,7 +111,7 @@ export default function ZulligerPage() {
             <p className="z-installments" aria-describedby="installment-note">Em até <strong>{course.maximumInstallments}x no cartão</strong><sup>*</sup></p>
             <p id="installment-note" className="z-installment-note">* Com juros por conta do comprador.</p>
             <p className="z-support">Tem alguma dúvida sobre o conteúdo ou formato da capacitação? <a href={zulligerSupportLink} target="_blank" rel="noopener noreferrer"><MessageCircle size={21} aria-hidden="true" /><span>Fale com nossa equipe no WhatsApp</span></a></p>
-            <div className="z-waitlist"><Users size={21} aria-hidden="true" /><p><strong>Uma turma de até 15 participantes.</strong><br />Após o preenchimento, a versão final terá lista de espera sem cobrança.</p></div>
+            <div className="z-waitlist"><Users size={21} aria-hidden="true" /><p><strong>Uma turma de até 15 participantes.</strong><br />{process.env.ZULLIGER_INFORMATION_ONLY === "true" ? "A disponibilidade de vagas será informada na abertura das inscrições." : "Após o preenchimento, a versão final terá lista de espera sem cobrança."}</p></div>
           </div>
           <div className="z-enrollment-contact">
             <div className="z-contact-card">
@@ -119,7 +119,7 @@ export default function ZulligerPage() {
               <h3>Aprenda na prática.<br />Faça parte desta turma.</h3>
               <p className="z-contact-limit">As inscrições serão encerradas quando a turma atingir {course.capacity} participantes. Dê o próximo passo e faça parte desta turma.</p>
               <RegistrationLink className="z-button z-button-full" />
-              <p className="z-small">Você seguirá para a página de inscrição. Nesta prévia, o formulário é demonstrativo.</p>
+              <p className="z-small">{process.env.ZULLIGER_INFORMATION_ONLY === "true" ? "As inscrições online ainda não estão abertas. Consulte as informações ou fale com nossa equipe." : "Você seguirá para a página de inscrição. Nesta prévia, o formulário é demonstrativo."}</p>
             </div>
           </div>
         </div></section>

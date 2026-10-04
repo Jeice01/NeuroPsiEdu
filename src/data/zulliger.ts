@@ -4,6 +4,7 @@ export const zulligerCourse = {
   priceCents: 60000,
   capacity: 15,
   certificateHours: 24,
+  certificateDeadlineDays: 20,
   minimumAttendancePercent: 75,
   maximumInstallments: 10,
   address: "Edifício Connect Towers, QS 1, Rua 212, Bloco D, Sala 1129 (11º andar) — Águas Claras, Brasília – DF, CEP 71950-550",
@@ -28,7 +29,7 @@ export const zulligerSupportLink = `https://wa.me/5561996436007?text=${encodeURI
 
 export const zulligerFaq = [
   { question: "Para quem é esta capacitação?", answer: "Para psicólogos e estudantes de Psicologia interessados na técnica de Zulliger. A participação no curso não substitui os requisitos legais e profissionais para uso de testes psicológicos." },
-  { question: "Como será o certificado?", answer: "O certificado terá carga horária de 24 horas. Para obtê-lo, será necessária frequência mínima de 75% da carga horária do curso, equivalente a 18 horas, registrada pela organização." },
+  { question: "Como será o certificado?", answer: "O certificado terá carga horária de 24 horas e será emitido em até 20 dias após o término do curso. Para obtê-lo, será necessária frequência mínima de 75% da carga horária do curso, equivalente a 18 horas, registrada pela organização." },
   { question: "Posso parcelar o investimento?", answer: "Sim. O valor-base é R$ 600,00, com parcelamento em até 10 vezes no cartão e juros por conta do comprador. O valor de cada parcela e o total com juros serão apresentados no checkout PagBank antes da confirmação." },
   { question: "O que acontece quando as vagas acabam?", answer: "A turma terá no máximo 15 participantes. Após o preenchimento, será disponibilizada uma lista de espera sem cobrança. O cadastro na lista não garante uma vaga." },
 ] as const;
