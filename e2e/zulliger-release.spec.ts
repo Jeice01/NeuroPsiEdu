@@ -16,10 +16,13 @@ test("artefato público informa abertura futura sem coletar dados ou iniciar pag
   await page.goto("/curso-zulliger/");
   await expect(page.locator(".z-preview-bar")).toContainText("INSCRIÇÕES EM BREVE");
   await expect(page.locator(".z-nav-cta")).toHaveText(/Inscrições em breve/);
+  await expect(page.getByText("Emissão em até 20 dias após o término do curso, mediante frequência mínima de 75%.", { exact: true })).toBeVisible();
+  await expect(page.getByText(/Nesta prévia|a versão final terá/)).toHaveCount(0);
   await expect(page.locator('meta[name="robots"][content*="noindex"]')).toHaveCount(0);
   await page.locator(".z-nav-cta").click();
   await expect(page).toHaveURL(/\/curso-zulliger\/inscricao\/$/);
   await expect(page.getByRole("heading", { name: "Inscrições em breve", exact: true })).toBeVisible();
+  await expect(page.locator("dd").filter({ hasText: "Emissão em até 20 dias após o término do curso." })).toBeVisible();
   await expect(page.locator("form, input")).toHaveCount(0);
   await expect(page.getByRole("link", { name: "Falar com a NeuroPsiEdu", exact: true })).toHaveAttribute("href", /^https:\/\/wa.me\//);
   for (const width of [1280, 390, 320]) {

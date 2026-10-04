@@ -44,7 +44,7 @@ export default function ZulligerRegistrationPage() {
               <div><dt>Abertura online</dt><dd>6 de novembro de 2026, às 20h30</dd></div>
               <div><dt>Encontros presenciais</dt><dd>7 e 8 de novembro de 2026, das 8h às 18h</dd></div>
               <div><dt>Local</dt><dd>{course.address}</dd></div>
-              <div><dt>Certificado</dt><dd>{course.certificateHours} horas, com frequência mínima de {course.minimumAttendancePercent}%</dd></div>
+              <div><dt>Certificado</dt><dd>{course.certificateHours} horas, com frequência mínima de {course.minimumAttendancePercent}%. Emissão em até {course.certificateDeadlineDays} dias após o término do curso.</dd></div>
               <div><dt>Turma</dt><dd>Até {course.capacity} participantes</dd></div>
             </dl>
             <p className="z-small">Horários de Brasília. A distribuição das 24 horas será detalhada no programa final.</p>
