@@ -9,6 +9,7 @@ export const metadata = createPageMetadata({
   title: "Capacitação em Zulliger — Z-Teste Coletivo e Individual",
   description: "Capacitação com Willian Santana, abertura online em 6 de novembro e encontros presenciais em 7 e 8 de novembro de 2026, em Águas Claras. Certificado de 24 horas.",
   path: "/curso-zulliger/",
+  image: "/images/zulliger/compartilhamento-zulliger-v1.png",
   noIndex: process.env.ZULLIGER_INFORMATION_ONLY !== "true",
 });
 
