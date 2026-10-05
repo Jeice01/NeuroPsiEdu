@@ -8,6 +8,7 @@ import { registrationDatabaseTests } from './registration-database.mjs';
 import { checkoutDatabaseTests } from './checkout-database.mjs';
 import { reconciliationDatabaseTests } from './reconciliation-database.mjs';
 import { confirmationDatabaseTests } from './confirmation-database.mjs';
+import { interestDatabaseTests } from './interest-database.mjs';
 
 const root = new URL('../', import.meta.url);
 const image = 'postgres:17.6-bookworm';
@@ -100,7 +101,7 @@ test('incremental courses schema on an isolated PostgreSQL 17', { timeout: 600_0
     });
     const before = await Promise.all(legacyQueries.map(scalar));
     const migrations = (await readdir(new URL('supabase/migrations/', root))).filter((f) => f.endsWith('.sql')).sort();
-    assert.equal(migrations.length, 7);
+    assert.equal(migrations.length, 8);
     await t.test('preflight matches captured schema before any incremental migration', async () => {
       assert.equal(await sql(await readFile(new URL('baseline/preflight.sql', root), 'utf8')), '');
     });
@@ -250,6 +251,7 @@ test('incremental courses schema on an isolated PostgreSQL 17', { timeout: 600_0
     await checkoutDatabaseTests(t, { sql, scalar, createOffer, register });
     await reconciliationDatabaseTests(t, { sql, scalar, createOffer, register });
     await confirmationDatabaseTests(t, { sql, scalar, createOffer, register });
+    await interestDatabaseTests(t, { sql, scalar, createOffer, register, reserve });
   } finally {
     if (containerId && /^[a-f0-9]{64}$/.test(containerId)) {
       const label = await command(['inspect', '--format', '{{index .Config.Labels "neuropsiedu.cursos-test"}}', containerId]);

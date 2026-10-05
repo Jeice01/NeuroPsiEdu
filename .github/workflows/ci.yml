@@ -57,7 +57,10 @@ jobs:
         run: npm test
 
       - name: Courses boundary tests
-        run: node --test services/cursos/tests/registration.test.mjs services/cursos/tests/checkout.test.mjs services/cursos/tests/reconciliation.test.mjs services/cursos/tests/confirmation.test.mjs
+        run: node --test services/cursos/tests/registration.test.mjs services/cursos/tests/checkout.test.mjs services/cursos/tests/reconciliation.test.mjs services/cursos/tests/confirmation.test.mjs services/cursos/tests/interest.test.mjs
+
+      - name: Courses interest capture in Google Chrome
+        run: npx playwright test --config playwright.interest.config.ts
 
       - name: Courses recovery adapter tests
         run: deno test --allow-env services/cursos/supabase/functions/cadastro-curso/recovery_test.ts
@@ -76,6 +79,7 @@ jobs:
       - name: Production build
         env:
           ZULLIGER_INFORMATION_ONLY: "true"
+          NEXT_PUBLIC_CURSOS_INTERESSE_ENABLED: "true"
           NEXT_PUBLIC_CURSOS_ENABLED: "false"
           NEXT_PUBLIC_CURSOS_CHECKOUT_SANDBOX_ENABLED: "false"
           NEXT_PUBLIC_CURSOS_SANDBOX_ENABLED: "true"
