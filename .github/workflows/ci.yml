@@ -62,6 +62,9 @@ jobs:
       - name: Courses interest capture in Google Chrome
         run: npx playwright test --config playwright.interest.config.ts
 
+      - name: Courses automation API permissions
+        run: node --test services/cursos/tests/n8n-api.test.mjs
+
       - name: Courses recovery adapter tests
         run: deno test --allow-env services/cursos/supabase/functions/cadastro-curso/recovery_test.ts
 

@@ -91,6 +91,10 @@ test('incremental courses schema on an isolated PostgreSQL 17', { timeout: 600_0
     assert.equal(ready, true, 'Disposable PostgreSQL did not become ready');
     await sql(`CREATE ROLE anon NOLOGIN; CREATE ROLE authenticated NOLOGIN;
       CREATE ROLE service_role NOLOGIN BYPASSRLS; GRANT USAGE ON SCHEMA public TO anon,authenticated,service_role;`);
+    await sql(`CREATE SCHEMA auth; CREATE TABLE auth.users(id uuid PRIMARY KEY);
+      CREATE FUNCTION auth.uid() RETURNS uuid LANGUAGE sql STABLE AS $$
+        SELECT nullif(current_setting('request.jwt.claim.sub',true),'')::uuid $$;
+      GRANT USAGE ON SCHEMA auth TO authenticated;`);
     await sql(await readFile(new URL('baseline/schema.sql', root), 'utf8'));
     await sql(await readFile(new URL('tests/legacy-fixture.sql', root), 'utf8'));
     const snapshot = JSON.parse(await readFile(new URL('baseline/remote-schema.json', root), 'utf8'));
@@ -101,7 +105,7 @@ test('incremental courses schema on an isolated PostgreSQL 17', { timeout: 600_0
     });
     const before = await Promise.all(legacyQueries.map(scalar));
     const migrations = (await readdir(new URL('supabase/migrations/', root))).filter((f) => f.endsWith('.sql')).sort();
-    assert.equal(migrations.length, 8);
+    assert.equal(migrations.length, 9);
     await t.test('preflight matches captured schema before any incremental migration', async () => {
       assert.equal(await sql(await readFile(new URL('baseline/preflight.sql', root), 'utf8')), '');
     });
