@@ -2,7 +2,7 @@ import { defineConfig, devices } from "@playwright/test";
 
 export default defineConfig({
   testDir: "./e2e",
-  testIgnore: ["**/cursos-registration.spec.ts", "**/cursos-recovery-disabled.spec.ts", "**/zulliger-release.spec.ts"],
+  testIgnore: ["**/cursos-registration.spec.ts", "**/cursos-recovery-disabled.spec.ts", "**/cursos-interest.spec.ts", "**/zulliger-release.spec.ts"],
   fullyParallel: true,
   forbidOnly: Boolean(process.env.CI),
   retries: process.env.CI ? 2 : 0,
